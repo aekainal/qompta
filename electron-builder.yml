@@ -53,6 +53,8 @@ linux:
     entièrement hors ligne et sur des données chiffrées : décompte AFC,
     devis et factures avec QR-facture, tableaux de bord et impôts.
 deb:
+  # Debian requires a maintainer on every package; without it the build stops.
+  maintainer: Qwasar Gerber RI <contact@qwasar.ch>
   # Electron's system dependencies on Debian/Ubuntu. Without them the app installs
   # but never starts (libnss3/libasound2 missing).
   depends:

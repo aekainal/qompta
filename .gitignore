@@ -1,11 +1,13 @@
 node_modules/
 out/
 dist/
-# Tout le dossier de build est ignoré SAUF l'installeur Windows courant, versionné
+# Tout le dossier de build est ignoré SAUF les trois paquets publiés, versionnés
 # via Git LFS (voir .gitattributes) : c'est lui que la release publie. Les
 # sous-dossiers (win-unpacked, archives, blockmap…) restent hors dépôt.
 /release/*
 !/release/Qompta-*-setup.exe
+!/release/Qompta-*.deb
+!/release/Qompta-*.AppImage
 *.log
 .DS_Store
 src/db/migrations/meta/_journal.json.bak

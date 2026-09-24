@@ -28,15 +28,11 @@ included. No data ever leaves your machine.
 
 ---
 
-<!--
-  Screenshot gallery — restored once docs/images/ is populated.
-  Kept here so the markup does not have to be rewritten.
-
 ## 📸 Overview
 
 <div align="center">
 
-<img src="docs/images/dashboard.png" alt="Dashboard" width="820">
+<img src="docs/images/06-tableau-bord.png" alt="Dashboard" width="820">
 
 <em>Customisable dashboard: draggable and resizable widgets, KPIs and charts.</em>
 
@@ -44,15 +40,15 @@ included. No data ever leaves your machine.
 
 <table>
 <tr>
-<td width="50%"><img src="docs/images/invoices.png" alt="Invoice list"><br><em>Invoices: filters by VAT period, statuses, service line detail.</em></td>
-<td width="50%"><img src="docs/images/vat-return.png" alt="VAT return"><br><em>VAT return pre-filled in the format of the FTA form.</em></td>
+<td width="50%"><img src="docs/images/10-factures.png" alt="Invoice list"><br><em>Invoices: filters by VAT period, statuses, service line detail.</em></td>
+<td width="50%"><img src="docs/images/12-decompte-tva.png" alt="VAT return"><br><em>VAT return pre-filled in the format of the FTA form.</em></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/images/quote-pdf.png" alt="Quote as PDF"><br><em>Quotes and invoices as PDF, with a compliant Swiss QR-bill.</em></td>
-<td width="50%"><img src="docs/images/treasury.png" alt="Cash position"><br><em>Cash position: payments received, shareholder contributions, bank reconciliation.</em></td>
+<td width="50%"><img src="docs/images/09-devis.png" alt="Quotes"><br><em>Quotes: sections, service lines, status from draft to invoiced.</em></td>
+<td width="50%"><img src="docs/images/07-tresorerie.png" alt="Cash position"><br><em>Cash position: payments received, shareholder contributions, bank reconciliation.</em></td>
 </tr>
 </table>
--->
+
 
 ---
 
@@ -109,6 +105,10 @@ to **resume** it.
 ---
 
 ## ⬇️ Installation
+
+> 🇫🇷 **[Guide d'installation →](docs/fr/INSTALLATION.md)** · **[Guide d'utilisation →](docs/fr/GUIDE.md)**
+>
+> User documentation follows the application, which is in French. English and German are planned.
 
 Packages can be downloaded from the **[releases page](https://github.com/aekainal/qompta/releases/latest)**.
 
@@ -212,6 +212,8 @@ The detailed technical documentation is in English in [`docs/`](docs/):
 
 | Document | Contents |
 |---|---|
+| [`fr/INSTALLATION.md`](docs/fr/INSTALLATION.md) | Installing on Windows and Linux, the recovery key, backups — **in French** |
+| [`fr/GUIDE.md`](docs/fr/GUIDE.md) | Using the application, screen by screen — **in French** |
 | [`ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Processes, IPC, security, PDF generation pipeline |
 | [`DATA-MODEL.md`](docs/DATA-MODEL.md) | All tables, columns and relations |
 | [`VAT-LOGIC.md`](docs/VAT-LOGIC.md) | FTA VAT return codes and calculation rules |

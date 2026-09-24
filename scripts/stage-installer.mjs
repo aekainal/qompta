@@ -1,20 +1,27 @@
 #!/usr/bin/env node
 /**
- * Prepares the Windows installer built on this machine so it ships with the
- * commit, versioned through **Git LFS**.
+ * Prepares the packages built on this machine so they ship with the commit,
+ * versioned through **Git LFS**.
  *
- * Replaces the former `upload:installer` (upload to the registry with a personal
- * token). Here, no token: the exe travels with `git push` (usual SSH auth).
- * The git history only receives an LFS pointer of ~130 B; the ~85 MB binary
- * lives in the LFS store. The pipeline (`release` job) fetches it, archives it
- * to the package registry and attaches it to the release.
+ * Three packages are published for every version: the Windows installer, the
+ * Debian package and the AppImage. No token is involved: they travel with
+ * `git push` over the usual SSH auth. The git history only receives an LFS
+ * pointer of ~130 B each; the binaries live in the LFS store. The pipeline
+ * (`release` job) fetches them, archives them to the package registry and
+ * attaches them to the release.
  *
  * Usage:
- *   npm run build:win && npm run stage:installer
- *   git commit … && git push          (the version commit carries the exe)
+ *   npm run build:win                 on Windows  -> release/Qompta-<v>-setup.exe
+ *   npm run pack:linux                on Linux    -> release/Qompta-<v>.deb + .AppImage
+ *   npm run stage:installer
+ *   git commit … && git push          (the version commit carries all three)
  *
- * Prerequisite: `git-lfs` installed and `git lfs install` done once (otherwise
- * the exe would be committed raw — 85 MB in the history). This script checks it.
+ * The Linux build must NOT run in this working copy: rebuilding the native
+ * module for Linux would overwrite the Windows-ABI binary and break `npm run dev`.
+ * Build it in a separate copy, then drop the two files into release/ here.
+ *
+ * Prerequisite: `git-lfs` installed and `git lfs install` done once (otherwise a
+ * binary would be committed raw — 85 MB in the history). This script checks it.
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -26,18 +33,26 @@ function fail(message) {
 }
 
 const version = JSON.parse(readFileSync("package.json", "utf8")).version;
-const exeName = `Qompta-${version}-setup.exe`;
-const exePath = `release/${exeName}`;
 
-if (!existsSync(exePath)) {
+/** The three published packages, in the order the README lists them. */
+const packages = [
+  { name: `Qompta-${version}-setup.exe`, how: "npm run build:win (sous Windows)" },
+  { name: `Qompta-${version}.deb`, how: "npm run pack:linux (dans une copie séparée)" },
+  { name: `Qompta-${version}.AppImage`, how: "npm run pack:linux (dans une copie séparée)" },
+];
+
+const missing = packages.filter((p) => !existsSync(`release/${p.name}`));
+if (missing.length) {
   fail(
-    `Installeur introuvable : ${exePath}\n` +
-      "  Le construire d'abord : npm run build:win (voir README).",
+    "Paquet(s) manquant(s) dans release/ :\n" +
+      missing.map((p) => `  - ${p.name}  →  ${p.how}`).join("\n") +
+      "\n  Les trois doivent partir ensemble : une version publiée sans son paquet\n" +
+      "  Linux laisserait un lien mort sur la release.",
   );
 }
 
 // git-lfs must be installed AND its filter active, otherwise `git add` would
-// commit the 85 MB raw into the history instead of a pointer.
+// commit the binaries raw into the history instead of pointers.
 try {
   execFileSync("git", ["lfs", "version"], { stdio: "ignore" });
 } catch {
@@ -54,21 +69,24 @@ if (!cleanFilter) {
   fail("Le filtre LFS n'est pas configuré. Lancer une fois : git lfs install");
 }
 
-// Stages the current installer (through the LFS filter) and the removal of the
-// old one (release-housekeeping already moved it out of release/). Only the exe
-// is concerned: the rest of release/ is ignored (see .gitignore).
+// Stages the current packages (through the LFS filter) and the removal of the
+// previous ones (release-housekeeping already moved them out of release/). Only
+// those three names are concerned: the rest of release/ is ignored (.gitignore).
 execFileSync("git", ["add", "-A", "--", "release"], { stdio: "inherit" });
 
-// Checks that the staged file really is an LFS pointer, not the raw binary.
-const staged = execFileSync("git", ["show", `:${exePath}`], { encoding: "buffer" });
-if (!staged.subarray(0, 40).toString("latin1").includes("git-lfs")) {
-  fail(
-    `${exePath} n'a pas été indexé comme pointeur LFS.\n` +
-      "  Le filtre LFS n'a pas tourné : vérifier `git lfs install` et .gitattributes.",
-  );
+// Checks that each staged file really is an LFS pointer, not the raw binary.
+for (const { name } of packages) {
+  const staged = execFileSync("git", ["show", `:release/${name}`], { encoding: "buffer" });
+  if (!staged.subarray(0, 40).toString("latin1").includes("git-lfs")) {
+    fail(
+      `release/${name} n'a pas été indexé comme pointeur LFS.\n` +
+        "  Le filtre LFS n'a pas tourné : vérifier `git lfs install` et .gitattributes.",
+    );
+  }
 }
 
 console.log(
-  `✓ ${exeName} indexé via Git LFS (pointeur, pas le binaire).\n` +
-    "  Il partira avec ton prochain commit + push — la pipeline le publiera.",
+  `✓ ${packages.length} paquets indexés via Git LFS (pointeurs, pas les binaires) :\n` +
+    packages.map((p) => `    ${p.name}`).join("\n") +
+    "\n  Ils partiront avec ton prochain commit + push — la pipeline les publiera.",
 );

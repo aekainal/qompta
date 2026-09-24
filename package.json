@@ -1,8 +1,16 @@
 {
   "name": "qompta",
-  "version": "1.20.2",
+  "version": "1.20.3",
   "description": "Comptabilité & TVA suisse multi-sociétés (Electron)",
-  "author": "Qompta",
+  "author": {
+    "name": "Qwasar Gerber RI",
+    "email": "contact@qwasar.ch"
+  },
+  "homepage": "https://github.com/aekainal/qompta",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aekainal/qompta.git"
+  },
   "main": "./out/main/index.js",
   "type": "module",
   "scripts": {
