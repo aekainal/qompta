@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /**
- * Housekeeping of the `release/` folder after the Windows installer is built.
+ * Housekeeping of the `release/` folder after the packages are built.
  *
- * Rule: **only the installer of the current version stays at the root**. For
- * each installer of an earlier version:
+ * Rule: **only the packages of the current version stay at the root** — the
+ * Windows installer, the Debian package and the AppImage alike. For each package
+ * of an earlier version:
  *  - if the matching GitLab release exists, the file is **deleted** —
  *    it stays downloadable from GitLab, keeping a duplicate brings nothing;
  *  - otherwise (or if GitLab is unreachable, or without an access token), it is
@@ -17,7 +18,15 @@
  * `GITLAB_TOKEN` locally; without a token, everything goes to the archives.
  */
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync } from "node:fs";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+} from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 
@@ -26,9 +35,16 @@ const ARCHIVE_DIR = join(RELEASE_DIR, "archives");
 
 const version = JSON.parse(readFileSync("package.json", "utf8")).version;
 
-/** `Qompta-1.4.0-setup.exe` -> `1.4.0`. Returns null if the name does not fit. */
+/**
+ * `Qompta-1.4.0-setup.exe`, `Qompta-1.4.0.deb`, `Qompta-1.4.0.AppImage` -> `1.4.0`.
+ * Returns null if the name does not fit.
+ *
+ * The three published packages are treated alike: an old Debian package has no
+ * more reason to stay at the root of release/ than an old installer, and no
+ * reason to be deleted outright either.
+ */
 function versionOf(fileName) {
-  const m = /^Qompta-(\d+\.\d+\.\d+)-setup\.exe$/.exec(fileName);
+  const m = /^Qompta-(\d+\.\d+\.\d+)(?:-setup\.exe|\.deb|\.AppImage)$/.exec(fileName);
   return m ? m[1] : null;
 }
 
@@ -73,7 +89,18 @@ async function releaseExists(v, base, headers) {
 
 function archive(fileName) {
   mkdirSync(ARCHIVE_DIR, { recursive: true });
-  renameSync(join(RELEASE_DIR, fileName), join(ARCHIVE_DIR, fileName));
+  const from = join(RELEASE_DIR, fileName);
+  const to = join(ARCHIVE_DIR, fileName);
+  try {
+    renameSync(from, to);
+  } catch (err) {
+    // On the Windows filesystem seen through WSL, a package freshly copied can
+    // still be held for a moment and rename fails with EACCES/EPERM. Copying then
+    // unlinking gets there anyway — archiving must not stop a build.
+    if (err.code !== "EACCES" && err.code !== "EPERM" && err.code !== "EXDEV") throw err;
+    copyFileSync(from, to);
+    rmSync(from, { force: true });
+  }
 }
 
 /** The blockmap goes with its installer, whatever the fate of the latter. */
@@ -127,7 +154,7 @@ async function main() {
 
   console.log(
     `→ Ménage terminé : ${removed} supprimé(s), ${archived} archivé(s). ` +
-      `Reste à la racine : Qompta-${version}-setup.exe`,
+      `Reste à la racine : les paquets ${version}.`,
   );
 }
 
