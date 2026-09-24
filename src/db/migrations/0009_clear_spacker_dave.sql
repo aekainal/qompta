@@ -1,0 +1,1 @@
+ALTER TABLE `third_parties` ADD `entity_type` text DEFAULT 'company' NOT NULL;

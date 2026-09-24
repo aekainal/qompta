@@ -1,0 +1,1 @@
+ALTER TABLE `invoices` ADD `vat_amount_override` integer;

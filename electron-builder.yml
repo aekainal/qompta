@@ -1,0 +1,64 @@
+appId: ch.qompta.app
+productName: Qompta
+copyright: © 2026 Qompta
+directories:
+  output: release
+  buildResources: resources
+# We run the native rebuild ourselves (electron-rebuild -f) right before electron-builder:
+# its internal @electron/rebuild (without -f) has a cache that can skip the rebuild and
+# leave a Node-ABI binary behind -> the packaged app crashes on startup.
+npmRebuild: false
+files:
+  - out/**/*
+  - package.json
+asarUnpack:
+  - "**/*.node"
+# Drizzle migrations are copied outside the asar and read through process.resourcesPath.
+extraResources:
+  - from: src/db/migrations
+    to: migrations
+  # Inter fonts embedded in the PDFs (quotes, invoices, contracts): the app must render
+  # identically offline, without depending on the fonts installed on the machine.
+  - from: resources/fonts
+    to: fonts
+  # App icon, read at runtime for the window and the taskbar (see appIconPath).
+  - from: resources/icon.png
+    to: icon.png
+win:
+  target:
+    - nsis
+  artifactName: ${productName}-${version}-setup.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Qompta
+mac:
+  target:
+    - dmg
+  category: public.app-category.finance
+  artifactName: ${productName}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+    - deb
+  category: Office
+  # The .deb and the AppImage share a base name; ${ext} tells them apart.
+  artifactName: ${productName}-${version}.${ext}
+  synopsis: Comptabilité et TVA suisse multi-sociétés
+  description: >-
+    Qompta tient la comptabilité et la TVA de plusieurs sociétés suisses,
+    entièrement hors ligne et sur des données chiffrées : décompte AFC,
+    devis et factures avec QR-facture, tableaux de bord et impôts.
+deb:
+  # Electron's system dependencies on Debian/Ubuntu. Without them the app installs
+  # but never starts (libnss3/libasound2 missing).
+  depends:
+    - libnss3
+    - libnspr4
+    - libasound2
+    - libgtk-3-0
+    - libgbm1
+  priority: optional

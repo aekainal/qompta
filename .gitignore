@@ -1,0 +1,19 @@
+node_modules/
+out/
+dist/
+# Tout le dossier de build est ignoré SAUF l'installeur Windows courant, versionné
+# via Git LFS (voir .gitattributes) : c'est lui que la release publie. Les
+# sous-dossiers (win-unpacked, archives, blockmap…) restent hors dépôt.
+/release/*
+!/release/Qompta-*-setup.exe
+*.log
+.DS_Store
+src/db/migrations/meta/_journal.json.bak
+qompta.sqlite*
+# Sauvegardes datées de la base : données comptables réelles, jamais versionnées.
+# (qompta-dev.sqlite est le jeu de démo du seed et reste suivi.)
+qompta-[0-9][0-9][0-9][0-9]-*.sqlite
+.env
+
+# Rapport JUnit produit par la CI (vitest).
+junit.xml

@@ -1,0 +1,1 @@
+ALTER TABLE `company_brand_settings` ADD `pattern_columns` integer DEFAULT 3 NOT NULL;

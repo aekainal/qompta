@@ -1,0 +1,1 @@
+ALTER TABLE `contracts` ADD `one_off_amount_ht` integer;

@@ -1,0 +1,1 @@
+ALTER TABLE `quotes` ADD `superseded_by_quote_id` text;
