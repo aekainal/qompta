@@ -3,6 +3,52 @@
 All notable versions of Qompta. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- **No more em dashes** anywhere in the interface, the PDFs, the exports or the
+  documentation. An empty value now shows as "-"; screen subtitles and list entries use
+  a middle dot ("Factures · Société", "FC… · titre"); the empty signature choice reads
+  "Aucun"; a signature caption reads "Nom, fonction"; the VAT and tax export titles read
+  "Décompte TVA · Société" and "Dossier fiscal 2026 · Société".
+
+## [1.20.5] · 2026-09-25
+
+### Fixed
+- **Pixelated taskbar icon on Windows**: the window received the 512 px PNG and
+  Electron shrank it to 32 px itself. It now uses a hand-made 32 px `.ico`, shipped
+  with the installed application. Linux and macOS keep the PNG.
+
+## [1.20.4] · 2026-09-24
+
+### Fixed
+- **GitLab release**: 1.20.3 was published with the Windows installer only. The release
+  now carries all three packages (Windows installer, `.deb`, AppImage), checks that the
+  three are present before publishing anything, and can repair an incomplete release
+  when its job is run again.
+- Previous `.deb` and AppImage files are archived like the installer instead of being
+  discarded.
+
+## [1.20.3] · 2026-09-24
+
+### Added
+- **User documentation in French**, with 40 screenshots taken on a fictitious company:
+  installation guide (`docs/fr/INSTALLATION.md`) and user guide (`docs/fr/GUIDE.md`).
+- **Three packages per version**: Windows installer, Debian/Ubuntu `.deb` and AppImage.
+
+## [1.20.2] · 2026-09-24
+
+### Added
+- **Open source release** on GitHub under Apache 2.0 with the Commons Clause (fork and
+  redistribute freely, selling excluded).
+- **New application icon**, now also shown in the sidebar and on the window.
+- Linux `.deb` package.
+
+### Changed
+- Code comments and technical documentation are in English; the interface stays in
+  French.
+- Segoe UI comes first in the interface font on every platform.
+
 ## [1.20.1] · 2026-09-21
 
 ### Changed
