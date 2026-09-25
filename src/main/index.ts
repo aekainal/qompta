@@ -51,17 +51,19 @@ function migrationsDir(): string {
 
 /**
  * App icon for the window and the taskbar.
- * - dev (electron-vite): source tree `resources/icon.png`.
+ * - dev (electron-vite): source tree (`build/icon.ico` on Windows, `resources/icon.png`
+ *   elsewhere).
  * - packaged: copied into the app resources (see electron-builder.yml).
  *
- * Windows takes the taskbar icon of a packaged app from the executable, which the
- * installer stamps. Passing it here is what gives the right icon in dev, and on
- * Linux, where the window carries its own.
+ * On Windows the window icon is what the taskbar shows. Given the 512 px PNG, Electron
+ * shrinks it itself to the 32 px window icon and the taskbar comes out pixelated; the
+ * hand-made `build/icon.ico` (provided by Thomas, never delete or regenerate it) is
+ * drawn at that size. Linux and macOS keep the PNG.
  */
 function appIconPath(): string {
-  return app.isPackaged
-    ? join(process.resourcesPath, "icon.png")
-    : join(app.getAppPath(), "resources", "icon.png");
+  const file = process.platform === "win32" ? "icon.ico" : "icon.png";
+  if (app.isPackaged) return join(process.resourcesPath, file);
+  return join(app.getAppPath(), file === "icon.ico" ? "build" : "resources", file);
 }
 
 /** Detects a run under WSL (WSLg) in order to adapt the rendering. */

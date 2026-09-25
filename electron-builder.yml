@@ -24,6 +24,9 @@ extraResources:
   # App icon, read at runtime for the window and the taskbar (see appIconPath).
   - from: resources/icon.png
     to: icon.png
+  # Windows window/taskbar icon, drawn at 32 px (see appIconPath). Hand-made file: keep it.
+  - from: build/icon.ico
+    to: icon.ico
 win:
   target:
     - nsis
