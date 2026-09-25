@@ -11,7 +11,7 @@ import type { DB } from "../src/db/client.js";
 let db: DB;
 beforeEach(() => { db = createTestDb(); });
 
-describe("backup — export / import par société", () => {
+describe("backup : export / import par société", () => {
   it("réimporte une société comme nouvelle entité, avec ses données et FK remappées", () => {
     const companies = createCompaniesRepo(db);
     const invoices = createInvoicesRepo(db);

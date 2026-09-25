@@ -9,7 +9,7 @@ import {
   vatFromNet,
 } from "../src/shared/money.js";
 
-describe("money — conversions", () => {
+describe("money : conversions", () => {
   it("chfToCents gère les formats suisses", () => {
     expect(chfToCents("1'234.55")).toBe(123455);
     expect(chfToCents("1234,55")).toBe(123455);
@@ -28,7 +28,7 @@ describe("money — conversions", () => {
   });
 });
 
-describe("money — TVA", () => {
+describe("money : TVA", () => {
   it("vatFromNet applique le taux et arrondit au centime", () => {
     // 1000.00 @ 8.10% = 81.00
     expect(vatFromNet(100000, 810)).toBe(8100);
@@ -62,7 +62,7 @@ describe("money — TVA", () => {
   });
 });
 
-describe("money — conversion de devise", () => {
+describe("money : conversion de devise", () => {
   it("toChf applique le taux ×10000", () => {
     // 100.00 EUR @ 0.95 -> 95.00 CHF
     expect(toChf(10000, 9500)).toBe(9500);

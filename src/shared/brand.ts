@@ -22,7 +22,7 @@ export type PatternMode = "letters" | "none";
  * Document font.
  *
  *  - `inter`  : Inter, embedded in the app (QWASAR template, guaranteed rendering);
- *  - `custom` : files supplied by the company, embedded in the database — the PDF
+ *  - `custom` : files supplied by the company, embedded in the database; the PDF
  *    then prints identically everywhere, including offline;
  *  - `system` : font installed on the machine, referenced by its name. Simpler,
  *    but the rendering depends on the workstation: if the font is missing, the
@@ -45,7 +45,7 @@ export interface BrandSettings {
   logoMode: LogoMode;
   /** Logo image as a data-URI (`image` mode). */
   logoImage: string | null;
-  /** Logo height in tenths of a mm — font size in text mode. */
+  /** Logo height in tenths of a mm (font size in text mode). */
   logoHeightDmm: number;
   /** Contact line (e-mail) below the logo. */
   showContact: boolean;
@@ -57,7 +57,7 @@ export interface BrandSettings {
    *
    * This is not just a decorative detail: the band occupies the right edge of
    * the sheet and the text column is aligned right next to it. Changing this
-   * number therefore moves the right margin of the whole document — see
+   * number therefore moves the right margin of the whole document: see
    * `contentRightMm` in theme.ts.
    */
   patternColumns: number;

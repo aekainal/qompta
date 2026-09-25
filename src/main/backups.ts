@@ -3,7 +3,7 @@
  * in order to restore it.
  *
  * Every backup is sealed with the machine key (`security/vault.ts`). A backup
- * coming from another machine — hence from another key — is opened with the
+ * coming from another machine (hence from another key) is opened with the
  * recovery key of that machine, entered on screen.
  */
 

@@ -4,7 +4,7 @@
 
 # Qompta
 
-**Swiss multi-company accounting and VAT — fully local, fully encrypted.**
+**Swiss multi-company accounting and VAT, fully local, fully encrypted.**
 
 Desktop application that keeps the books of several Swiss companies, prepares the FTA
 VAT return and covers the commercial cycle quote → contract → invoice, Swiss QR-bill
@@ -57,7 +57,7 @@ included. No data ever leaves your machine.
 ### 🏢 Several companies, several legal forms
 
 Sole proprietorship, simple partnership, general partnership, Sàrl, SA, association. Each
-company is **strictly compartmentalised** — isolation is enforced by automated tests, not
+company is **strictly compartmentalised**: isolation is enforced by automated tests, not
 by convention alone. A company can **change legal form** along the way: the books switch
 to double-entry accounting and the chart of accounts is completed, without losing any
 history.
@@ -93,7 +93,7 @@ shown to you **only once**, as a recovery key. Automatic backups are encrypted t
 ### 📊 Dashboards and targets
 
 Several dashboards per company, widgets draggable and resizable on a free-form grid, 22
-metrics available as KPIs and a catalogue of charts — plus custom charts. Management
+metrics available as KPIs and a catalogue of charts, plus custom charts. Management
 targets tracked in real time: never stored, always recomputed from the data.
 
 ### ↩️ Nothing is irreversible
@@ -132,14 +132,14 @@ the install by hand with `sudo apt-get install -f`.
 > **Other distributions**: an AppImage is published as well. Make it executable
 > (`chmod +x Qompta-<version>.AppImage`) and run it, with no installation.
 
-### 🔑 On first launch — read this before clicking
+### 🔑 On first launch: read this before clicking
 
 Qompta encrypts your data and shows you **only once** a recovery key of the form
 `QK1-XXXX-XXXX-…`.
 
 **Write it down and keep it somewhere other than this computer.** It is the only way to
 reopen your data if the machine becomes inaccessible or if the system vault is reset. No
-one can regenerate it — neither you, nor the author of the software.
+one can regenerate it: neither you, nor the author of the software.
 
 ---
 
@@ -147,7 +147,7 @@ one can regenerate it — neither you, nor the author of the software.
 
 ### Prerequisites
 
-**Node 22 LTS** — an [`.nvmrc`](.nvmrc) file is provided. Node 22 has prebuilt binaries
+**Node 22 LTS**; an [`.nvmrc`](.nvmrc) file is provided. Node 22 has prebuilt binaries
 for `better-sqlite3`: no compiler is needed.
 
 ```bash
@@ -192,7 +192,7 @@ npm run seed      # 4 demo companies
 
 ## 📚 Code documentation
 
-The business core — VAT, tax, amounts — lives in `src/shared/` as **pure functions**,
+The business core (VAT, tax, amounts) lives in `src/shared/` as **pure functions**,
 with no dependency on Electron or on the database. That is what makes it testable and
 verifiable in isolation.
 
@@ -212,8 +212,8 @@ The detailed technical documentation is in English in [`docs/`](docs/):
 
 | Document | Contents |
 |---|---|
-| [`fr/INSTALLATION.md`](docs/fr/INSTALLATION.md) | Installing on Windows and Linux, the recovery key, backups — **in French** |
-| [`fr/GUIDE.md`](docs/fr/GUIDE.md) | Using the application, screen by screen — **in French** |
+| [`fr/INSTALLATION.md`](docs/fr/INSTALLATION.md) | Installing on Windows and Linux, the recovery key, backups (**in French**) |
+| [`fr/GUIDE.md`](docs/fr/GUIDE.md) | Using the application, screen by screen (**in French**) |
 | [`ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Processes, IPC, security, PDF generation pipeline |
 | [`DATA-MODEL.md`](docs/DATA-MODEL.md) | All tables, columns and relations |
 | [`VAT-LOGIC.md`](docs/VAT-LOGIC.md) | FTA VAT return codes and calculation rules |
@@ -226,7 +226,7 @@ The detailed technical documentation is in English in [`docs/`](docs/):
 **Apache License 2.0, supplemented by the [Commons Clause](https://commonsclause.com/).**
 Full text in [`LICENSE`](LICENSE).
 
-In summary — and the `LICENSE` file alone is authoritative:
+In summary (the `LICENSE` file alone is authoritative):
 
 | | |
 |---|---|
@@ -245,5 +245,5 @@ The name "Qompta" and the associated brand elements are not granted by the licen
 ---
 
 <div align="center">
-<sub>© 2026 Qwasar Gerber RI — made in Switzerland 🇨🇭</sub>
+<sub>© 2026 Qwasar Gerber RI · made in Switzerland 🇨🇭</sub>
 </div>

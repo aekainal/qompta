@@ -32,7 +32,7 @@ Chaque version publie ses paquets sur la
 
 1. Lancez `Qompta-<version>-setup.exe`.
 2. **Windows SmartScreen affiche un avertissement.** L'installeur n'est pas signé par
-   un certificat commercial — ceux-ci coûtent plusieurs centaines de francs par an.
+   un certificat commercial, car ceux-ci coûtent plusieurs centaines de francs par an.
    Cliquez sur **Informations complémentaires**, puis **Exécuter quand même**.
 3. L'installeur vous demande où installer. Il **n'exige aucun droit administrateur**
    et installe pour votre compte utilisateur uniquement.
@@ -122,7 +122,7 @@ Deux boutons vous aident : **« Copier »** la met dans le presse-papiers,
 >
 > C'est le **seul** moyen de rouvrir vos données si la machine tombe en panne, si
 > Windows est réinstallé, ou si le coffre du système est réinitialisé.
-> **Personne ne peut la régénérer** — ni vous, ni l'auteur du logiciel. La perdre,
+> **Personne ne peut la régénérer** : ni vous, ni l'auteur du logiciel. La perdre,
 > c'est perdre toute votre comptabilité et toutes vos sauvegardes.
 
 ### Confirmer que vous l'avez conservée
@@ -181,7 +181,7 @@ d'autre.
 
 ## 7. Mettre à jour
 
-Installez la nouvelle version par-dessus l'ancienne — même installeur, mêmes étapes.
+Installez la nouvelle version par-dessus l'ancienne : même installeur, mêmes étapes.
 Vos données, votre clé et vos sauvegardes ne sont pas touchées : elles vivent en dehors
 du dossier du programme.
 
@@ -196,7 +196,7 @@ chaque ligne existante.
 - **Debian/Ubuntu** : `sudo apt remove qompta`.
 
 Ni l'un ni l'autre n'efface vos données. Pour les supprimer aussi, effacez le dossier
-de données indiqué plus haut et votre dossier de sauvegardes — en étant sûr de ne plus
+de données indiqué plus haut et votre dossier de sauvegardes, en étant sûr de ne plus
 en avoir besoin, car sans ces fichiers la clé de récupération seule ne restaure rien.
 
 ---
@@ -214,11 +214,11 @@ faux reste un caractère faux. Vérifiez les `0`/`O` et les `1`/`I` : l'alphabet
 en est vraiment une.
 
 **Linux : la fenêtre reste noire ou ne s'ouvre pas.**
-Bibliothèques système manquantes — voyez la commande de la section 3. Sous WSLg, même
+Bibliothèques système manquantes : voyez la commande de la section 3. Sous WSLg, même
 remède.
 
 **J'ai perdu ma clé de récupération.**
 Il n'y a pas de solution. C'est le prix du chiffrement : si une porte de secours
 existait, elle existerait aussi pour quelqu'un d'autre. Tant que l'application s'ouvre
-encore sur ce poste, la clé est toujours dans le coffre du système — faites une
+encore sur ce poste, la clé est toujours dans le coffre du système : faites une
 sauvegarde immédiatement et, surtout, notez la clé.

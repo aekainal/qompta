@@ -3,7 +3,7 @@
  *
  * Core rule: a refused or expired quote is a lost deal only if it has not been
  * taken over. When the offer is adapted, the new version is the one carrying
- * the opportunity — counting both would inflate the losses artificially.
+ * the opportunity; counting both would inflate the losses artificially.
  */
 
 import { describe, expect, it } from "vitest";
@@ -17,7 +17,7 @@ const q = (
   issueDate = "2026-05-12",
 ): DashQuote => ({ id, issueDate, status, amountHt, supersededByQuoteId });
 
-describe("devis — potentiel, gagné, perdu", () => {
+describe("devis : potentiel, gagné, perdu", () => {
   it("compte les devis en cours comme chiffre d'affaires encore possible", () => {
     const p = buildQuotePipeline([q("1", "draft", 50000), q("2", "sent", 30000)], 2026);
     expect(p.pending).toBe(80000);

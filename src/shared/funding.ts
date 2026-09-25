@@ -155,7 +155,7 @@ export interface CashVatSettlement {
 
 /**
  * Available cash position: what the shareholders put in, plus what has been
- * collected, minus what has been paid. Cumulative (no financial year) — this is
+ * collected, minus what has been paid. Cumulative (no financial year): this is
  * the question « can I pay the next invoice? », not an annual result.
  */
 export interface CashPosition {
@@ -169,7 +169,7 @@ export interface CashPosition {
   available: Cents;
   /** Issued unpaid purchases: what is still to go out. */
   toPay: Cents;
-  /** Date of the last reconciliation taken into account (null if none) — `available` derives from it. */
+  /** Date of the last reconciliation taken into account (null if none); `available` derives from it. */
   reconciledOn?: string | null;
   /** Actual balance recorded at that date (null if no reconciliation). */
   reconciledBalance?: Cents | null;
@@ -188,7 +188,7 @@ export function buildCashPosition(
 ): CashPosition {
   const funding = summarizeFunding(contributions, upTo).net;
   const onDate = (i: CashInvoice) => i.paymentDate ?? i.issueDate;
-  // VAT paid to (or refunded by) the FTA for paid returns — leaves/enters the cash position.
+  // VAT paid to (or refunded by) the FTA for paid returns: leaves/enters the cash position.
   const vatPaid = sumCents(
     ...vatSettlements.filter((s) => upTo === undefined || s.date <= upTo).map((s) => s.amount),
   );
@@ -211,7 +211,7 @@ export function buildCashPosition(
 
   /*
    * Reconciliation: the last actual balance (≤ upTo) is authoritative. The cash
-   * position starts from that balance and adds ONLY the later flows — an entry
+   * position starts from that balance and adds ONLY the later flows: an entry
    * dated before the reconciliation therefore no longer moves the present cash
    * position. Without a reconciliation, we fall back on the total since inception.
    */

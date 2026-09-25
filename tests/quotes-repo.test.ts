@@ -1,6 +1,6 @@
 /**
  * Integration tests of quotes and contracts: life cycle, conversion into an
- * invoice, isolation per company, and — the key point — entering the VAT return
+ * invoice, isolation per company, and (the key point) entering the VAT return
  * only after conversion.
  */
 
@@ -59,7 +59,7 @@ const LINES: DocumentLineInput[] = [
   { kind: "item", label: "Gestion du site", qtyMilli: 1000, unitPriceHt: 4500, vatRateBps: 810 },
 ];
 
-describe("devis — cycle de vie", () => {
+describe("devis : cycle de vie", () => {
   it("numérote automatiquement en DC<date><NN> et calcule les totaux", () => {
     const { quotes, company, client } = setup();
     const q = quotes.create(company.id, {
@@ -135,7 +135,7 @@ describe("devis — cycle de vie", () => {
   });
 });
 
-describe("devis — conversion en facture et décompte TVA", () => {
+describe("devis : conversion en facture et décompte TVA", () => {
   /** VAT return of Q3 2026, computed on the fly the way the VAT screen does. */
   function vatBase(companyId: string) {
     return createVatReturnsRepo(db).computeLive(companyId, "quarterly", 2026, 3);
@@ -237,7 +237,7 @@ describe("devis — conversion en facture et décompte TVA", () => {
     expect(quotes.linesOf(company.id, "quote", q.id)).toHaveLength(0);
   });
 
-  it("repasse « accepté » — modifiable et reconvertible — quand la facture est supprimée", () => {
+  it("repasse « accepté » (modifiable et reconvertible) quand la facture est supprimée", () => {
     const { quotes, invoices, company } = setup();
     const q = quotes.create(company.id, { issueDate: "2026-07-22", lines: LINES });
     const [invoice] = quotes.convertToInvoice(company.id, q.id, { issueDate: "2026-07-22" });
@@ -318,7 +318,7 @@ describe("devis — conversion en facture et décompte TVA", () => {
   });
 });
 
-describe("devis — isolation par société", () => {
+describe("devis : isolation par société", () => {
   it("ne laisse jamais voir les devis d'une autre société", () => {
     const { quotes, companies, company } = setup();
     const other = companies.create({ name: "Autre", legalForm: "sarl" });

@@ -3,7 +3,7 @@
  *
  * The key itself is never written in clear: `safeStorage` protects it with the
  * system vault (DPAPI on Windows, keychain on macOS), tied to the user's
- * session. Copying `qompta.key` to another machine is therefore useless — it is
+ * session. Copying `qompta.key` to another machine is therefore useless: it is
  * the recovery key, written down away from the machine, that allows the data to
  * be reopened elsewhere.
  *

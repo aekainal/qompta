@@ -137,7 +137,7 @@ export function buildQuotePdfHtml(
 
 /**
  * QR payment part of an invoice.
- * Returns `null` — rather than failing — if the data is incomplete: an invoice
+ * Returns `null` (rather than failing) if the data is incomplete: an invoice
  * must stay printable even without bank details.
  */
 export function buildQrSvg(
@@ -159,7 +159,7 @@ export function buildQrSvg(
       currency: invoice.currency,
       message: [invoice.number && `Facture ${invoice.number}`, invoice.title]
         .filter(Boolean)
-        .join(" — "),
+        .join(", "),
     });
     return { svg: new SwissQRBill(data, { language: "FR" }).toString(), error: null };
   } catch (err) {

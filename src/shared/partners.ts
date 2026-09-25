@@ -4,7 +4,7 @@
  * This is not a new table nor a checkbox, but a reading of the address book:
  * a partner is any customer third party, of `company` kind, that has at least
  * one contract. Nothing to maintain by hand, hence nothing that can drift out
- * of sync — a terminated and deleted contract takes the third party out of the
+ * of sync: a terminated and deleted contract takes the third party out of the
  * list on its own.
  *
  * Amounts in cents.
@@ -57,7 +57,7 @@ export interface Partner {
   contracts: PartnerContract[];
   /** Signed and non-terminated contracts: the living relationship. */
   activeContracts: number;
-  /** Monthly net recurring revenue of the signed contracts — the revenue base. */
+  /** Monthly net recurring revenue of the signed contracts: the revenue base. */
   monthlyRecurringHt: Cents;
   /** Net one-off service lines committed by the signed contracts. */
   oneOffHt: Cents;

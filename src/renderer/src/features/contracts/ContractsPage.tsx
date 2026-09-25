@@ -116,7 +116,7 @@ export function ContractsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Contrats</h1>
-          <p className="text-sm text-muted-foreground">{rows.length} contrat(s) — {active.name}</p>
+          <p className="text-sm text-muted-foreground">{rows.length} contrat(s) · {active.name}</p>
         </div>
         {tab === "contracts" && (
           <Button onClick={() => dlg.open(null)}>
@@ -171,10 +171,10 @@ export function ContractsPage() {
                     <tr key={c.id} className="border-t hover:bg-accent/40">
                       <td className="px-3 py-2 font-mono text-xs">{c.number}</td>
                       <td className="px-3 py-2">{formatDate(c.issueDate)}</td>
-                      <td className="px-3 py-2">{c.thirdPartyId ? tpMap[c.thirdPartyId] ?? "—" : "—"}</td>
-                      <td className="px-3 py-2">{c.title ?? "—"}</td>
+                      <td className="px-3 py-2">{c.thirdPartyId ? tpMap[c.thirdPartyId] ?? "-" : "-"}</td>
+                      <td className="px-3 py-2">{c.title ?? "-"}</td>
                       <td className="px-3 py-2 text-right tabular-nums">
-                        {c.monthlyAmountHt != null ? formatChf(c.monthlyAmountHt) : "—"}
+                        {c.monthlyAmountHt != null ? formatChf(c.monthlyAmountHt) : "-"}
                       </td>
                       <td className="px-3 py-2">
                         <Badge className={STATUS_COLORS[c.status]}>{STATUS_LABELS[c.status]}</Badge>
@@ -340,7 +340,7 @@ function TemplatesSection({ companyId }: { companyId: string }) {
                 <td className="px-3 py-2">{t.name}</td>
                 <td className="px-3 py-2">{contentCount(t.blocks)}</td>
                 <td className="px-3 py-2">
-                  {t.isDefault ? <Badge className="bg-green-500/15 text-green-600 dark:text-green-400">Par défaut</Badge> : "—"}
+                  {t.isDefault ? <Badge className="bg-green-500/15 text-green-600 dark:text-green-400">Par défaut</Badge> : "-"}
                 </td>
                 <td className="px-3 py-2">
                   <div className="flex justify-end gap-1">

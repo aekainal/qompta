@@ -149,7 +149,7 @@ function seriesForDim(data: CompanyDashboardResult, custom: CustomChart): { rows
       const scale = scaleFor(def.unit);
       return {
         rows: data.monthlyMetrics.map((mm, i) => ({ name: MONTHS[i], value: scale(mm.values[m]) })),
-        name: def.label, fmt: unitTooltip(def.unit), title: `${def.label} — par mois`,
+        name: def.label, fmt: unitTooltip(def.unit), title: `${def.label}, par mois`,
       };
     }
     case "product_category":
@@ -178,7 +178,7 @@ export function InvoiceList({ rows, empty }: { rows: CompanyDashboardResult["unp
     <div className="h-full divide-y overflow-auto text-sm">
       {rows.map((r) => (
         <div key={r.id} className="flex items-center justify-between py-1.5">
-          <span className="truncate">{r.number ?? "—"} · {r.thirdPartyName ?? "—"}</span>
+          <span className="truncate">{r.number ?? "-"} · {r.thirdPartyName ?? "-"}</span>
           <span className="flex items-center gap-2">
             {r.dueDate && <span className="text-xs text-muted-foreground">{formatDate(r.dueDate)}</span>}
             <span className="tabular-nums">{formatChf(r.amountTtc)}</span>
@@ -414,7 +414,7 @@ function PresetChart({ data, chart, metric, size }: { data: CompanyDashboardResu
       const def = metricDef(metric);
       const scale = scaleFor(def.unit);
       const rows = data.monthlyMetrics.map((mm, i) => ({ name: MONTHS[i], value: scale(mm.values[metric]) }));
-      return <ChartFrame title={`Par mois — ${def.label}`} size={size}><SimpleChart type="line" rows={rows} name={def.label} fmt={unitTooltip(def.unit)} size={size} /></ChartFrame>;
+      return <ChartFrame title={`Par mois : ${def.label}`} size={size}><SimpleChart type="line" rows={rows} name={def.label} fmt={unitTooltip(def.unit)} size={size} /></ChartFrame>;
     }
     default:
       return null;

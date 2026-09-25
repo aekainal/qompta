@@ -6,7 +6,7 @@
  * (`document_lines`), so there must be only one possible data entry form.
  *
  * The form reproduces the PDF layout: each `section` line opens a
- * **separate table**, with its own header — on screen as when printed.
+ * **separate table**, with its own header, on screen as when printed.
  */
 
 import { useMemo, type ReactNode } from "react";
@@ -250,7 +250,7 @@ export function DocumentLinesEditor({
             <strong>Prestation</strong> : ligne facturée (quantité × prix HT). ·{" "}
             <strong>Prestation comprise</strong> : détail sans montant, imprimé avec un tiret sous
             la prestation qui la précède. · <strong>Nouveau tableau</strong> : son intitulé
-            introduit un tableau supplémentaire sur le PDF — utile pour séparer une prestation
+            introduit un tableau supplémentaire sur le PDF, utile pour séparer une prestation
             ponctuelle d'un abonnement.
           </>
         )}
@@ -283,7 +283,7 @@ export function DocumentLinesEditor({
                 </>
               ) : (
                 <span className="flex-1 text-xs text-muted-foreground">
-                  Sans intitulé — premier tableau du document.
+                  Sans intitulé : premier tableau du document.
                 </span>
               )}
             </div>
@@ -341,7 +341,7 @@ export function DocumentLinesEditor({
                               placeholder="1"
                             />
                           ) : (
-                            <div className="py-1.5 text-right text-muted-foreground">—</div>
+                            <div className="py-1.5 text-right text-muted-foreground">-</div>
                           )}
                         </td>
                         <td className="px-2 py-1.5">
@@ -354,7 +354,7 @@ export function DocumentLinesEditor({
                               placeholder="0.00"
                             />
                           ) : (
-                            <div className="py-1.5 text-right text-muted-foreground">—</div>
+                            <div className="py-1.5 text-right text-muted-foreground">-</div>
                           )}
                         </td>
                         {!hideVatColumn && (
@@ -372,12 +372,12 @@ export function DocumentLinesEditor({
                                 ))}
                               </Select>
                             ) : (
-                              <div className="py-1.5 text-muted-foreground">—</div>
+                              <div className="py-1.5 text-muted-foreground">-</div>
                             )}
                           </td>
                         )}
                         <td className="px-2 py-1.5 text-right font-medium">
-                          {billable ? formatChf(lineHtOf(line)) : "—"}
+                          {billable ? formatChf(lineHtOf(line)) : "-"}
                         </td>
                         <td className="px-2 py-1.5">
                           {rowActions(index, line.key, "la ligne")}

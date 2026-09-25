@@ -2,7 +2,7 @@
  * Address book per company, in two pages: Customers and Suppliers.
  *
  * One and the same table (`third_parties`) behind: `scope` is what filters.
- * A third party marked « client & fournisseur » shows up in both lists — it is
+ * A third party marked « client & fournisseur » shows up in both lists: it is
  * indeed the same counterpart, not two records to keep up to date separately.
  */
 
@@ -74,7 +74,7 @@ export function ThirdPartiesPage({ scope }: { scope: ThirdPartyScope }) {
     });
   }
 
-  // Permanent deletion — refused when the third party carries history (invoices,
+  // Permanent deletion: refused when the third party carries history (invoices,
   // quotes, contracts): we say so right away rather than arming a countdown that
   // would fail. Otherwise `defer` leaves 5 s to change one's mind.
   async function remove(id: string) {
@@ -104,7 +104,7 @@ export function ThirdPartiesPage({ scope }: { scope: ThirdPartyScope }) {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">{texts.title}</h1>
-          <p className="text-sm text-muted-foreground">{texts.subtitle} — {active.name}</p>
+          <p className="text-sm text-muted-foreground">{texts.subtitle} · {active.name}</p>
         </div>
         <Button onClick={() => dlg.open(null)}>
           <Plus size={16} /> {texts.action}
@@ -231,7 +231,7 @@ function TpForm({ companyId, initial, scope, onSaved, onCancel }: {
       {entityType === "company" && kind !== "supplier" && (
         <p className="text-xs text-muted-foreground">
           Une entreprise cliente devient un <strong>partenaire</strong> dès qu'elle a un
-          contrat — elle apparaît alors dans le module du même nom.
+          contrat : elle apparaît alors dans le module du même nom.
         </p>
       )}
       {kind !== scope && kind !== "both" && (

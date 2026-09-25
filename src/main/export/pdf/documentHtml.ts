@@ -18,7 +18,7 @@ export interface PartyView {
 
 /**
  * A printed block: an optional introductory note, then its own table with its
- * own header. A `section` line closes the current block and opens a new one —
+ * own header. A `section` line closes the current block and opens a new one:
  * that is what produces two distinct tables on the document.
  */
 export interface SectionView {
@@ -171,7 +171,7 @@ function signaturesBlock(signature: DocumentView["signature"]): string {
   // the same height so both rules stay aligned.
   const provider = signature
     ? `${img ? `<img class="sig-img" src="${esc(img)}" alt="Signature">` : ""}<div class="rule"></div>` +
-      `<div class="sig-caption"><b>${esc(signature.name)}</b>${signature.role ? ` — ${esc(signature.role)}` : ""}</div>`
+      `<div class="sig-caption"><b>${esc(signature.name)}</b>${signature.role ? `, ${esc(signature.role)}` : ""}</div>`
     : `<div class="rule"></div>`;
   const client = signature ? `<div class="rule"></div><div class="sig-caption">&nbsp;</div>` : `<div class="rule"></div>`;
   return `<div class="signatures">
@@ -183,7 +183,7 @@ function signaturesBlock(signature: DocumentView["signature"]): string {
 /**
  * Header repeated on **every** page: logo, contact, issuer and customer.
  *
- * It goes into the `thead` of the wrapping table — the only way to get a
+ * It goes into the `thead` of the wrapping table: the only way to get a
  * per-page repetition when printing. Reserved for quotes and invoices: a
  * contract keeps its header on the first page only.
  */
@@ -198,7 +198,7 @@ export function documentHeader(view: DocumentView): string {
 </div>`;
 }
 
-/** Document body (title, tables, totals, signatures) — the header is separate. */
+/** Document body (title, tables, totals, signatures); the header is separate. */
 export function documentBody(view: DocumentView): string {
   const sections = groupIntoSections(view.lines);
 
@@ -235,7 +235,7 @@ export function documentBody(view: DocumentView): string {
  * `layout` describes the pagination measured on the previous render: number of
  * pages and usable height of a page (297 mm minus the repeated header). Both are
  * used to reserve the height that pushes the QR-bill to the bottom of the last
- * page, and are only known after a first render — hence the two-step call
+ * page, and are only known after a first render, hence the two-step call
  * (see `htmlToPdfBuffer`). Without `layout`, nothing is stretched.
  */
 export function buildDocumentHtml(
@@ -246,7 +246,7 @@ export function buildDocumentHtml(
   const title = `${view.kind === "quote" ? "Devis" : "Facture"} ${view.number}`;
   const header = documentHeader(view);
   // Too tall for Chromium to replay: it falls back to the top of the body, hence
-  // on the first page only — better than a header that vanishes silently while
+  // on the first page only: better than a header that vanishes silently while
   // having skewed the usable-band computation.
   const repeated = layout?.repeatHeader ?? true;
 

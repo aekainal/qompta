@@ -3,13 +3,13 @@
  *
  * PURE function: it produces the `InvoiceInput` to create, without touching the DB.
  *
- * Sensitive point — VAT. A Qompta invoice carries **a single** rate (`vatRateBps`)
+ * Sensitive point: VAT. A Qompta invoice carries **a single** rate (`vatRateBps`)
  * and a single return code: that is what lets `aggregateInvoices` break it down
  * into the right box of the FTA form (303 / 313 / 343). A quote, on the other
  * hand, may mix several rates. So **one invoice per rate** is issued, rather than
  * a single invoice whose VAT breakdown would be wrong.
  *
- * In practice a single-rate quote — the common case — yields a single invoice.
+ * In practice a single-rate quote (the common case) yields a single invoice.
  */
 
 import type { InvoiceInput, RateType } from "../types.js";

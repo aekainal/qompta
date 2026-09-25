@@ -1,9 +1,9 @@
-# VAT logic — FTA/ESTV VAT return
+# VAT logic: FTA/ESTV VAT return
 
 ## 1. VAT return codes
 
 The labels below are translations. The official FTA form exists only in French,
-German and Italian, and Qompta displays the French wording — an invoice's VAT
+German and Italian, and Qompta displays the French wording: an invoice's VAT
 treatment reads `Exonérée / export (220)` or `Exclue art. 21 (230)` in the user
 interface. **The numeric codes are the stable key**: they are identical across all
 language versions of the form, and they are what the code, the exports and this
@@ -33,8 +33,8 @@ document all join on. Article references point to the Swiss VAT Act (LTVA/MWSTG)
 | 303 | Supplies at the standard rate | 8.10 % |
 | 313 | Supplies at the reduced rate | 2.60 % |
 | 343 | Supplies at the special accommodation rate | 3.80 % |
-| 379 | Total taxable turnover (= must match 299) | — |
-| 383 | Acquisition tax (net, excluding VAT) | — |
+| 379 | Total taxable turnover (= must match 299) | - |
+| 383 | Acquisition tax (net, excluding VAT) | - |
 | **399** | **Total tax due** = tax(303)+tax(313)+tax(343)+383 |
 
 ### Input tax
@@ -53,7 +53,7 @@ document all join on. Article references point to the Swiss VAT Act (LTVA/MWSTG)
 | 500 | Amount payable (if 399 − 479 > 0) |
 | 510 | Balance in favour of the VAT-registered person (if 399 − 479 ≤ 0) |
 
-### III. Other cash flows (art. 18 para. 2) — informational, outside the balance computation
+### III. Other cash flows (art. 18 para. 2): informational, outside the balance computation
 | Code | Label |
 |---|---|
 | 900 | Subsidies, tourist taxes, waste/water disposal contributions |
@@ -100,14 +100,14 @@ hard-coded, so that past periods are preserved.
 | Sale, standard rate | 200 + 299 | 303 |
 | Sale, reduced rate | 200 + 299 | 313 |
 | Sale, accommodation | 200 + 299 | 343 |
-| Exempt sale (export, art. 23) | 200 then 220 | — |
-| Supply abroad | 200 then 221 | — |
-| Excluded supply (art. 21, without option) | 200 then 230 | — |
-| Rebate / discount granted | — | 235 (reduction) |
-| Purchase of materials / services | — | 400 |
-| Purchase of investment / operating expense | — | 405 |
-| Subsidy / tourist tax received | — | 900 (+ impact on 420) |
-| Donation / dividend received | — | 910 |
+| Exempt sale (export, art. 23) | 200 then 220 | - |
+| Supply abroad | 200 then 221 | - |
+| Excluded supply (art. 21, without option) | 200 then 230 | - |
+| Rebate / discount granted | - | 235 (reduction) |
+| Purchase of materials / services | - | 400 |
+| Purchase of investment / operating expense | - | 405 |
+| Subsidy / tourist tax received | - | 900 (+ impact on 420) |
+| Donation / dividend received | - | 910 |
 
 - The **default code** comes from `account_categories.default_vat_code`, adjusted by the
   VAT rate and the type (sale/purchase).
@@ -132,7 +132,7 @@ hard-coded, so that past periods are preserved.
 
 An invoice with status `draft` is **excluded whatever the basis**. On the accrual
 basis VAT is due on issue: as long as the invoice is not issued, it
-creates no liability. This rule has been indispensable since quotes arrived — their
+creates no liability. This rule has been indispensable since quotes arrived: their
 conversion produces a draft invoice, which must not inflate the VAT return
 before it has actually been sent to the customer.
 

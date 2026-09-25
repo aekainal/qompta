@@ -4,13 +4,13 @@
  *
  * Useful after a version bump: the number shown in the sidebar comes from
  * `__APP_VERSION__`, frozen by electron-vite when the server starts. Without a
- * restart, the app keeps showing the old version — hot reloading is not
+ * restart, the app keeps showing the old version; hot reloading is not
  * enough.
  *
  * The script runs the whole cycle:
  *  1. closes the running app (it locks the native binary on Windows);
  *  2. puts `better-sqlite3` back on the Electron ABI if it stayed on the Node
- *     ABI (the case after an `npm test`) — otherwise the app refuses to start;
+ *     ABI (the case after an `npm test`), otherwise the app refuses to start;
  *  3. restarts `electron-vite dev`, detached, with a log in /tmp.
  *
  * Usage:

@@ -1,6 +1,6 @@
 /**
  * Income statement (common ground for every legal form).
- * Pure function — aggregates income/expenses from the invoices of a financial year.
+ * Pure function: aggregates income/expenses from the invoices of a financial year.
  */
 
 import { sumCents, type Cents } from "../money.js";

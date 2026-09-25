@@ -74,8 +74,8 @@ export function ObjectivesView({ companyId }: { companyId: string }) {
         <Card className="flex flex-col items-center gap-3 p-10 text-center">
           <Target className="text-muted-foreground" size={28} />
           <p className="max-w-md text-sm text-muted-foreground">
-            Fixez des cibles — chiffre d'affaires, résultat, devis gagnés, nouveaux clients,
-            revenu récurrent… — et suivez leur progression, ici et sur chaque tableau de bord.
+            Fixez des cibles (chiffre d'affaires, résultat, devis gagnés, nouveaux clients,
+            revenu récurrent…) et suivez leur progression, ici et sur chaque tableau de bord.
           </p>
           <Button onClick={() => dlg.open(null)}>
             <Plus size={16} /> Créer un premier objectif

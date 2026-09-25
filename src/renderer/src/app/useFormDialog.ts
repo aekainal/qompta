@@ -4,7 +4,7 @@
  * Hard-won lesson: a contract template being written, one click on "Annuler", and
  * everything was lost. From now on, closing a modified form (Annuler, cross, click
  * outside, Escape) does not destroy it: the form stays mounted, hidden, and the
- * action bar offers "Reprendre" for a few seconds — the input is found exactly as
+ * action bar offers "Reprendre" for a few seconds: the input is found exactly as
  * it was, even if never saved. An unmodified form simply closes.
  *
  * Usage:
@@ -54,7 +54,7 @@ export function useFormDialog<T>(what: string) {
     const key = keyRef.current;
     setState((s) => ({ ...s, visible: false }));
     bar.restore(
-      `Saisie fermée sans enregistrer — ${what}`,
+      `Saisie fermée sans enregistrer : ${what}`,
       () => setState((s) => (s.key === key ? { ...s, visible: true } : s)),
       () => setState((s) => (s.key === key && !s.visible ? { ...s, mounted: false } : s)),
     );

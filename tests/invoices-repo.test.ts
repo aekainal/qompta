@@ -32,7 +32,7 @@ describe("plan comptable", () => {
   });
 });
 
-describe("factures — création et calcul", () => {
+describe("factures : création et calcul", () => {
   it("crée une vente avec montants et code TVA calculés", () => {
     const companies = createCompaniesRepo(db);
     const invoices = createInvoicesRepo(db);
@@ -72,7 +72,7 @@ describe("factures — création et calcul", () => {
   });
 });
 
-describe("factures — paiements partiels et statut", () => {
+describe("factures : paiements partiels et statut", () => {
   it("passe en partial puis paid selon le total payé", () => {
     const companies = createCompaniesRepo(db);
     const invoices = createInvoicesRepo(db);
@@ -96,7 +96,7 @@ describe("factures — paiements partiels et statut", () => {
   });
 });
 
-describe("factures — filtres et tri", () => {
+describe("factures : filtres et tri", () => {
   it("filtre par type et trie par montant", () => {
     const companies = createCompaniesRepo(db);
     const invoices = createInvoicesRepo(db);
@@ -135,7 +135,7 @@ describe("factures — filtres et tri", () => {
   });
 });
 
-describe("isolation M2 — factures, tiers, comptes", () => {
+describe("isolation M2 : factures, tiers, comptes", () => {
   it("ne mélange jamais les données de deux sociétés", () => {
     const companies = createCompaniesRepo(db);
     const invoices = createInvoicesRepo(db);

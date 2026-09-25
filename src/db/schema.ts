@@ -107,7 +107,7 @@ export const companyBrandSettings = sqliteTable("company_brand_settings", {
   fontFamily: text("font_family").notNull().default(""),
   /**
    * Embedded weights (custom mode): [{ weight, style, data, name }], the font
-   * as a data-URI. Bulky but essential — the PDF must print identically on any
+   * as a data-URI. Bulky but essential: the PDF must print identically on any
    * machine, so the font travels with the backup.
    */
   fontFacesJson: text("font_faces_json").notNull().default("[]"),
@@ -166,7 +166,7 @@ export const thirdParties = sqliteTable("third_parties", {
     .references(() => companies.id, { onDelete: "cascade" }),
   kind: text("kind").notNull().default("both"),
   /**
-   * company | person — a partner is a customer company under contract, never a
+   * company | person: a partner is a customer company under contract, never a
    * natural person. Default "company": in B2B that is the common case, and the
    * existing records are companies.
    */
@@ -354,7 +354,7 @@ export const quotes = sqliteTable("quotes", {
   /**
    * Provider signature printed at the bottom of the quote (table `signatures`).
    * Deliberately without a foreign key: deleting a signature must neither block
-   * nor rewrite a quote — the PDF then falls back on the default signature.
+   * nor rewrite a quote; the PDF then falls back on the default signature.
    */
   signatureId: text("signature_id"),
   createdAt: text("created_at").notNull().default(now),
@@ -498,7 +498,7 @@ export const associates = sqliteTable("associates", {
  * printed at the bottom of quotes and in the "Signatures" section of contracts.
  *
  * Attached to a shareholder: they are the one who signs. `name` and `role` are
- * frozen on entry (editable) — a shareholder leaving does not erase their signature
+ * frozen on entry (editable): a shareholder leaving does not erase their signature
  * from documents already issued. The image is a data-URI (usually a transparent PNG).
  */
 export const signatures = sqliteTable("signatures", {
@@ -520,7 +520,7 @@ export const signatures = sqliteTable("signatures", {
  * Fund contributions: money paid into the company by a shareholder.
  *
  * This is NOT revenue: a contribution creates no turnover and stays outside the
- * scope of VAT — hence a separate table, which no VAT return calculation reads.
+ * scope of VAT, hence a separate table, which no VAT return calculation reads.
  * It only feeds the cash position (paying the first invoices) and, depending on
  * `kind`, the equity or the debt owed to the shareholder.
  *

@@ -33,7 +33,7 @@ export const DEFAULT_VAT_RATES: VatRatePeriod[] = [
 
 /**
  * Returns the rate in bps applicable on a given date for a rate type.
- * @param atDate ISO date (YYYY-MM-DD) — typically the invoice or period date.
+ * @param atDate ISO date (YYYY-MM-DD), typically the invoice or period date.
  */
 export function resolveRate(
   rateType: RateType,

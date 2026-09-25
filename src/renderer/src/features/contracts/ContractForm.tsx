@@ -219,7 +219,7 @@ export function ContractForm({
       <div className="grid grid-cols-2 gap-3">
         <Field label="Client">
           <Select value={thirdPartyId} onChange={(e) => setThirdPartyId(e.target.value)} className="w-full">
-            <option value="">—</option>
+            <option value="">-</option>
             {thirdParties
               .filter((t) => t.kind !== "supplier")
               .map((t) => (
@@ -229,9 +229,9 @@ export function ContractForm({
         </Field>
         <Field label="Devis rattaché">
           <Select value={quoteId} onChange={(e) => setQuoteId(e.target.value)} className="w-full">
-            <option value="">—</option>
+            <option value="">-</option>
             {quotes.map((q) => (
-              <option key={q.id} value={q.id}>{q.number}{q.title ? ` — ${q.title}` : ""}</option>
+              <option key={q.id} value={q.id}>{q.number}{q.title ? ` · ${q.title}` : ""}</option>
             ))}
           </Select>
         </Field>

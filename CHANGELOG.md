@@ -3,10 +3,10 @@
 All notable versions of Qompta. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions [SemVer](https://semver.org/).
 
-## [1.20.1] — 2026-09-21
+## [1.20.1] · 2026-09-21
 
 ### Changed
-- Sidebar: the "— local" mention next to the version number is removed.
+- Sidebar: the "local" mention next to the version number is removed.
 
 ### Fixed
 - **Crash when enabling encryption**: the in-memory copy of the database used a
@@ -14,7 +14,7 @@ versions [SemVer](https://semver.org/).
   closed the application. Replaced by a logical copy (schema + rows). No data was
   touched: the crash happened before any write.
 
-## [1.20.0] — 2026-09-21
+## [1.20.0] · 2026-09-21
 
 ### Removed
 - **QomptAI** (local AI assistant): screen, code, conversation history (`ai_conversations`/

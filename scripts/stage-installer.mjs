@@ -21,7 +21,7 @@
  * Build it in a separate copy, then drop the two files into release/ here.
  *
  * Prerequisite: `git-lfs` installed and `git lfs install` done once (otherwise a
- * binary would be committed raw — 85 MB in the history). This script checks it.
+ * binary would be committed raw: 85 MB in the history). This script checks it.
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -88,5 +88,5 @@ for (const { name } of packages) {
 console.log(
   `✓ ${packages.length} paquets indexés via Git LFS (pointeurs, pas les binaires) :\n` +
     packages.map((p) => `    ${p.name}`).join("\n") +
-    "\n  Ils partiront avec ton prochain commit + push — la pipeline les publiera.",
+    "\n  Ils partiront avec ton prochain commit + push, et la pipeline les publiera.",
 );

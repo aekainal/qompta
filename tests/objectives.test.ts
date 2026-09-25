@@ -1,5 +1,5 @@
 /**
- * Management metrics (per period) and target progress — pure logic.
+ * Management metrics (per period) and target progress: pure logic.
  * Amounts in cents, rates in basis points.
  */
 
@@ -53,7 +53,7 @@ const DATA: MetricData = {
   ] as FundContribution[],
 };
 
-describe("métriques — période annuelle", () => {
+describe("métriques : période annuelle", () => {
   const m = computeMetricValues({ type: "year", year: 2026 }, DATA);
 
   it("agrège le chiffre d'affaires, les charges et le résultat de l'année", () => {
@@ -95,7 +95,7 @@ describe("métriques — période annuelle", () => {
   });
 });
 
-describe("métriques — trimestre et mois", () => {
+describe("métriques : trimestre et mois", () => {
   it("ne retient que les ventes du trimestre", () => {
     const q1 = computeMetricValues({ type: "quarter", year: 2026, quarter: 1 }, DATA);
     expect(q1.revenue_invoiced).toBe(100000); // February only, May falls in Q2

@@ -1,6 +1,6 @@
 /**
  * Partners: company customers under contract, assembled from the address book,
- * the contracts and the invoices. No dedicated table — see
+ * the contracts and the invoices. No dedicated table: see
  * src/shared/partners.ts for the rule.
  */
 

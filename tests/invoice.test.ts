@@ -3,7 +3,7 @@ import { computeInvoice, isOverdue } from "../src/shared/invoice.js";
 
 const RATES = { normal: 810, reduced: 260, lodging: 380 };
 
-describe("computeInvoice — calcul d'une facture", () => {
+describe("computeInvoice : calcul d'une facture", () => {
   it("vente normale saisie en HT", () => {
     const r = computeInvoice(
       { type: "sale", treatment: "standard", rate: "normal", enteredAmount: 100000, enteredAs: "ht", issueDate: "2026-02-01" },

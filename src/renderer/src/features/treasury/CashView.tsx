@@ -59,7 +59,7 @@ export function CashView({ data, objectives, companyId, reload }: {
         <Kpi label="Disponible" value={formatChf(data.cash.available)} accent={data.cash.available >= data.cash.toPay ? "green" : "red"} hint={reconciledHint ?? (data.cash.toPay > 0 ? `${formatChf(data.cash.toPay)} à payer` : "rien à payer")} />
         <Kpi label="Encaissé (TTC)" value={formatChf(data.cash.collected)} accent="green" />
         <Kpi label="Payé (TTC)" value={formatChf(data.cash.spent)} accent="red" />
-        <Kpi label="Apports associés" value={formatChf(data.cash.funding)} accent="blue" hint={data.funding.count > 0 ? `${data.funding.count} en ${data.year}` : "—"} />
+        <Kpi label="Apports associés" value={formatChf(data.cash.funding)} accent="blue" hint={data.funding.count > 0 ? `${data.funding.count} en ${data.year}` : "-"} />
         <Kpi label="Impayés (TTC)" value={formatChf(sumRefs(data.unpaid))} accent="amber" hint={`${data.unpaid.length} facture${data.unpaid.length > 1 ? "s" : ""}`} />
         <Kpi label="Taux d'encaissement" value={`${(data.metrics.collection_rate / 100).toFixed(0)} %`} accent="blue" />
       </div>
@@ -90,7 +90,7 @@ export function CashView({ data, objectives, companyId, reload }: {
                 <tr key={r.id} className="border-t">
                   <td className="py-1.5">{formatDate(r.date)}</td>
                   <td className="py-1.5 text-right font-medium">{formatChf(r.balance)}</td>
-                  <td className="py-1.5 pl-3 text-muted-foreground">{r.note ?? "—"}</td>
+                  <td className="py-1.5 pl-3 text-muted-foreground">{r.note ?? "-"}</td>
                   <td className="py-1.5 text-right">
                     <Button variant="ghost" className="h-7 px-2 text-destructive" onClick={() => removeRec(r)}>Supprimer</Button>
                   </td>
@@ -193,7 +193,7 @@ function ReconcileForm({ companyId, computed, onSaved, onCancel }: {
         <Input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Prélèvement privé, cash…" />
       </label>
       <p className="text-xs text-muted-foreground">
-        Trésorerie calculée : {formatChf(computed)} — écart appliqué : {delta >= 0 ? "+" : ""}{formatChf(delta)}.
+        Trésorerie calculée : {formatChf(computed)} · écart appliqué : {delta >= 0 ? "+" : ""}{formatChf(delta)}.
       </p>
       {error && <p className="text-sm text-destructive">{error}</p>}
       <div className="flex justify-end gap-2">

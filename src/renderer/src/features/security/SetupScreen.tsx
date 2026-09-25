@@ -4,9 +4,9 @@
  * Two paths:
  *  - « Créer ma clé »: a key is generated, the user writes it down OFF the
  *    machine (file on a USB stick, password manager, paper) and proves it by
- *    typing its last group back — a key never written down means backups that
+ *    typing its last group back: a key never written down means backups that
  *    cannot be restored anywhere else;
- *  - « J'ai déjà une clé »: reinstall, new machine — the key entered must open
+ *  - « J'ai déjà une clé »: reinstall, new machine; the key entered must open
  *    the data present (or the backups restored afterwards).
  *
  * State "locked": encrypted data exists but the machine's key is missing or does
@@ -48,8 +48,8 @@ export function SetupScreen({ status }: { status: SecurityStatus }) {
                 {locked ? "Déverrouillez vos données" : "Protégez vos données comptables"}
               </h1>
               <p className="mt-1 text-sm text-muted-foreground">
-                Qompta chiffre toutes vos données — la base de l'application comme chaque
-                sauvegarde — avec une <b>clé de récupération</b> propre à votre entreprise.
+                Qompta chiffre toutes vos données (la base de l'application comme chaque
+                sauvegarde) avec une <b>clé de récupération</b> propre à votre entreprise.
                 Sans elle, personne ne peut lire vos fichiers, pas même en copiant le disque.
               </p>
             </div>

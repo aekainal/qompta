@@ -69,7 +69,7 @@ export function normalizeIban(iban: string): string {
 }
 
 /**
- * Computes the QR reference (27 digits) from a free numeric base — typically
+ * Computes the QR reference (27 digits) from a free numeric base, typically
  * the invoice number reduced to its digits.
  */
 export function buildQrReference(base: string): string {

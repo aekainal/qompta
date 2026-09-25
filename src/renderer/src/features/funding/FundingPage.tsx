@@ -1,7 +1,7 @@
 /**
  * Fund contributions: the money paid into the company by its shareholders.
  *
- * This is not revenue — nothing here enters the VAT return.
+ * This is not revenue: nothing here enters the VAT return.
  * The screen answers two questions: how much each shareholder put in, and how
  * much the company still owes them (shareholder loan account).
  */
@@ -94,7 +94,7 @@ export function FundingPage() {
         <Landmark size={16} className="mt-0.5 shrink-0" />
         <span>
           Un apport n'est ni un produit ni une opération TVA : il n'apparaît dans aucun décompte.
-          Il finance la trésorerie — de quoi payer les premières factures avant les premiers
+          Il finance la trésorerie : de quoi payer les premières factures avant les premiers
           encaissements. Le <strong>capital</strong> reste dans la société ; une{" "}
           <strong>avance en compte courant</strong> lui est prêtée et peut être remboursée.
         </span>
@@ -120,7 +120,7 @@ export function FundingPage() {
                   <td className="px-3 py-2 text-right tabular-nums">{formatChf(a.capital)}</td>
                   <td className="px-3 py-2 text-right tabular-nums">{formatChf(a.currentAccount)}</td>
                   <td className="px-3 py-2 text-right tabular-nums text-muted-foreground">
-                    {a.repaid > 0 ? `− ${formatChf(a.repaid)}` : "—"}
+                    {a.repaid > 0 ? `− ${formatChf(a.repaid)}` : "-"}
                   </td>
                   <td className="px-3 py-2 text-right font-medium tabular-nums">{formatChf(a.net)}</td>
                 </tr>
@@ -176,7 +176,7 @@ export function FundingPage() {
                       ? ` · ${banks.find((b) => b.id === r.bankAccountId)!.label}`
                       : ""}
                   </td>
-                  <td className="px-3 py-2 text-muted-foreground">{r.reference ?? "—"}</td>
+                  <td className="px-3 py-2 text-muted-foreground">{r.reference ?? "-"}</td>
                   <td
                     className={`px-3 py-2 text-right font-medium tabular-nums ${out ? "text-amber-600 dark:text-amber-400" : "text-green-600 dark:text-green-400"}`}
                   >
@@ -354,7 +354,7 @@ function FundingForm({ companyId, initial, associates, banks, onSaved, onCancel 
       {method === "bank" && banks.length > 0 && (
         <Field label="Compte crédité">
           <Select className="w-full" value={bankAccountId} onChange={(e) => setBankAccountId(e.target.value)}>
-            <option value="">—</option>
+            <option value="">-</option>
             {banks.map((b) => (
               <option key={b.id} value={b.id}>{b.label}</option>
             ))}

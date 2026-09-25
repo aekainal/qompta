@@ -115,7 +115,7 @@ export function createDashboardRepo(db: DB) {
   function categoryLabels(companyId: string): Record<string, string> {
     const out: Record<string, string> = {};
     for (const c of db.select().from(accountCategories).where(eq(accountCategories.companyId, companyId)).all()) {
-      out[c.id] = `${c.code} — ${c.label}`;
+      out[c.id] = `${c.code} · ${c.label}`;
     }
     return out;
   }
@@ -153,7 +153,7 @@ export function createDashboardRepo(db: DB) {
       return computeMetricValues(period, metricData(companyId));
     },
 
-    /** Quote pipeline of the year (open, accepted, won, lost) — used by QomptAI. */
+    /** Quote pipeline of the year (open, accepted, won, lost), used by QomptAI. */
     pipeline(companyId: string, year: number): QuotePipeline {
       return buildQuotePipeline(loadDashQuotes(companyId), year);
     },

@@ -28,8 +28,8 @@ const STATUS_LABELS: Record<VatReturnRecord["status"], string> = {
 
 const CURRENT_YEAR = new Date().getFullYear();
 /**
- * Input bounds for the year. Wide — taking over an old set of books stays
- * possible — but closed: the arrows must not lead to year 0.
+ * Input bounds for the year. Wide (taking over an old set of books stays
+ * possible) but closed: the arrows must not lead to year 0.
  */
 const MIN_YEAR = 2000;
 const MAX_YEAR = CURRENT_YEAR + 5;
@@ -38,7 +38,7 @@ const YEARS_PER_PAGE = 12;
 
 /**
  * Period in progress at today's date: Q3 in July, H1 in March…
- * That is the one we want to see when reaching the screen — in 99 % of cases, the
+ * That is the one we want to see when reaching the screen: in 99 % of cases, the
  * VAT return is opened for the current period.
  */
 function currentPeriodIndex(count: number, date = new Date()): number {
@@ -271,7 +271,7 @@ export function VatReturnPage() {
                     <button
                       key={i}
                       onClick={() => setPeriodIndex(i)}
-                      title={isCurrent ? `${label} — période en cours` : label}
+                      title={isCurrent ? `${label} · période en cours` : label}
                       className={cn(
                         "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
                         periodIndex === i ? "bg-primary text-primary-foreground" : "hover:bg-accent",
@@ -352,7 +352,7 @@ export function VatReturnPage() {
                 <span>{h.periodType === "annual" ? `Année ${h.year}` : `${h.periodType === "quarterly" ? "T" : "S"}${h.periodIndex} ${h.year}`}</span>
                 <div className="flex items-center gap-3">
                   <span className="text-muted-foreground">
-                    {h.totalPayable ? `À payer ${formatChf(h.totalPayable)}` : h.totalCredit ? `Crédit ${formatChf(h.totalCredit)}` : "—"}
+                    {h.totalPayable ? `À payer ${formatChf(h.totalPayable)}` : h.totalCredit ? `Crédit ${formatChf(h.totalCredit)}` : "-"}
                   </span>
                   <Badge>{STATUS_LABELS[h.status]}</Badge>
                 </div>

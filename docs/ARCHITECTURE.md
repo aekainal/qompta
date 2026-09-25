@@ -1,4 +1,4 @@
-# Technical architecture — Qompta
+# Qompta technical architecture
 
 ## 1. Overview of the Electron processes
 
@@ -18,7 +18,7 @@
 └───────────────▲──────────────────────────────────────────────────┘
                 │
 ┌───────────────┴──────────────────────────────────────────────────┐
-│  RENDERER (Chromium) — React 18 + Tailwind + shadcn/ui           │
+│  RENDERER (Chromium): React 18 + Tailwind + shadcn/ui            │
 │  - UI, application state, active company (context)               │
 │  - NEVER accesses the DB or the FS directly                      │
 │  - Calls window.api.* → main → DB                                │
@@ -93,7 +93,7 @@ src/
 > The IPC handlers live in **a single** `registerHandlers.ts` rather than one file per
 > domain: they are mostly one-line delegations to a repository, and splitting them up
 > would have multiplied the number of files without any gain in readability. The UI
-> uses in-house primitives, not shadcn/ui, and calls IPC directly from `useEffect` —
+> uses in-house primitives, not shadcn/ui, and calls IPC directly from `useEffect`,
 > with no cache layer such as TanStack Query.
 
 ## 3. IPC contract (typed end to end)
@@ -153,7 +153,7 @@ Five constraints shaped this layout, all of them discovered in practice:
 1. **Embedded fonts.** Inter is read from `resources/fonts` and injected as
    base64 into the HTML. The rendering window has no access to system fonts and
    the app must produce an identical rendering offline. The folder is resolved through
-   `app.getAppPath()` — never relative to the module, since the main process is bundled
+   `app.getAppPath()`, never relative to the module, since the main process is bundled
    into `out/main/`.
 2. **Vertical margins in `thead`/`tfoot`.** A top/bottom `padding` only applies
    once: from the 2nd page on, the text was stuck against the edge. The content is
@@ -165,7 +165,7 @@ Five constraints shaped this layout, all of them discovered in practice:
    content `padding`, which does apply on every page.
 4. **No scaling.** Content overflowing the width of the content area
    triggers a silent Chromium "shrink to fit". That is unacceptable
-   for the QR-bill, whose 210 × 105 mm are standardised — hence its
+   for the QR-bill, whose 210 × 105 mm are standardised, hence its
    width obtained through negative margins rather than through an overflow.
 5. **QR-bill at the bottom of the *last* page.** In fixed position it repeated
    on every page and the content slid underneath it as soon as the invoice overflowed. It
@@ -217,7 +217,7 @@ bank details, with an explicit message rather than a failure.
 - **Migrations** (`tests/migrations-safety.test.ts`): fails if a migration
   contains a destructive statement or recreates a table through `__new_`.
 - **zod schemas** (`tests/schemas-roundtrip.test.ts`): a complete object goes through
-  every schema without losing a field — `parse()` silently drops any
+  every schema without losing a field: `parse()` silently drops any
   key absent from the schema, which has already made addresses disappear from the database.
 
 ## 10. UI state

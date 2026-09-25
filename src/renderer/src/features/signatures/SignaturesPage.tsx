@@ -71,7 +71,7 @@ export function SignaturesPage() {
         <div>
           <h1 className="text-2xl font-semibold">Signatures</h1>
           <p className="text-sm text-muted-foreground">
-            Apposées au bas de vos devis et dans la section « Signatures » de vos contrats — {active.name}
+            Apposées au bas de vos devis et dans la section « Signatures » de vos contrats · {active.name}
           </p>
         </div>
         <Button onClick={() => dlg.open(null)}>
@@ -243,7 +243,7 @@ function SignatureForm({
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Field label="Associé qui signe">
           <Select value={associateId} onChange={(e) => pickAssociate(e.target.value)} className="w-full">
-            <option value="">— Aucun —</option>
+            <option value="">Aucun</option>
             {associates.map((a) => (
               <option key={a.id} value={a.id}>{a.name}</option>
             ))}

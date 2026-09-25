@@ -48,7 +48,7 @@ describe("selectPeriodInvoices", () => {
   });
 });
 
-describe("buildVatReturn — décompte de bout en bout sur factures", () => {
+describe("buildVatReturn : décompte de bout en bout sur factures", () => {
   const range = periodRange("quarterly", 2026, 1);
   it("ventes imposées + achat -> 500/510 cohérents", () => {
     const list: ReturnInvoice[] = [

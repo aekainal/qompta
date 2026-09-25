@@ -12,7 +12,7 @@ function purchase(net: number, treatment: AggregatableInvoice["treatment"], rate
   return { type: "purchase", treatment, rate: "normal", rateBps, netChf: net, vatChf: Math.round((net * rateBps) / 10000) };
 }
 
-describe("aggregateInvoices — factures -> bases du décompte", () => {
+describe("aggregateInvoices : factures -> bases du décompte", () => {
   it("ventes par taux alimentent 200 et 303/313/343", () => {
     const input = aggregateInvoices(
       [sale(100000, "normal"), sale(50000, "reduced", "standard", 260), sale(20000, "lodging", "standard", 380)],
@@ -70,13 +70,13 @@ describe("aggregateInvoices — factures -> bases du décompte", () => {
   });
 
   it("6) saisie TTC vs HT donne les mêmes bases (via rateBps cohérent)", () => {
-    // Two equivalent invoices: 1000 net @ 8.10% — base 303 must be identical.
+    // Two equivalent invoices (1000 net @ 8.10%): base 303 must be identical.
     const fromHt = aggregateInvoices([sale(100000, "normal")], OPTS);
     expect(fromHt.b303).toBe(100000);
   });
 });
 
-describe("rates — historisation", () => {
+describe("rates : historisation", () => {
   it("résout les taux 2024+ et les taux antérieurs", () => {
     expect(resolveRate("normal", "2026-03-15")).toBe(810);
     expect(resolveRate("reduced", "2026-03-15")).toBe(260);

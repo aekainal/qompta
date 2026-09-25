@@ -39,7 +39,7 @@ export function AccountsPage() {
         <div>
           <h1 className="text-2xl font-semibold">Plan comptable</h1>
           <p className="text-sm text-muted-foreground">
-            {rows.length} comptes — {active.name} (compta {active.accountingMode})
+            {rows.length} comptes · {active.name} (compta {active.accountingMode})
           </p>
         </div>
         <Button onClick={() => dlg.open(null)}><Plus size={16} /> Nouveau compte</Button>
@@ -62,7 +62,7 @@ export function AccountsPage() {
                 <td className="px-3 py-2 font-mono text-xs">{a.code}</td>
                 <td className="px-3 py-2">{a.label}</td>
                 <td className="px-3 py-2"><Badge>{KIND_LABELS[a.kind]}</Badge></td>
-                <td className="px-3 py-2 font-mono text-xs">{a.defaultVatCode ?? "—"}</td>
+                <td className="px-3 py-2 font-mono text-xs">{a.defaultVatCode ?? "-"}</td>
                 <td className="px-3 py-2 text-right">
                   <Button variant="ghost" className="h-7 px-2" onClick={() => dlg.open(a)}><Pencil size={14} /></Button>
                 </td>

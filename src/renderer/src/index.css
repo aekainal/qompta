@@ -54,7 +54,7 @@ body {
   /*
    * Segoe UI first on every platform: the Qompta wordmark in the sidebar is drawn
    * around it, and the app icon follows its shapes. It ships with Windows only and
-   * is not redistributable, so the rest of the chain approximates it elsewhere —
+   * is not redistributable, so the rest of the chain approximates it elsewhere:
    * Selawik is Microsoft's own metric-compatible open substitute, picked up when
    * the user has it installed.
    */

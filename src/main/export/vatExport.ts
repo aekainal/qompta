@@ -79,7 +79,7 @@ function buildHtml(ctx: ExportContext): string {
     .c{font-family:ui-monospace,monospace}
     .warn{color:#b91c1c;margin-top:12px}
   </style></head><body>
-    <h1>Décompte TVA — ${ctx.companyName}</h1>
+    <h1>Décompte TVA · ${ctx.companyName}</h1>
     <div class="meta">
       ${ctx.vatNumber ? `N° TVA : ${ctx.vatNumber} · ` : ""}Période : ${ctx.periodLabel} (${ctx.startDate} → ${ctx.endDate})
       · Méthode : ${ctx.method === "tdfn" ? "TDFN" : "effective"}

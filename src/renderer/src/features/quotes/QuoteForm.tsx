@@ -143,7 +143,7 @@ export function QuoteForm({
             onChange={(e) => setThirdPartyId(e.target.value)}
             className="w-full"
           >
-            <option value="">—</option>
+            <option value="">-</option>
             {thirdParties
               .filter((t) => t.kind !== "supplier")
               .map((t) => (
@@ -167,21 +167,21 @@ export function QuoteForm({
             onChange={(e) => setBankAccountId(e.target.value)}
             className="w-full"
           >
-            <option value="">—</option>
+            <option value="">-</option>
             {bankAccounts
               .filter((b) => !b.archived)
               .map((b) => (
-                <option key={b.id} value={b.id}>{b.label} — {b.iban}</option>
+                <option key={b.id} value={b.id}>{b.label} · {b.iban}</option>
               ))}
           </Select>
         </Field>
         <Field label="Signature du prestataire">
           <Select value={signatureId} onChange={(e) => setSignatureId(e.target.value)} className="w-full">
             <option value="">
-              {defaultSignature ? `Par défaut — ${defaultSignature.name}` : "Aucune signature enregistrée (ligne vierge)"}
+              {defaultSignature ? `Par défaut : ${defaultSignature.name}` : "Aucune signature enregistrée (ligne vierge)"}
             </option>
             {signatures.map((s) => (
-              <option key={s.id} value={s.id}>{s.name}{s.role ? ` — ${s.role}` : ""}</option>
+              <option key={s.id} value={s.id}>{s.name}{s.role ? `, ${s.role}` : ""}</option>
             ))}
             <option value="none">Aucune (ligne vierge à signer)</option>
           </Select>

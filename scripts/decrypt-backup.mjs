@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Decrypts a Qompta file OUTSIDE the application — fallback plan.
+ * Decrypts a Qompta file OUTSIDE the application (fallback plan).
  *
  *   node scripts/decrypt-backup.mjs <fichier.qbak|.qexp|.qdb> <clé QK1-…> [sortie]
  *
- * Produces a SQLite database (`.sqlite`, backups and database — rebuilt with the
+ * Produces a SQLite database (`.sqlite`, backups and database; rebuilt with the
  * project's better-sqlite3, on the Node ABI: `npm run rebuild:node` if needed) or a JSON
  * (`.json`, company exports), readable by any tool. The result is IN CLEAR TEXT:
  * delete it once the recovery is done.

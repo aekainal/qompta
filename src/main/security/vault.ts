@@ -55,7 +55,7 @@ export function keyFingerprint(key: Buffer): Buffer {
 // ───────────────────────────── Recovery key (text) ─────────────────────────────
 
 /**
- * Crockford base32 alphabet: no I, L, O nor U — nothing that can be confused
+ * Crockford base32 alphabet: no I, L, O nor U, nothing that can be confused
  * when reading back a key copied out by hand.
  */
 const ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";

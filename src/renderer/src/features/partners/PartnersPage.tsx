@@ -3,7 +3,7 @@
  *
  * The list is not entered but derived (see src/shared/partners.ts): every
  * customer of «entreprise» kind with at least one contract appears here. It
- * shows what makes the relationship — the monthly recurring amount, the
+ * shows what makes the relationship: the monthly recurring amount, the
  * commitment, what has been invoiced, what is still due.
  */
 
@@ -42,7 +42,7 @@ export function PartnersPage() {
       <div>
         <h1 className="text-2xl font-semibold">Partenaires</h1>
         <p className="text-sm text-muted-foreground">
-          Clients entreprises sous contrat — {active.name}
+          Clients entreprises sous contrat · {active.name}
         </p>
       </div>
 
@@ -78,7 +78,7 @@ export function PartnersPage() {
         <Building2 size={16} className="mt-0.5 shrink-0" />
         <span>
           Cette liste se déduit du carnet d'adresses : y figure tout client de nature
-          <strong> entreprise</strong> ayant au moins un contrat. Rien à cocher — un contrat
+          <strong> entreprise</strong> ayant au moins un contrat. Rien à cocher : un contrat
           ajouté ou supprimé fait entrer ou sortir le tiers d'ici tout seul. La nature se
           règle sur la fiche du client.
         </span>
@@ -109,7 +109,7 @@ export function PartnersPage() {
                     )}
                   </div>
                   <div className="mt-0.5 text-xs text-muted-foreground">
-                    {[p.city, p.email].filter(Boolean).join(" · ") || "—"}
+                    {[p.city, p.email].filter(Boolean).join(" · ") || "-"}
                   </div>
                 </div>
                 <div className="flex gap-6 text-right">
@@ -129,7 +129,7 @@ export function PartnersPage() {
                     <span className="flex items-center gap-2">
                       <FileSignature size={14} className="text-muted-foreground" />
                       <span className="font-medium">{c.number}</span>
-                      <span className="text-muted-foreground">{c.title ?? "—"}</span>
+                      <span className="text-muted-foreground">{c.title ?? "-"}</span>
                       <Badge>{CONTRACT_LABELS[c.status] ?? c.status}</Badge>
                     </span>
                     <span className="flex items-center gap-4 text-xs text-muted-foreground">

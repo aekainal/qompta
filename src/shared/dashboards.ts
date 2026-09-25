@@ -1,7 +1,7 @@
 /**
  * Customizable dashboards: each company has a list of dashboards, and each
  * dashboard a list of widgets (KPI or chart) placed on a grid (x, y, width w,
- * height h in cells). Purely descriptive — the rendering and the computation of
+ * height h in cells). Purely descriptive: the rendering and the computation of
  * the values live elsewhere (renderer + shared/dashboard).
  */
 

@@ -1,6 +1,6 @@
 /**
  * Contract builder: a list of typed sections that are added, filled in, moved
- * (arrows or drag and drop), duplicated, collapsed and deleted — with a preview
+ * (arrows or drag and drop), duplicated, collapsed and deleted, with a preview
  * that resolves the variables live.
  *
  * Deleting a section goes through the action bar ("Annuler" puts it back).

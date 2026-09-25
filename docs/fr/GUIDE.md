@@ -55,7 +55,7 @@ fiscalité appliquées ensuite.
 | Sàrl, SA | double | sur le **bénéfice et le capital** |
 | Association | simple | sur le bénéfice seul, sans capital |
 
-Les autres champs — IDE, n° TVA, adresse, contact — servent aux documents commerciaux.
+Les autres champs (IDE, n° TVA, adresse, contact) servent aux documents commerciaux.
 Remplissez-les proprement : ils s'impriment sur vos devis et vos factures, et l'adresse
 est indispensable à la QR-facture.
 
@@ -109,7 +109,7 @@ contrat, il en sort. Un tiers archivé y reste : l'archivage ne raye pas un enga
 ### Supprimer un tiers
 
 Un tiers sans aucun document lié peut être **supprimé définitivement**. Dès qu'il porte
-une facture ou un devis, seul l'archivage est possible — l'historique comptable prime.
+une facture ou un devis, seul l'archivage est possible : l'historique comptable prime.
 
 ---
 
@@ -151,17 +151,17 @@ complète » facturée, et sous elle trois lignes qui disent ce que « complète
 
 ### Le cycle
 
-1. **Brouillon** — vous rédigez.
-2. **Envoyé** — le devis est parti chez le client.
-3. **Accepté** — il a dit oui.
-4. **Facturé** — un devis accepté se transforme en facture.
+1. **Brouillon** : vous rédigez.
+2. **Envoyé** : le devis est parti chez le client.
+3. **Accepté** : il a dit oui.
+4. **Facturé** : un devis accepté se transforme en facture.
 
 Un devis **refusé** puis retravaillé est relié à son remplaçant : il sort alors des
 affaires perdues du tableau de bord, au lieu de compter deux fois.
 
 ### La conversion en facture
 
-La conversion produit une facture de vente **en brouillon** — et **une facture par taux
+La conversion produit une facture de vente **en brouillon**, et **une facture par taux
 de TVA** si le devis en mélange plusieurs. Ce découpage n'est pas une coquetterie : une
 facture ne peut porter qu'un seul taux, sans quoi la ventilation 303/313/343 du décompte
 serait fausse.
@@ -187,7 +187,7 @@ l'enregistrement** : choisissez donc le modèle **avant** de saisir les montants
 
 Un contrat couvre **tout le devis** : le montant ponctuel comme le récurrent. Seuls les
 contrats **signés** comptent dans le chiffre d'affaires récurrent, mais tous restent
-affichés — l'historique compte.
+affichés : l'historique compte.
 
 ---
 
@@ -213,7 +213,7 @@ Seul le brouillon reste hors du décompte : la TVA est due à l'**émission**, p
 paiement.
 
 Le dernier statut est le cas particulier. Il couvre une facture **réglée par un tiers**
-— typiquement une autre de vos sociétés — mais enregistrée ici pour **récupérer la TVA**.
+(typiquement une autre de vos sociétés) mais enregistrée ici pour **récupérer la TVA**.
 Elle entre au décompte et reste hors de la trésorerie, puisque aucun argent n'est entré
 dans cette société-ci. Il n'est proposé qu'aux sociétés **assujetties**.
 
@@ -227,15 +227,15 @@ filtrent cette année-là à défaut de trimestre sélectionné.
 ### Le détail des prestations
 
 Une facture peut porter des lignes comme un devis. Son montant et son taux découlent
-alors de ces lignes — et elle n'accepte **qu'un seul taux de TVA**, pour la même raison
+alors de ces lignes, et elle n'accepte **qu'un seul taux de TVA**, pour la même raison
 qu'un devis se découpe à la conversion. Sans ligne, elle reste une écriture au montant
 global.
 
 ### La TVA réelle
 
 Le champ « TVA réelle » permet de saisir le montant exact figurant sur une facture
-fournisseur, quand il diffère du calcul théorique — un ancien taux à 7.7 %, un arrondi
-différent. Le décompte reprend alors ce montant plutôt que le sien.
+fournisseur, quand il diffère du calcul théorique : un ancien taux à 7.7 %, un
+arrondi différent. Le décompte reprend alors ce montant plutôt que le sien.
 
 ---
 
@@ -247,7 +247,7 @@ L'écran reprend le formulaire officiel de l'AFC et le **pré-remplit depuis vos
 factures**, aux vrais codes : chiffre d'affaires en 200, déductions en 220 à 280, impôt
 calculé en 303/313/343, impôt préalable en 400 à 420.
 
-Choisissez l'année et la période. Les chiffres sont **recalculés en direct** — rien
+Choisissez l'année et la période. Les chiffres sont **recalculés en direct** : rien
 n'est stocké, donc une facture corrigée se répercute immédiatement.
 
 ### Clôturer
@@ -282,7 +282,7 @@ l'impôt sur le bénéfice et sur le capital.
 
 La trésorerie est **cumulative depuis l'origine** : apports nets, plus ventes réellement
 encaissées, moins achats réellement payés, moins la TVA nette versée à l'AFC. L'apport
-de l'an dernier paie encore les factures de cette année — c'est pourquoi rien n'est
+de l'an dernier paie encore les factures de cette année. C'est pourquoi rien n'est
 remis à zéro au changement d'exercice.
 
 L'écran affiche aussi l'**ancienneté des créances** : ce qui est à échoir, et ce qui
@@ -298,7 +298,7 @@ une date. À partir de là, la trésorerie affiche *ce solde, plus ce qui s'est 
 strictement après*.
 
 Une écriture antérieure au pointage ne bouge donc plus la trésorerie présente. Elle
-reste dans les listes, les rapports et le décompte TVA — le pointage n'affecte **ni le
+reste dans les listes, les rapports et le décompte TVA : le pointage n'affecte **ni le
 résultat ni la TVA**.
 
 ---
@@ -325,7 +325,7 @@ Trois natures :
 | Nature | Sens |
 |---|---|
 | **Capital** | fonds propres, définitivement dans la société |
-| **Compte courant** | avance remboursable — une dette envers l'associé |
+| **Compte courant** | avance remboursable, une dette envers l'associé |
 | **Remboursement** | l'argent ressort |
 
 Le montant reste **toujours positif** : c'est la nature qui porte le sens.
@@ -370,7 +370,7 @@ Le bouton **« Modifier »** fait apparaître la grille. Chaque widget se **dép
 **redimensionne** librement, et refuse de chevaucher un autre : il ne va que sur de la
 place libre.
 
-Les widgets s'adaptent à la place qu'on leur donne — un indicateur réduit au minimum
+Les widgets s'adaptent à la place qu'on leur donne : un indicateur réduit au minimum
 n'affiche plus que son chiffre, et la taille du texte grandit avec la case.
 
 ![Ajouter un widget](../images/35-tableau-widget.png)
@@ -385,7 +385,7 @@ camembert), la dimension (mois, catégorie, client, étape) et la valeur.
 
 ![Objectifs](../images/08-objectifs.png)
 
-Un objectif porte sur une métrique, pour une période — année, trimestre ou mois — avec
+Un objectif porte sur une métrique, pour une période (année, trimestre ou mois), avec
 un sens : **atteindre au moins** (un plancher : chiffre d'affaires, marge) ou **rester
 en dessous** (un plafond : charges).
 
@@ -402,14 +402,14 @@ affichage, si bien qu'un objectif ne peut pas dériver de la comptabilité qu'il
 
 Chaque société a sa propre apparence de documents :
 
-- **Logo** : un texte, une image importée, ou aucun — avec sa hauteur ;
+- **Logo** : un texte, une image importée, ou aucun, avec sa hauteur ;
 - **Couleur de marque** ;
 - **Motif du bord droit** : le caractère, de 1 à 5 colonnes, sa taille, son opacité, ou
   rien du tout. Les marges, l'en-tête et la QR-facture se recalent automatiquement sur
   la largeur de la bande ;
 - **Ligne de contact** et **blocs de signature** ;
 - **Police** : Inter (fournie, par défaut), un fichier que vous importez (.ttf, .otf,
-  .woff2 — stocké en base, donc emporté par les sauvegardes et imprimé même hors ligne),
+  .woff2, stocké en base, donc emporté par les sauvegardes et imprimé même hors ligne),
   ou une police installée sur le poste.
 
 Les valeurs par défaut reproduisent le gabarit d'origine à l'identique : une société qui
@@ -431,8 +431,8 @@ par convention.
 
 ![Dupliquer une société](../images/36-societe-dupliquer.png)
 
-La **duplication** reprend la structure d'une société — plan comptable, réglages TVA,
-apparence — sans ses écritures. Pratique pour ouvrir une deuxième entité sur le même
+La **duplication** reprend la structure d'une société (plan comptable, réglages TVA,
+apparence) sans ses écritures. Pratique pour ouvrir une deuxième entité sur le même
 modèle.
 
 Une société peut aussi être rendue **inactive** : elle disparaît du sélecteur sans que
@@ -455,7 +455,7 @@ restauration, et l'export.
 - **Export Excel** sort les données pour les retravailler dans un tableur.
 
 Pour déménager toute l'installation, emportez une sauvegarde `.qbak` **et** votre clé de
-récupération — séparément.
+récupération, séparément.
 
 ---
 
@@ -465,12 +465,12 @@ Qompta n'a **aucune boîte de dialogue bloquante**. À la place, une barre d'act
 de l'écran :
 
 - **les suppressions attendent 5 secondes** avant de s'appliquer, avec un compte à
-  rebours visible — « Annuler » renonce, la croix applique tout de suite ;
+  rebours visible : « Annuler » renonce, la croix applique tout de suite ;
 - **les modifications s'annulent après coup**, rejouées à l'envers depuis un journal
   tenu par l'application ;
 - **fermer un formulaire commencé** le garde de côté et propose « Reprendre » pendant
   15 secondes.
 
 C'est vrai partout : supprimer un tiers, convertir un devis, changer la forme juridique
-d'une société. Vous pouvez essayer sans crainte — et pour les essais à blanc, créez une
+d'une société. Vous pouvez essayer sans crainte, et pour les essais à blanc, créez une
 **société de test**, la seule qui se supprime définitivement.

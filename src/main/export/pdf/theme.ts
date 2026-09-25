@@ -75,7 +75,7 @@ export function patternBandWidthMm(brand: BrandSettings): number {
  *
  * The original template sets the text ~4 mm from the first Q column. That gap
  * is kept whatever the number of columns: the right margin follows the band
- * width, column by column. Without a pattern the text could run to the edge —
+ * width, column by column. Without a pattern the text could run to the edge:
  * it is held back at a right margin equal to the left one, so the page stays
  * balanced.
  *
@@ -142,7 +142,7 @@ export function customFontFaces(brand: BrandSettings): string {
  *
  * Inter always stays second: a missing weight in the supplied font, or a system
  * font absent from the machine, must not produce a document in the OS default
- * font — the template takes over.
+ * font: the template takes over.
  */
 export function fontFamilyCss(brand: BrandSettings): string {
   if (brand.fontMode === "custom" && brand.fontFaces.length > 0) {
@@ -186,7 +186,7 @@ export function patternStepMm(brand: BrandSettings): number {
 }
 
 /**
- * Decorative band on the right edge (Inter Black, semi-transparent) — the QWASAR
+ * Decorative band on the right edge (Inter Black, semi-transparent): the QWASAR
  * «Q» by default, any other character otherwise, or nothing at all.
  * Rendered in fixed position so it repeats identically on every printed page.
  */
@@ -214,7 +214,7 @@ export const CONTENT_BAND_MM = 297 - LAYOUT.marginTop;
  * Maximum height of a repeated header.
  *
  * Chromium stops replaying a table header beyond about a quarter of the page
- * (74 mm on A4): past that it only appears on the first page — silently.
+ * (74 mm on A4): past that it only appears on the first page, silently.
  * Measured on a real render: 75.5 mm does not repeat, 62 mm does. A safety
  * margin is kept, and the render falls back to a first-page header only if the
  * measurement exceeds this threshold (over-long customer address).
@@ -258,7 +258,7 @@ export interface PageOptions {
   header?: string;
   /**
    * Shifts the Q band half a column towards the right edge, and paints it over
-   * everything else — including the QR payment part, which its right margin
+   * everything else, including the QR payment part, which its right margin
    * then crosses. Quotes and invoices only; contracts keep the original band.
    */
   documentQBand?: boolean;
@@ -328,7 +328,7 @@ html, body {
 /*
  * Band repeated on every printed page. When printing, Chromium positions a fixed
  * element against the WHOLE page (@page margins included): it is therefore simply
- * anchored to the edges, with no negative offset — which would send it off-sheet.
+ * anchored to the edges, with no negative offset, which would send it off-sheet.
  */
 .qband {
   position: fixed;
@@ -343,7 +343,7 @@ html, body {
   overflow: hidden;
   /*
    * Quotes and invoices: the band goes ABOVE the content, otherwise the QR
-   * payment part — opaque and full width — would break it at the bottom of the
+   * payment part (opaque and full width) would break it at the bottom of the
    * page. It runs along the right edge, outside the text column, and hides none of it.
    */
   z-index: ${opts.documentQBand ? 3 : 0};
@@ -365,7 +365,7 @@ html, body {
   z-index: 1;
   /*
    * Without a repeated header, the sheet is filled. With one, the usable band is
-   * shorter: a fixed minimum height would spill onto a second page — it is then
+   * shorter: a fixed minimum height would spill onto a second page; it is then
    * the QR-bill alignment (content min-height) that fills the page.
    */
   min-height: ${opts.header ? 0 : 297 - LAYOUT.marginTop - bottomMargin}mm;
@@ -384,7 +384,7 @@ html, body {
  *
  * CONSTRAINT: Chromium stops repeating a table header beyond about a quarter of
  * the page (~74 mm on A4). All the geometry below is set to stay under that, top
- * margin spacer included — and the render checks the real height before printing
+ * margin spacer included, and the render checks the real height before printing
  * (see MAX_REPEATED_HEADER_MM).
  */
 .doc-header {
@@ -424,7 +424,7 @@ html, body {
 /*
  * Each block is a standalone table; the wider gap separates them clearly.
  * Above all NO page-break-inside: avoid here: a 40-row table fits in no page,
- * and Chromium then pushed it whole to the next page — leaving the first one
+ * and Chromium then pushed it whole to the next page, leaving the first one
  * nearly empty. Only the rows stay unbreakable.
  */
 .section { margin-top: 7mm; }
@@ -446,7 +446,7 @@ table.items tr.item td { font-weight: 700; font-size: 3.2mm; }
 /*
  * Included service lines: they read as the detail of the service line just
  * above, hence the italics and a very tight leading that groups them into a
- * block — without cramming them to the point of being unreadable.
+ * block, without cramming them to the point of being unreadable.
  */
 table.items tr.detail td { padding: .35mm 0; font-size: 2.8mm; font-style: italic; line-height: 1.15; }
 table.items tr.detail td:first-child { padding-left: 0; }
@@ -472,7 +472,7 @@ table.items col.c-tot  { width: 16%; }
 /* ── Signatures ── */
 /*
  * The rules are pushed to the bottom of their column (margin-top auto): the
- * labels do not have the same height — the customer's spans two lines — and a
+ * labels do not have the same height (the customer's spans two lines), and a
  * plain fixed spacing offset the two signature rules from one another.
  */
 .signatures {
@@ -535,14 +535,14 @@ table.kv tr { break-inside: avoid; page-break-inside: avoid; }
 
 /* ── QR payment part (invoice) ── */
 /*
- * The payment part follows the content IN THE FLOW — and not in fixed position,
+ * The payment part follows the content IN THE FLOW, and not in fixed position,
  * which would repeat it on every page and let the text run underneath. The
  * content before it is stretched to (page count × usable band − 105 mm) so that
  * it falls exactly at the bottom of the LAST page.
  *
  * The negative margins give it back the full width of the sheet; the negative
  * bottom margin takes a fraction of a millimetre off the flow, so that a
- * pagination rounding cannot cause an extra blank page — the payment part
+ * pagination rounding cannot cause an extra blank page: the payment part
  * itself is painted all the way to the physical edge.
  */
 .qr-part {

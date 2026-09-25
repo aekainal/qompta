@@ -128,7 +128,7 @@ export function createThirdPartiesRepo(db: DB) {
     },
 
     /**
-     * Permanently deletes a third party — but only if it is referenced nowhere.
+     * Permanently deletes a third party, but only if it is referenced nowhere.
      * A third party with history (invoices, quotes, contracts) must be archived:
      * the deletion is refused rather than hitting a foreign-key constraint or
      * orphaning documents.

@@ -68,7 +68,7 @@ export function CompanyDocumentSettings({
 
   return (
     <Card className="p-5">
-      <h2 className="mb-1 text-lg font-medium">Coordonnées imprimées — {company.name}</h2>
+      <h2 className="mb-1 text-lg font-medium">Coordonnées imprimées · {company.name}</h2>
       <p className="mb-4 text-sm text-muted-foreground">
         Ces informations apparaissent sur les devis, les factures et les contrats. Le logo,
         la couleur et le motif se règlent dans « Apparence PDF ».

@@ -312,7 +312,7 @@ export const CONTRACT_MODELS: ContractModel[] = [
   },
   {
     key: "work",
-    name: "Contrat d'entreprise — forfait (art. 363 ss CO)",
+    name: "Contrat d'entreprise au forfait (art. 363 ss CO)",
     description:
       "Un ouvrage livré contre un prix forfaitaire : cahier des charges, échéancier, " +
       "réception et garantie des défauts. Idéal pour la création d'un site ou d'une application.",

@@ -1,7 +1,7 @@
 /**
  * The zod schemas are applied on the main side before writing, and `parse()`
  * **silently drops** any key absent from the schema. A field added to the type
- * but forgotten in the schema therefore vanishes without error — the form seems
+ * but forgotten in the schema therefore vanishes without error: the form seems
  * to work and nothing is stored.
  *
  * These tests check that a complete object goes through the schema losing nothing.
@@ -12,7 +12,7 @@ import { companyInputSchema } from "../src/shared/schemas/company.js";
 import { thirdPartyInputSchema } from "../src/shared/schemas/invoice.js";
 import type { CompanyInput, ThirdPartyInput } from "../src/shared/types.js";
 
-describe("schémas — aucun champ perdu au passage", () => {
+describe("schémas : aucun champ perdu au passage", () => {
   it("conserve l'adresse structurée d'un tiers", () => {
     const input: Required<ThirdPartyInput> = {
       kind: "client",

@@ -3,7 +3,7 @@
  *
  * Everything visual about quotes, invoices and contracts is set here:
  * logo (text or image), color, decorative pattern, contact line, signatures.
- * The default values are the original QWASAR template — a company that leaves
+ * The default values are the original QWASAR template: a company that leaves
  * them alone prints exactly as before.
  */
 
@@ -134,7 +134,7 @@ export function BrandPage() {
         <div>
           <h1 className="text-2xl font-semibold">Apparence des documents</h1>
           <p className="text-sm text-muted-foreground">
-            Devis, factures et contrats — {active.name}
+            Devis, factures et contrats · {active.name}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -346,7 +346,7 @@ export function BrandPage() {
                 Les fichiers sont enregistrés dans la base : le PDF s'imprime à l'identique
                 sur n'importe quel poste, même hors ligne. Prévoir le <strong>normal</strong>,
                 le <strong>gras</strong> et, si le logo est en texte, le{" "}
-                <strong>très gras</strong> — une graisse absente est simulée par le moteur de
+                <strong>très gras</strong> ; une graisse absente est simulée par le moteur de
                 rendu, en moins net. {BRAND_LIMITS.fontFileBytes / 1024 / 1024} Mo par fichier
                 au maximum.
               </p>
@@ -382,8 +382,8 @@ export function BrandPage() {
         <Card className="space-y-3 p-4">
           <h2 className="text-sm font-semibold">Motif du bord droit</h2>
           <p className="text-xs text-muted-foreground">
-            La bande de caractères semi-transparents qui longe le bord droit de chaque page —
-            les « Q » chez QWASAR.
+            La bande de caractères semi-transparents qui longe le bord droit de chaque page
+            (les « Q » chez QWASAR).
           </p>
 
           <Field label="Motif">

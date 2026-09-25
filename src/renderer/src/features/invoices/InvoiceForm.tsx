@@ -186,7 +186,7 @@ export function InvoiceForm({ companyId, initial, vatSubject, thirdParties, acco
     }
   }, [type, treatment, effectiveRate, enteredAmount, effectiveEnteredAs, issueDate, vatOverride]);
 
-  // VAT computed automatically (no override) — used as placeholder and reference.
+  // VAT computed automatically (no override), used as placeholder and reference.
   const autoVat = useMemo(() => {
     try {
       return computeInvoice({
@@ -303,7 +303,7 @@ export function InvoiceForm({ companyId, initial, vatSubject, thirdParties, acco
       <div className="grid grid-cols-2 gap-3">
         <Field label={type === "sale" ? "Client" : "Fournisseur"}>
           <Select value={thirdPartyId} onChange={(e) => setThirdPartyId(e.target.value)} className="w-full">
-            <option value="">—</option>
+            <option value="">-</option>
             {filteredTp.map((t) => (
               <option key={t.id} value={t.id}>{t.name}</option>
             ))}
@@ -311,9 +311,9 @@ export function InvoiceForm({ companyId, initial, vatSubject, thirdParties, acco
         </Field>
         <Field label="Catégorie comptable">
           <Select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className="w-full">
-            <option value="">—</option>
+            <option value="">-</option>
             {relevantAccounts.map((a) => (
-              <option key={a.id} value={a.id}>{a.code} — {a.label}</option>
+              <option key={a.id} value={a.id}>{a.code} · {a.label}</option>
             ))}
           </Select>
         </Field>
@@ -363,7 +363,7 @@ export function InvoiceForm({ companyId, initial, vatSubject, thirdParties, acco
             title={detailed ? "Calculé depuis le détail des prestations." : undefined}
           />
         </Field>
-        <Field label="TVA réelle (CHF) — optionnel">
+        <Field label="TVA réelle (CHF), optionnel">
           <Input
             value={vatOverrideStr}
             onChange={(e) => setVatOverrideStr(e.target.value)}
@@ -378,7 +378,7 @@ export function InvoiceForm({ companyId, initial, vatSubject, thirdParties, acco
       </div>
       {vatOverride != null && (
         <p className="-mt-1 text-xs text-amber-600 dark:text-amber-400">
-          TVA saisie manuellement ({formatChf(vatOverride)}) — elle prime sur le calcul auto
+          TVA saisie manuellement ({formatChf(vatOverride)}) : elle prime sur le calcul auto
           ({centsToInput(autoVat)} au taux {(preview ? preview.rateBps / 100 : 0).toFixed(2)} %).
         </p>
       )}
@@ -399,7 +399,7 @@ export function InvoiceForm({ companyId, initial, vatSubject, thirdParties, acco
         help={
           <>
             Facultatif : sans ligne, le PDF reprend la description et le montant global. ·{" "}
-            <strong>Prestation</strong> : ligne facturée (quantité × prix HT) — le montant et le
+            <strong>Prestation</strong> : ligne facturée (quantité × prix HT) ; le montant et le
             taux de la facture en découlent. · <strong>Prestation comprise</strong> : détail sans
             montant, imprimé avec un tiret. · <strong>Nouveau tableau</strong> : son intitulé
             introduit un second tableau sur le PDF. · Une facture ne peut porter qu'un seul taux de
@@ -430,7 +430,7 @@ export function InvoiceForm({ companyId, initial, vatSubject, thirdParties, acco
               onChange={(e) => setBankAccountId(e.target.value)}
               className="w-full"
             >
-              <option value="">Aucun — pas de QR-facture</option>
+              <option value="">Aucun (pas de QR-facture)</option>
               {bankAccounts.map((a) => (
                 <option key={a.id} value={a.id}>
                   {a.label}

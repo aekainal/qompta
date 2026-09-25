@@ -1,5 +1,5 @@
 /**
- * Step 1 of creating a contract or a template: choose the starting STRUCTURE —
+ * Step 1 of creating a contract or a template: choose the starting STRUCTURE:
  * a template of the company (the default one is preselected) or a ready-made
  * structure from the catalogue. Step 2 then builds freely.
  */

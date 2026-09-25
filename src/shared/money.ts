@@ -86,7 +86,7 @@ export function splitGross(grossCents: Cents, rateBps: Bps): { net: Cents; vat: 
 
 /**
  * From an entered amount (net or gross) and a rate, returns the consistent
- * triple { ht, vat, ttc } — single entry point for computing an invoice line.
+ * triple { ht, vat, ttc }: single entry point for computing an invoice line.
  */
 export function resolveAmounts(
   enteredCents: Cents,

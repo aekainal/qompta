@@ -3,7 +3,7 @@
  *
  * Principle: a "bundle" gathers all the data of one company. The import
  * recreates each company with NEW identifiers (full FK remapping), which avoids
- * any ID conflict and guarantees isolation — an existing company is never
+ * any ID conflict and guarantees isolation: an existing company is never
  * overwritten. For a full "overwriting" restore, use the copy of the SQLite
  * file (handled on the main side).
  */

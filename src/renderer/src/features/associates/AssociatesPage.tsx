@@ -52,7 +52,7 @@ export function AssociatesPage() {
         <Card className="flex items-center gap-2 p-4 text-sm text-muted-foreground">
           <Users size={16} />
           Le module Associés concerne surtout la société simple et la SNC. La forme actuelle
-          ({active.legalForm === "sarl" || active.legalForm === "sa" ? "personne morale" : "—"})
+          ({active.legalForm === "sarl" || active.legalForm === "sa" ? "personne morale" : "-"})
           n'en a pas besoin, mais tu peux quand même en saisir.
         </Card>
       )}
@@ -72,7 +72,7 @@ export function AssociatesPage() {
             {rows.map((a) => (
               <tr key={a.id} className="border-t hover:bg-accent/40">
                 <td className="px-3 py-2 font-medium">{a.name}</td>
-                <td className="px-3 py-2 text-muted-foreground">{a.role ?? "—"}</td>
+                <td className="px-3 py-2 text-muted-foreground">{a.role ?? "-"}</td>
                 <td className="px-3 py-2 text-right tabular-nums">{(a.shareBps / 100).toFixed(2)} %</td>
                 <td className="px-3 py-2 text-right">
                   <Button variant="ghost" className="h-7 px-2" onClick={() => dlg.open(a)}><Pencil size={14} /></Button>

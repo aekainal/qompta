@@ -311,7 +311,7 @@ export function isLegacyShape(blocks: ContractBlock[]): boolean {
 /**
  * Sections actually printed. A contract in the legacy format receives the
  * financial summary first and the signature block last, as it did before
- * v1.20.0 — without its data being rewritten.
+ * v1.20.0, without its data being rewritten.
  */
 export function legacyFrame(blocks: ContractBlock[]): ContractBlock[] {
   if (!isLegacyShape(blocks)) return blocks;

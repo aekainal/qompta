@@ -44,7 +44,7 @@ export function clampRetentionDays(days: unknown): number {
 
 /**
  * Files to delete: Qompta backups older than `days` days.
- * The most recent one is always kept, even past the limit — a machine left off
+ * The most recent one is always kept, even past the limit: a machine left off
  * for a month must not end up with no backup at all.
  */
 export function backupsToPrune(fileNames: string[], now: Date, days: number): string[] {

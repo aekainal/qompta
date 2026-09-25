@@ -2,10 +2,10 @@
 /**
  * Housekeeping of the `release/` folder after the packages are built.
  *
- * Rule: **only the packages of the current version stay at the root** — the
+ * Rule: **only the packages of the current version stay at the root**: the
  * Windows installer, the Debian package and the AppImage alike. For each package
  * of an earlier version:
- *  - if the matching GitLab release exists, the file is **deleted** —
+ *  - if the matching GitLab release exists, the file is **deleted**:
  *    it stays downloadable from GitLab, keeping a duplicate brings nothing;
  *  - otherwise (or if GitLab is unreachable, or without an access token), it is
  *    **moved into `release/archives/`**. We never destroy an installer that we
@@ -72,7 +72,7 @@ function token() {
 
 /**
  * Does the `v<version>` release exist on GitLab?
- * `null` = we could not tell (no token, network unreachable) — when in doubt,
+ * `null` = we could not tell (no token, network unreachable); when in doubt,
  * the caller archives instead of deleting.
  */
 async function releaseExists(v, base, headers) {
@@ -96,7 +96,7 @@ function archive(fileName) {
   } catch (err) {
     // On the Windows filesystem seen through WSL, a package freshly copied can
     // still be held for a moment and rename fails with EACCES/EPERM. Copying then
-    // unlinking gets there anyway — archiving must not stop a build.
+    // unlinking gets there anyway: archiving must not stop a build.
     if (err.code !== "EACCES" && err.code !== "EPERM" && err.code !== "EXDEV") throw err;
     copyFileSync(from, to);
     rmSync(from, { force: true });

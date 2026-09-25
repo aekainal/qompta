@@ -173,7 +173,7 @@ function registerSecurityHandlers(): void {
     writeFileSync(
       filePath,
       [
-        "QOMPTA — CLÉ DE RÉCUPÉRATION",
+        "QOMPTA : CLÉ DE RÉCUPÉRATION",
         "",
         recoveryKey,
         "",

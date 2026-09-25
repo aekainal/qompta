@@ -698,7 +698,7 @@ export function registerHandlers(db: DB, ctx: HandlerContext): void {
 
   /**
    * Company-supplied fonts: several files at once (one weight per file). The
-   * weight is guessed from the file name — foundries almost always name it —
+   * weight is guessed from the file name (foundries almost always name it)
    * and stays editable in the settings screen.
    */
   handle("brand:pickFont", async () => {
@@ -893,7 +893,7 @@ export function registerHandlers(db: DB, ctx: HandlerContext): void {
 
   /**
    * Full restore: the current database is backed up first (rollback stays
-   * possible), then replaced — re-encrypted with THIS machine's key — and the
+   * possible), then replaced (re-encrypted with THIS machine's key) and the
    * application restarts.
    */
   handle("backup:restore", async ({ path, recoveryKey }) => {

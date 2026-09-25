@@ -8,7 +8,7 @@
  *  - `defer(label, run)`       : deletion, archiving, conversion… fire after
  *                                5 s; "Annuler" drops them, the cross applies them;
  *  - `undoable(label, undo)`   : the action is already done, "Annuler" runs `undo`;
- *  - `track(label, run)`       : runs a change AND offers to undo it — the main
+ *  - `track(label, run)`       : runs a change AND offers to undo it; the main
  *                                undoes exactly what it wrote (undo journal,
  *                                see `src/main/undo.ts`);
  *  - `restore(label, reopen)`  : an entry has just been abandoned (Annuler, click

@@ -30,7 +30,7 @@ function setup() {
   return { companies, associates, signatures, company, a, b };
 }
 
-describe("signatures — dépôt", () => {
+describe("signatures : dépôt", () => {
   it("la première devient celle par défaut, une seule à la fois", () => {
     const { signatures, company, a, b } = setup();
     const s1 = signatures.create(company.id, { associateId: a.id, name: "Associé A", image: PNG });
@@ -68,7 +68,7 @@ describe("signatures — dépôt", () => {
   });
 });
 
-describe("signatures — contrôles", () => {
+describe("signatures : contrôles", () => {
   it("n'accepte qu'une image en data-URI", () => {
     expect(safeSignatureImage(PNG)).toBe(PNG);
     expect(safeSignatureImage("data:image/svg+xml;base64,PHN2Zz4=")).not.toBeNull();
@@ -92,7 +92,7 @@ describe("signatures — contrôles", () => {
   });
 });
 
-describe("signatures — export / import d'une société", () => {
+describe("signatures : export / import d'une société", () => {
   it("suivent la société importée, devis et contrats pointant vers les nouvelles", () => {
     const { companies, signatures, company, a } = setup();
     const quotes = createQuotesRepo(db, createInvoicesRepo(db));

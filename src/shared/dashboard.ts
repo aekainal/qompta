@@ -257,7 +257,7 @@ function monthlySeries(invoices: DashInvoice[], year: number): MonthlyPoint[] {
 function topClientsOf(sales: DashInvoice[], limit = 6): ClientRevenue[] {
   const map = new Map<string, ClientRevenue>();
   for (const i of sales) {
-    const key = i.thirdPartyId ?? `name:${i.thirdPartyName ?? "—"}`;
+    const key = i.thirdPartyId ?? `name:${i.thirdPartyName ?? "-"}`;
     const entry =
       map.get(key) ??
       { thirdPartyId: i.thirdPartyId ?? null, name: i.thirdPartyName ?? "Sans client", invoicedHt: 0, count: 0 };
@@ -306,7 +306,7 @@ export function buildCompanyDashboard(
 
   /*
    * Contributions: the shareholder table stays on the selected year, but the
-   * cash position is cumulative up to 31.12 — last year's contribution still
+   * cash position is cumulative up to 31.12: last year's contribution still
    * funds this year's invoices.
    */
   const endOfYear = `${year}-12-31`;

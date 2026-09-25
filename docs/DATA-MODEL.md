@@ -1,8 +1,8 @@
-# Data model — Qompta
+# Qompta data model
 
 Convention: every amount is stored in **cents (INTEGER)**. Dates are ISO `TEXT`
 `YYYY-MM-DD`. `company_id` is present on **every** business table. Primary keys are
-named `id` (TEXT/UUID or INTEGER autoincrement — UUID chosen to ease import/export).
+named `id` (TEXT/UUID or INTEGER autoincrement; UUID chosen to ease import/export).
 
 Legend: 🌐 = global table (no `company_id`).
 
@@ -18,7 +18,7 @@ Legend: 🌐 = global table (no `company_id`).
 | legal_form | TEXT | `raison_individuelle` \| `societe_simple` \| `snc` \| `sarl` \| `sa` \| `association` |
 | ide_number | TEXT? | `CHE-123.456.789` |
 | vat_number | TEXT? | `CHE-123.456.789 TVA` |
-| rc_registered | INTEGER | bool — listed in the commercial register |
+| rc_registered | INTEGER | bool: listed in the commercial register |
 | address_json | TEXT? | structured address (JSON) |
 | accounting_mode | TEXT | `simple` (receipts/payments) \| `double` |
 | share_capital | INTEGER? | share capital (Sàrl/SA), in cents |
@@ -60,7 +60,7 @@ Legend: 🌐 = global table (no `company_id`).
 | Column | Type | Notes |
 |---|---|---|
 | company_id | TEXT PK/FK | 1–1 with the company |
-| is_vat_subject | INTEGER | bool — if false, the whole VAT module is hidden |
+| is_vat_subject | INTEGER | bool: if false, the whole VAT module is hidden |
 | period_type | TEXT | `quarterly` (default) \| `semestrial` \| `annual` |
 | method | TEXT | `effective` (default) \| `tdfn` (net tax debt rate) |
 | accounting_basis | TEXT | `agreed` (accrual = invoice date, default) \| `received` (cash = payment date) |
@@ -91,7 +91,7 @@ Bounds and safeguards (image data URI only, capped values):
 `src/shared/brand.ts`.
 
 **Font.** Inter is embedded in the application: identical output everywhere, offline.
-A `custom` font follows the same path — the files are stored in the database and go
+A `custom` font follows the same path: the files are stored in the database and go
 back out with every PDF, so the backup carries them along. A `system` font is only
 **named**: it depends on the machine generating the document and falls back to Inter
 if missing. Inter always stays second in the `font-family` chain, so that a missing
@@ -99,11 +99,11 @@ weight never makes the document fall back to the operating system's default font
 
 The number of columns is not merely decorative: the band occupies the right edge of
 the sheet and the text column is aligned just to its left. Adding a column narrows
-the text by exactly one column width (4.33 mm), removing one gives the space back —
+the text by exactly one column width (4.33 mm), removing one gives the space back,
 up to a right margin equal to the left margin. `contentRightMm` /
 `contentRightMarginMm` (theme.ts) are the single source of this value: the page
 padding, the repeated header and the QR-bill's negative margin all derive from it,
-otherwise the payment part would no longer be 210 mm and would be scaled — hence
+otherwise the payment part would no longer be 210 mm and would be scaled, hence
 non-compliant.
 
 ### `vat_rate_defaults` 🌐
@@ -153,7 +153,7 @@ Allows freezing the rates of past periods. Otherwise `vat_rate_defaults` is read
 | id | TEXT PK | |
 | company_id | TEXT FK | |
 | kind | TEXT | `client` \| `supplier` \| `both` |
-| entity_type | TEXT | `company` (default) \| `person` — a **partner** is a customer company under contract |
+| entity_type | TEXT | `company` (default) \| `person` (a **partner** is a customer company under contract) |
 | name | TEXT | |
 | address_json | TEXT? | |
 | email / phone | TEXT? | |
@@ -171,7 +171,7 @@ Allows freezing the rates of past periods. Otherwise `vat_rate_defaults` is read
 | kind | TEXT | `product` \| `expense` \| `asset` \| `liability` \| `equity` |
 | default_vat_code | TEXT? | default mapping to a VAT return code (303/400/405…) |
 | default_prepaid_input | TEXT? | `400` \| `405` for expenses |
-| is_investment | INTEGER | bool — routes to 405 |
+| is_investment | INTEGER | bool: routes to 405 |
 | sort_order | INTEGER | |
 | archived | INTEGER | bool |
 
@@ -191,7 +191,7 @@ Allows freezing the rates of past periods. Otherwise `vat_rate_defaults` is read
 | third_party_id | TEXT? FK | customer or supplier |
 | description | TEXT? | |
 | category_id | TEXT? FK | accounting category |
-| entered_as | TEXT | `ht` \| `ttc` — how the user entered it (net / gross) |
+| entered_as | TEXT | `ht` \| `ttc`: how the user entered it (net / gross) |
 | amount_ht | INTEGER | computed net amount, cents |
 | vat_rate_bps | INTEGER | applied rate (810/260/380/0) |
 | vat_amount | INTEGER | computed |
@@ -200,7 +200,7 @@ Allows freezing the rates of past periods. Otherwise `vat_rate_defaults` is read
 | fx_rate | INTEGER? | conversion rate ×10000 if currency ≠ CHF |
 | amount_chf | INTEGER | amount converted to CHF for the VAT return |
 | vat_code | TEXT | VAT return code (200/303/313/343/220/221/230/235/400/405/900/910…) |
-| vat_code_override | INTEGER | bool — true if forced manually |
+| vat_code_override | INTEGER | bool: true if forced manually |
 | status | TEXT | `draft` \| `issued` \| `paid` \| `partial` \| `overdue` |
 | payment_date | TEXT? | |
 | recurring_id | TEXT? FK | if generated from a recurring template |
@@ -251,7 +251,7 @@ Allows freezing the rates of past periods. Otherwise `vat_rate_defaults` is read
 | start_date / end_date | TEXT | |
 | method | TEXT | `effective` \| `tdfn` (frozen at closing) |
 | status | TEXT | `in_progress` \| `closed` \| `filed` \| `paid` |
-| locked | INTEGER | bool — period locked |
+| locked | INTEGER | bool: period locked |
 | total_payable | INTEGER? | code 500 (snapshot) |
 | total_credit | INTEGER? | code 510 (snapshot) |
 | filed_at / paid_at | TEXT? | |
@@ -294,12 +294,12 @@ Allows freezing the rates of past periods. Otherwise `vat_rate_defaults` is read
 | image | TEXT | image data URI only (`safeSignatureImage`) |
 | is_default | BOOL | only one per company (enforced by the repository) |
 
-`quotes.signature_id` (no FK): signatory of the quote — `null` = the default one,
+`quotes.signature_id` (no FK): signatory of the quote: `null` = the default one,
 `"none"` = a blank line.
 
 ### `fund_contributions` (fund contributions: money paid in by a shareholder)
 Money the shareholder puts **into** the company to keep it running: initial capital,
-cash advance, repayment. **Outside turnover and outside the scope of VAT** — no VAT
+cash advance, repayment. **Outside turnover and outside the scope of VAT**: no VAT
 return query reads this table. It only feeds the cash position and, depending on
 `kind`, equity or the debt owed to the shareholder.
 
@@ -412,7 +412,7 @@ in printing order.
 A contract's sections are **frozen** (`articles_json`, variables already resolved) on
 save: changing a template never alters a signed contract. Since v1.20.0 they are
 **typed sections** (`article`, `heading`, `text`, `list`, `table`, `callout`,
-`parties`, `commitments`, `signatures`, `pageBreak` — see
+`parties`, `commitments`, `signatures`, `pageBreak`; see
 `shared/documents/contract-blocks.ts`); the old `[{ title, body }]` format is still
 read (as articles) and prints as before.
 

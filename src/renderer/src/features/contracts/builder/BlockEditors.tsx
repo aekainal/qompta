@@ -158,7 +158,7 @@ function ListEditor({ block, onChange, readOnly }: EditorProps<ListBlock>) {
         <Input
           value={block.title}
           onChange={(e) => onChange({ ...block, title: e.target.value })}
-          placeholder="Titre (facultatif — sans titre, pas de numéro)"
+          placeholder="Titre (facultatif ; sans titre, pas de numéro)"
           readOnly={readOnly}
           className="min-w-[220px] flex-1 font-medium"
         />
@@ -327,7 +327,7 @@ function SignaturesEditor({ block, onChange, readOnly, signatures }: EditorProps
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <div className="space-y-2 rounded-md border p-3">
-        <Field label="Votre côté — intitulé">
+        <Field label="Votre côté : intitulé">
           <Input
             value={block.providerTitle}
             onChange={(e) => onChange({ ...block, providerTitle: e.target.value })}
@@ -374,7 +374,7 @@ function SignaturesEditor({ block, onChange, readOnly, signatures }: EditorProps
         </label>
       </div>
       <div className="space-y-2 rounded-md border p-3">
-        <Field label="Côté client — intitulé">
+        <Field label="Côté client : intitulé">
           <Input
             value={block.clientTitle}
             onChange={(e) => onChange({ ...block, clientTitle: e.target.value })}

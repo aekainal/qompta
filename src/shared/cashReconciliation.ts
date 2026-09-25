@@ -1,6 +1,6 @@
 /**
  * Cash reconciliation: the actual balance observed at a date (bank
- * reconciliation). It overrides the *computed* cash position — on that day, the
+ * reconciliation). It overrides the *computed* cash position: on that day, the
  * cash position equals that balance, and only LATER flows add to it. An earlier
  * entry added afterwards (backdated invoice, etc.) therefore no longer moves the
  * present cash position; it of course stays in the lists, the reports and the VAT

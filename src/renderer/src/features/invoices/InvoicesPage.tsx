@@ -152,11 +152,11 @@ export function InvoicesPage() {
    */
   async function previewPdf(id: string) {
     const res = await window.api.invoke("invoices:previewPdf", { companyId, id });
-    if (res.qrError) actionBar.notify(`PDF généré sans QR-facture — ${res.qrError}`);
+    if (res.qrError) actionBar.notify(`PDF généré sans QR-facture : ${res.qrError}`);
   }
   async function exportPdf(id: string) {
     const res = await window.api.invoke("invoices:exportPdf", { companyId, id });
-    if (res.saved && res.qrError) actionBar.notify(`PDF enregistré sans QR-facture — ${res.qrError}`);
+    if (res.saved && res.qrError) actionBar.notify(`PDF enregistré sans QR-facture : ${res.qrError}`);
   }
 
   if (!active) return <p className="text-sm text-muted-foreground">Sélectionnez une société.</p>;
@@ -168,10 +168,10 @@ export function InvoicesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Factures</h1>
-          <p className="text-sm text-muted-foreground">{total} facture(s) — {active.name}</p>
+          <p className="text-sm text-muted-foreground">{total} facture(s) · {active.name}</p>
         </div>
         <div className="flex items-center gap-3">
-          {/* Quick filters by VAT period — stackable, additive to the other filters. */}
+          {/* Quick filters by VAT period: stackable, additive to the other filters. */}
           <div className="flex items-center gap-1 rounded-lg border p-0.5">
             <button
               type="button"
@@ -284,10 +284,10 @@ export function InvoicesPage() {
             {rows.map((inv) => (
               <tr key={inv.id} className="border-t hover:bg-accent/40">
                 <td className="px-3 py-2">{formatDate(inv.issueDate)}</td>
-                <td className="px-3 py-2">{inv.number ?? "—"}</td>
-                <td className="px-3 py-2">{inv.thirdPartyId ? tpMap[inv.thirdPartyId] ?? "—" : "—"}</td>
+                <td className="px-3 py-2">{inv.number ?? "-"}</td>
+                <td className="px-3 py-2">{inv.thirdPartyId ? tpMap[inv.thirdPartyId] ?? "-" : "-"}</td>
                 <td className="px-3 py-2">{inv.type === "sale" ? "Vente" : "Achat"}</td>
-                <td className="px-3 py-2 font-mono text-xs">{inv.vatCode ?? "—"}</td>
+                <td className="px-3 py-2 font-mono text-xs">{inv.vatCode ?? "-"}</td>
                 <td className="px-3 py-2 text-right">{formatChf(inv.amountHt)}</td>
                 <td className="px-3 py-2 text-right">{formatChf(inv.vatAmount)}</td>
                 <td className="px-3 py-2 text-right font-medium">{formatChf(inv.amountTtc)}</td>

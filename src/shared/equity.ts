@@ -1,5 +1,5 @@
 /**
- * Equity entered for a Sàrl/SA — feeds the "profit + capital" tax file.
+ * Equity entered for a Sàrl/SA; feeds the "profit + capital" tax file.
  * Amounts in cents.
  */
 

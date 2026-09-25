@@ -54,8 +54,8 @@ function rows(d: TaxDossier): (string | number)[][] {
     out.push(["IMPÔT SUR LE BÉNÉFICE ET LE CAPITAL (Sàrl/SA)"]);
     out.push(["", "Bénéfice imposable", chf(d.corporate.taxableProfit)]);
     out.push(["", "Capital propre imposable", chf(d.corporate.equityCapital)]);
-    out.push(["", "— dont capital social", chf(d.corporate.shareCapital)]);
-    out.push(["", "— dont réserves", chf(d.corporate.reserves)]);
+    out.push(["", "  dont capital social", chf(d.corporate.shareCapital)]);
+    out.push(["", "  dont réserves", chf(d.corporate.reserves)]);
     out.push(["", "Salaire du gérant", chf(d.corporate.managerSalary)]);
     out.push(["", "Dividendes proposés", chf(d.corporate.dividends)]);
   }
@@ -91,7 +91,7 @@ function html(d: TaxDossier): string {
     table{width:100%;border-collapse:collapse} td{padding:4px 8px;border-bottom:1px solid #e2e8f0}
     .r{text-align:right;font-variant-numeric:tabular-nums}
   </style></head><body>
-    <h1>Dossier fiscal ${d.year} — ${d.companyName}</h1>
+    <h1>Dossier fiscal ${d.year} · ${d.companyName}</h1>
     <div class="meta">${LEGAL_FORM_LABELS[d.form]} · aide à la déclaration (hors calcul du montant d'impôt)</div>
     <table>${rows(d).map(tr).join("")}</table>
   </body></html>`;

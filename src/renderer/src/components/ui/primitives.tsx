@@ -98,7 +98,7 @@ export function Field({ label, children }: { label: string; children: React.Reac
 /**
  * Centred modal with a dimmed backdrop.
  *
- * `keepMounted`: the closed modal keeps its content mounted (hidden) — that is what
+ * `keepMounted`: the closed modal keeps its content mounted (hidden); that is what
  * allows an abandoned entry to be resumed with "Reprendre" without losing anything
  * (see `useFormDialog`). `onDirty` reports the first change of the content:
  * typing, a choice in a list, or a click on a button other than "Annuler".

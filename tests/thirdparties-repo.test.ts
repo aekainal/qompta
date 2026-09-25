@@ -4,7 +4,7 @@
  * A third party referenced by an invoice, a quote or a contract carries an
  * accounting trace; deleting it would hit a foreign key or orphan documents.
  * The repository then refuses and points to archiving. These tests fix that
- * boundary — and the per-company isolation of `usage`.
+ * boundary, and the per-company isolation of `usage`.
  */
 
 import { beforeEach, describe, expect, it } from "vitest";
@@ -29,7 +29,7 @@ function setup() {
   return { companies, invoices, quotes, thirdParties, company };
 }
 
-describe("tiers — suppression définitive", () => {
+describe("tiers : suppression définitive", () => {
   it("supprime un tiers sans document lié", () => {
     const { thirdParties, company } = setup();
     const tp = thirdParties.create(company.id, { kind: "client", name: "Sans histoire" });

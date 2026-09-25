@@ -44,7 +44,7 @@ export function SettingsPage() {
 
       {/* VAT settings */}
       <Card className="p-5">
-        <h2 className="mb-1 text-lg font-medium">Réglages TVA — {active.name}</h2>
+        <h2 className="mb-1 text-lg font-medium">Réglages TVA · {active.name}</h2>
         <p className="mb-4 text-sm text-muted-foreground">Pilotent la périodicité du décompte et la base de classement.</p>
         {vat && (
           <>

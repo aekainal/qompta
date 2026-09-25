@@ -12,7 +12,7 @@ import {
 
 const at = (iso: string) => new Date(iso);
 
-describe("sauvegardes — nommage", () => {
+describe("sauvegardes : nommage", () => {
   it("nomme par date et heure locales, et relit la date depuis le nom", () => {
     const d = new Date(2026, 8, 21, 7, 5, 9);
     const name = backupFileName(d);
@@ -29,7 +29,7 @@ describe("sauvegardes — nommage", () => {
   });
 });
 
-describe("sauvegardes — rétention", () => {
+describe("sauvegardes : rétention", () => {
   const now = at("2026-09-21T12:00:00");
   const files = [
     backupFileName(at("2026-09-21T08:00:00")),

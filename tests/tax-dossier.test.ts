@@ -18,7 +18,7 @@ function baseInput(form: LegalForm, result: number): TaxDossierInput {
   };
 }
 
-describe("buildTaxDossier — adaptation à la forme juridique", () => {
+describe("buildTaxDossier : adaptation à la forme juridique", () => {
   it("raison individuelle : résultat = revenu indépendant", () => {
     const d = buildTaxDossier(baseInput("raison_individuelle", 100000));
     expect(d.taxModule).toBe("independent_income");

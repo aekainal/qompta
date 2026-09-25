@@ -44,14 +44,14 @@ const DESTRUCTIVE = [
 
 /**
  * Intentional deletions, reviewed by hand. Only entry: the removal of QomptAI
- * (v1.20.0) — its conversation history is not accounting data, and the user
+ * (v1.20.0): its conversation history is not accounting data, and the user
  * asked that nothing of the assistant remain after the update.
  */
 const ALLOWED_DROPS: Record<string, string[]> = {
   "0016_remove_qomptai.sql": ["DROP TABLE `ai_messages`", "DROP TABLE `ai_conversations`"],
 };
 
-describe("migrations — aucune perte de données à la mise à jour", () => {
+describe("migrations : aucune perte de données à la mise à jour", () => {
   it("ne contient aucune instruction destructive", () => {
     for (const { name, sql: raw } of migrationFiles()) {
       const sql = (ALLOWED_DROPS[name] ?? []).reduce((acc, stmt) => acc.replace(stmt, ""), raw);

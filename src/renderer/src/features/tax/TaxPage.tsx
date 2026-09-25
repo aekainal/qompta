@@ -222,7 +222,7 @@ function EquityForm({ companyId, onSaved }: { companyId: string; onSaved: () => 
 function Lines({ lines, total, totalLabel }: { lines: { categoryId: string | null; categoryLabel: string; amount: number }[]; total: number; totalLabel: string }) {
   return (
     <div className="text-sm">
-      {lines.length === 0 && <p className="py-1 text-muted-foreground">—</p>}
+      {lines.length === 0 && <p className="py-1 text-muted-foreground">-</p>}
       {lines.map((l) => (
         <div key={l.categoryId ?? l.categoryLabel} className="flex justify-between py-1">
           <span className="text-muted-foreground">{l.categoryLabel}</span>

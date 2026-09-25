@@ -2,7 +2,7 @@
  * Management targets: metric catalogue, types, and **pure** computation of the
  * progress (actual vs target). Tested, with no DB dependency.
  *
- * A metric has a **unit** — money (cents), count, or rate (basis points) — and
+ * A metric has a **unit** (money in cents, count, or rate in basis points) and
  * a **default direction**: aim for a floor (`at_least`, e.g. revenue) or a
  * ceiling (`at_most`, e.g. expenses). The actual value is never stored: it is
  * recomputed from the data (see `src/shared/metrics`).
@@ -13,7 +13,7 @@ export type ObjectiveDirection = "at_least" | "at_most";
 export type ObjectiveCategory = "finance" | "sales" | "clients" | "cash" | "funds";
 export type ObjectivePeriodType = "year" | "quarter" | "month";
 
-/** Catalogue keys — one per tracked metric. */
+/** Catalogue keys, one per tracked metric. */
 export type ObjectiveMetric =
   // Finance
   | "revenue_invoiced"

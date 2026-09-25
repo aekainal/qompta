@@ -152,7 +152,7 @@ export interface ThirdPartyInput {
   country?: string | null;
 }
 
-/** Number of documents referencing a third party — decides if it is deletable. */
+/** Number of documents referencing a third party; decides if it is deletable. */
 export interface ThirdPartyUsage {
   invoices: number;
   quotes: number;

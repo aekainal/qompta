@@ -12,7 +12,7 @@ function base(): VatReturnInput {
   return emptyVatInput(RATES_2026);
 }
 
-describe("computeVatReturn — cas de référence VAT-LOGIC §6", () => {
+describe("computeVatReturn : cas de référence VAT-LOGIC §6", () => {
   it("1) vente unique 1000.00 @ 8.10% -> 500 = 8100", () => {
     const input = base();
     input.b200 = 100000;
@@ -112,7 +112,7 @@ describe("computeVatReturn — cas de référence VAT-LOGIC §6", () => {
   });
 });
 
-describe("computeTdfnReturn — méthode des taux de la dette fiscale nette", () => {
+describe("computeTdfnReturn : méthode des taux de la dette fiscale nette", () => {
   it("8) impôt = CA TTC × taux forfaitaire, sans impôt préalable", () => {
     const r = computeTdfnReturn([{ grossTtcCents: 1080000, rateBps: 610 }]);
     expect(r.totalGross).toBe(1080000);

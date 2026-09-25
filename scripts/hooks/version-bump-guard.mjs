@@ -17,6 +17,10 @@ try {
 // Only acts on a real git commit.
 if (!/\bgit\s+commit\b/.test(cmd)) process.exit(0);
 
+// A commit in the public copy (../qompta-public) has nothing to do with this
+// repository's version: the check below would read the wrong package.json.
+if (/qompta-public/.test(cmd)) process.exit(0);
+
 let cur = null;
 let prev = null;
 try {
@@ -49,7 +53,7 @@ if (cur && cur === prev && !docsOnly) {
       hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "deny",
-        permissionDecisionReason: `Version ${cur} inchangée depuis HEAD. Bumper package.json (majeur / mineur / correctif) et les références du README avant de committer — voir la skill version-bump.`,
+        permissionDecisionReason: `Version ${cur} inchangée depuis HEAD. Bumper package.json (majeur / mineur / correctif) et les références du README avant de committer : voir la skill version-bump.`,
       },
     }),
   );

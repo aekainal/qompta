@@ -142,7 +142,7 @@ export async function htmlToPdfBuffer(html: HtmlSource): Promise<Buffer> {
     const bandMm = 297 - (repeatHeader ? theadMm : LAYOUT.marginTop);
 
     // 3. Measurement print: nothing is stretched (pages = 0), the pagination
-    //    obtained is the shortest possible — the one the final render reproduces.
+    //    obtained is the shortest possible, the one the final render reproduces.
     const probe = await print(html({ pages: 0, bandMm, repeatHeader }));
     const pages = countPdfPages(probe);
 

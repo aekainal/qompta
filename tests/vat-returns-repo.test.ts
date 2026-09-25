@@ -16,7 +16,7 @@ function setup() {
   return { companies, invoices, vat, c };
 }
 
-describe("vatReturns — calcul à la volée", () => {
+describe("vatReturns : calcul à la volée", () => {
   it("agrège les factures de la période sélectionnée", () => {
     const { invoices, vat, c } = setup();
     invoices.create(c.id, { type: "sale", issueDate: "2026-02-01", treatment: "standard", rate: "normal", enteredAs: "ht", enteredAmount: 100000, status: "issued" });
@@ -33,7 +33,7 @@ describe("vatReturns — calcul à la volée", () => {
   });
 });
 
-describe("vatReturns — impôt préalable basé sur la TVA réelle", () => {
+describe("vatReturns : impôt préalable basé sur la TVA réelle", () => {
   it("utilise la TVA saisie (override) et non le recalcul au taux", () => {
     const { invoices, vat, c } = setup();
     // Purchase 9.66 net, actual VAT 0.74 (instead of 0.78 at 8.10 %).
@@ -48,7 +48,7 @@ describe("vatReturns — impôt préalable basé sur la TVA réelle", () => {
   });
 });
 
-describe("vatReturns — clôture et historique", () => {
+describe("vatReturns : clôture et historique", () => {
   it("fige les lignes, calcule les totaux, apparaît dans l'historique", () => {
     const { invoices, vat, c } = setup();
     invoices.create(c.id, { type: "sale", issueDate: "2026-02-01", treatment: "standard", rate: "normal", enteredAs: "ht", enteredAmount: 100000, status: "issued" });

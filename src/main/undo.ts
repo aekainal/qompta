@@ -1,5 +1,5 @@
 /**
- * Generic undo journal — what lets the action bar offer « Annuler » after a
+ * Generic undo journal: what lets the action bar offer « Annuler » after a
  * change, whatever entity was touched.
  *
  * Classic SQLite technique ("Automatic Undo/Redo Using SQLite Triggers"):

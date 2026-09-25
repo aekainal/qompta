@@ -185,7 +185,7 @@ export function QuotesPage() {
           issueDate: todayIso(),
         });
         const n = res.invoices.length;
-        setMessage(`${n} facture(s) créée(s) — une par taux de TVA.`);
+        setMessage(`${n} facture(s) créée(s), une par taux de TVA.`);
         await load();
       }),
     );
@@ -203,7 +203,7 @@ export function QuotesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Devis</h1>
-          <p className="text-sm text-muted-foreground">{rows.length} devis — {active.name}</p>
+          <p className="text-sm text-muted-foreground">{rows.length} devis · {active.name}</p>
         </div>
         <Button onClick={() => dlg.open(null)}>
           <Plus size={16} /> Nouveau devis
@@ -269,8 +269,8 @@ export function QuotesPage() {
                 <tr key={q.id} className="border-t hover:bg-accent/40">
                   <td className="px-3 py-2 font-mono text-xs">{q.number}</td>
                   <td className="px-3 py-2">{formatDate(q.issueDate)}</td>
-                  <td className="px-3 py-2">{q.thirdPartyId ? tpMap[q.thirdPartyId] ?? "—" : "—"}</td>
-                  <td className="px-3 py-2">{q.title ?? "—"}</td>
+                  <td className="px-3 py-2">{q.thirdPartyId ? tpMap[q.thirdPartyId] ?? "-" : "-"}</td>
+                  <td className="px-3 py-2">{q.title ?? "-"}</td>
                   <td className="px-3 py-2 text-right font-medium">{formatChf(q.amountTtc)}</td>
                   <td className="px-3 py-2">
                     <Badge className={STATUS_COLORS[q.status]}>{STATUS_LABELS[q.status]}</Badge>
@@ -332,7 +332,7 @@ export function QuotesPage() {
                         className="h-7 px-2"
                         // NEVER disabled: an invoiced quote becomes editable again as
                         // soon as its invoice is deleted, and only the main knows
-                        // whether it still exists — it refuses if need be.
+                        // whether it still exists; it refuses if need be.
                         title={locked ? lockTitle : "Modifier"}
                         onClick={() => void openEdit(q.id)}
                       >
@@ -348,7 +348,7 @@ export function QuotesPage() {
                         // deleted: the main decides, it knows the link.
                         title={
                           locked
-                            ? "Supprimer — possible seulement si la facture a été supprimée"
+                            ? "Supprimer : possible seulement si la facture a été supprimée"
                             : "Supprimer"
                         }
                         onClick={() => remove(q.id)}

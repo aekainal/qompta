@@ -268,7 +268,7 @@ export function createQuotesRepo(db: DB, invoicesRepo: InvoicesRepo) {
      * An invoiced quote stays protected **as long as its invoice exists**:
      * deleting it would leave an invoice orphaned from its offer. Once the
      * invoice itself is deleted (test, data entry mistake), nothing justifies
-     * keeping the quote — it becomes deletable again.
+     * keeping the quote: it becomes deletable again.
      */
     delete(companyId: string, id: string): { ok: true } {
       const current = this.get(companyId, id);
@@ -416,7 +416,7 @@ export function createQuotesRepo(db: DB, invoicesRepo: InvoicesRepo) {
      * Gives the quote back its pre-invoicing status once its invoice(s) have
      * been deleted.
      *
-     * It goes back to **accepted**: the customer's agreement still stands — the
+     * It goes back to **accepted**: the customer's agreement still stands: the
      * quote becomes editable and convertible again, without going back through
      * "sent". Call it after deleting an invoice issued from a quote.
      */

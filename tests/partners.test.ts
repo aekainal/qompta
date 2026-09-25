@@ -1,6 +1,6 @@
 /**
  * Partners: company customers under contract.
- * The list is derived, never entered — these tests pin the rule down.
+ * The list is derived, never entered; these tests pin the rule down.
  */
 
 import { describe, expect, it } from "vitest";
@@ -49,7 +49,7 @@ describe("qui est partenaire", () => {
     expect(p.map((x) => x.id)).toEqual(["a"]);
   });
 
-  it("une personne physique, non — même sous contrat", () => {
+  it("une personne physique, non, même sous contrat", () => {
     const p = buildPartners(
       [tp({ id: "a", entityType: "person" })],
       [contract({ id: "1", thirdPartyId: "a" })],

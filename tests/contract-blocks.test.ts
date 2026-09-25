@@ -23,7 +23,7 @@ import { resolve } from "node:path";
 const FONTS = resolve(process.cwd(), "resources/fonts");
 const PNG = "data:image/png;base64,iVBORw0KGgo=";
 
-describe("sections — lecture", () => {
+describe("sections : lecture", () => {
   it("lit l'ancien format { title, body } comme des articles", () => {
     const blocks = normalizeBlocks([{ title: "Objet", body: "Texte" }, { title: "Prix", body: "" }]);
     expect(blocks.map((b) => b.type)).toEqual(["article", "article"]);
@@ -45,7 +45,7 @@ describe("sections — lecture", () => {
   });
 });
 
-describe("sections — numérotation", () => {
+describe("sections : numérotation", () => {
   it("numérote articles, listes et tableaux titrés, en continu", () => {
     const blocks: ContractBlock[] = [
       emptyBlock("parties"),
@@ -61,7 +61,7 @@ describe("sections — numérotation", () => {
   });
 });
 
-describe("sections — ancien format à l'impression", () => {
+describe("sections : ancien format à l'impression", () => {
   it("ajoute récapitulatif et signatures aux seuls contrats d'avant la v1.20", () => {
     const legacy = normalizeBlocks([{ title: "Objet", body: "Texte" }]);
     expect(legacyFrame(legacy).map((b) => b.type)).toEqual(["commitments", "article", "signatures"]);
@@ -70,7 +70,7 @@ describe("sections — ancien format à l'impression", () => {
   });
 });
 
-describe("sections — variables", () => {
+describe("sections : variables", () => {
   it("résout les variables dans tous les types de sections", () => {
     const blocks = withIds([
       { type: "list", title: "Pour {{client}}", intro: "{{prestataire}} fournit :", items: ["{{montantMensuel}} par mois"], style: "bullet", numbered: true },
@@ -119,7 +119,7 @@ describe("catalogue de modèles", () => {
   });
 });
 
-describe("contrat — rendu PDF des sections", () => {
+describe("contrat : rendu PDF des sections", () => {
   const signature: Signature = {
     id: "sig-1", companyId: "c", associateId: null, name: "Thomas Exemple", role: "Associé gérant",
     image: PNG, isDefault: true, createdAt: "", updatedAt: "",

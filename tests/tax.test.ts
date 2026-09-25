@@ -3,7 +3,7 @@ import { allocateResult, ShareSumError } from "../src/shared/tax/allocation.js";
 import { computeCorporateTax } from "../src/shared/tax/company-tax.js";
 import { buildIncomeStatement } from "../src/shared/tax/result.js";
 
-describe("allocateResult — répartition par associé (société simple / SNC)", () => {
+describe("allocateResult : répartition par associé (société simple / SNC)", () => {
   it("répartit 60/40 exactement", () => {
     const shares = allocateResult(100000, [
       { id: "a", name: "A", shareBps: 6000 },
@@ -46,7 +46,7 @@ describe("allocateResult — répartition par associé (société simple / SNC)"
   });
 });
 
-describe("computeCorporateTax — Sàrl : bénéfice imposable + capital propre", () => {
+describe("computeCorporateTax (Sàrl) : bénéfice imposable + capital propre", () => {
   it("réintègre les charges non déductibles dans le bénéfice imposable", () => {
     const r = computeCorporateTax({
       accountingResult: 5000000,
@@ -64,7 +64,7 @@ describe("computeCorporateTax — Sàrl : bénéfice imposable + capital propre"
   });
 });
 
-describe("buildIncomeStatement — compte de résultat", () => {
+describe("buildIncomeStatement : compte de résultat", () => {
   it("calcule produits, charges et résultat", () => {
     const stmt = buildIncomeStatement([
       { categoryId: "p1", categoryLabel: "Ventes", kind: "product", amount: 200000 },

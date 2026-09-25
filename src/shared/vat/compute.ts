@@ -1,6 +1,6 @@
 /**
  * Computation of the Swiss VAT return from the bases aggregated by code.
- * Logic faithful to the FTA form — see docs/VAT-LOGIC.md.
+ * Logic faithful to the FTA form: see docs/VAT-LOGIC.md.
  *
  * PURE function: no Electron/DB dependency. Fully testable.
  */

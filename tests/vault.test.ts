@@ -16,9 +16,9 @@ import {
   unseal,
 } from "../src/main/security/vault.js";
 
-const SECRET = Buffer.from("Facture FC2026072201 — 1'234.50 CHF — Client Confidentiel SA", "utf8");
+const SECRET = Buffer.from("Facture FC2026072201 · 1'234.50 CHF · Client Confidentiel SA", "utf8");
 
-describe("coffre — scellement", () => {
+describe("coffre : scellement", () => {
   it("rend exactement ce qui a été scellé, et rien n'est lisible en clair", () => {
     const key = generateKey();
     const file = seal(SECRET, key, "database");
@@ -71,7 +71,7 @@ describe("coffre — scellement", () => {
   });
 });
 
-describe("coffre — clé de récupération", () => {
+describe("coffre : clé de récupération", () => {
   it("s'écrit QK1- + 13 groupes de 4 et se relit à l'identique", () => {
     const key = generateKey();
     const text = formatRecoveryKey(key);

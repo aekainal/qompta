@@ -3,10 +3,10 @@
  *
  * The SQLite database runs **in memory**; on disk there is only
  * `qompta.qdb`, sealed with the machine key (see `security/vault.ts`). After every
- * IPC call that changed data, the copy of the database (`db/dump.ts` — absolutely not
+ * IPC call that changed data, the copy of the database (`db/dump.ts`, absolutely not
  * `serialize()`, which makes Electron crash) is re-encrypted and written
  * (batched over a few hundred milliseconds), then one last time on
- * shutdown. Atomic write: temporary file then rename — a power
+ * shutdown. Atomic write: temporary file then rename: a power
  * cut leaves the previous version intact, never a half-written file.
  *
  * Migration: on the first launch of v1.20.0, the old plaintext database

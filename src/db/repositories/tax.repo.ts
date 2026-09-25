@@ -33,7 +33,7 @@ export function createTaxRepo(db: DB) {
 
       const cats = new Map(
         db.select().from(accountCategories).where(eq(accountCategories.companyId, companyId)).all()
-          .map((c) => [c.id, `${c.code} — ${c.label}`] as const),
+          .map((c) => [c.id, `${c.code} · ${c.label}`] as const),
       );
       const rows = db
         .select()
