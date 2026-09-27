@@ -19,7 +19,7 @@ import {
 const SECRET = Buffer.from("Facture FC2026072201 · 1'234.50 CHF · Client Confidentiel SA", "utf8");
 
 describe("coffre : scellement", () => {
-  it("rend exactement ce qui a été scellé, et rien n'est lisible en clair", () => {
+  it("rend exactement ce qui a été scellé et rien n'est lisible en clair", () => {
     const key = generateKey();
     const file = seal(SECRET, key, "database");
     expect(isVault(file)).toBe(true);
@@ -64,7 +64,7 @@ describe("coffre : scellement", () => {
     expect(seal(SECRET, key, "database").equals(seal(SECRET, key, "database"))).toBe(false);
   });
 
-  it("reconnaît un fichier qui n'est pas un coffre, et une base SQLite en clair", () => {
+  it("reconnaît un fichier qui n'est pas un coffre et une base SQLite en clair", () => {
     expect(isVault(Buffer.from("SQLite format 3\u0000 et la suite"))).toBe(false);
     expect(isPlainSqlite(Buffer.from("SQLite format 3\u0000 et la suite"))).toBe(true);
     expect(() => peek(Buffer.from("n'importe quoi"))).toThrow(/pas une sauvegarde/);

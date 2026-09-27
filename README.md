@@ -87,8 +87,10 @@ service line detail spills over several pages.
 ### 🔒 End-to-end encryption
 
 The database lives **in memory**; only a file sealed with **AES-256-GCM** ever touches
-the disk. The key is kept on the machine by the system vault (DPAPI on Windows) and is
-shown to you **only once**, as a recovery key. Automatic backups are encrypted too.
+the disk. The key is shown to you **only once**, as a recovery key; on the machine it is
+only kept wrapped by your **login password** (Argon2id) and, if you want, by **Windows
+Hello** (face, fingerprint, PIN). Nothing opens without logging in, and a forgotten
+password can only be replaced with the recovery key. Automatic backups are encrypted too.
 
 ### 📊 Dashboards and targets
 
@@ -135,10 +137,10 @@ the install by hand with `sudo apt-get install -f`.
 ### 🔑 On first launch: read this before clicking
 
 Qompta encrypts your data and shows you **only once** a recovery key of the form
-`QK1-XXXX-XXXX-…`.
+`QK1-XXXX-XXXX-…`, then asks for a login password.
 
 **Write it down and keep it somewhere other than this computer.** It is the only way to
-reopen your data if the machine becomes inaccessible or if the system vault is reset. No
+reopen your data if the machine becomes inaccessible, and to replace a forgotten password. No
 one can regenerate it: neither you, nor the author of the software.
 
 ---

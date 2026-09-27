@@ -243,7 +243,7 @@ describe("repository des entrées de fonds", () => {
     expect(rows[0].associateName).toBe("Partant");
   });
 
-  it("liste du plus récent au plus ancien, et se modifie", () => {
+  it("liste du plus récent au plus ancien et se modifie", () => {
     const db = createTestDb();
     const companies = createCompaniesRepo(db);
     const funding = createFundContributionsRepo(db);

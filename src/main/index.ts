@@ -2,15 +2,19 @@
  * Electron main process: creates the window, opens the encrypted database,
  * applies the migrations and registers the IPC handlers.
  *
- * Startup (v1.20.0):
+ * Startup (v1.21.0):
  *  1. the window controls and the `security:*` channel are available right away;
- *  2. if a key is stored on the machine, the data opens immediately
+ *  2. nothing opens without a login: the keyring of the machine (`qompta.keyring`)
+ *     gives the key only to the login password or to Windows Hello
+ *     (`security:unlock`, `security:unlockHello`), which then open the data
  *     (in-memory decryption, migrations, undo journal, handlers);
- *  3. otherwise the setup screen has the key chosen or typed in, then
- *     `security:activate` opens the data the same way;
+ *  3. without a keyring, the setup screen has the key chosen or typed in along with
+ *     a password (`security:activate`); the bare key of v1.20.x asks for a password
+ *     once (`security:setPassword`);
  *  4. an automatic encrypted backup starts a few seconds after opening.
  */
 
+import { randomBytes } from "node:crypto";
 import { existsSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { app, BrowserWindow, dialog, ipcMain, screen, shell } from "electron";
@@ -21,14 +25,35 @@ import { registerWindowHandlers } from "./ipc/windowHandlers.js";
 import { DATA_FILE, hasEncryptedData, hasLegacyData, openDataStore, type DataStore } from "./storage.js";
 import { installUndoJournal } from "./undo.js";
 import { createBackupService } from "./backups.js";
-import { hasStoredKey, keyIsProtected, loadKey, storeKey } from "./security/keystore.js";
+import { helloDelete, helloSign, isHelloSupported } from "./security/hello.js";
+import {
+  createKeyring,
+  helloChallenge,
+  helloEnrolled,
+  keyMatches,
+  openWithHello,
+  openWithPassword,
+  withHello,
+  withoutHello,
+  type Keyring,
+} from "./security/keyring.js";
+import {
+  hasKeyring,
+  hasLegacyKey,
+  keyIsProtected,
+  loadKeyring,
+  loadLegacyKey,
+  removeLegacyKey,
+  setAsideKeyFiles,
+  storeKeyring,
+} from "./security/keystore.js";
 import {
   VaultError,
   formatRecoveryKey,
   generateKey,
   parseRecoveryKey,
 } from "./security/vault.js";
-import type { IpcInput, IpcOutput, SecurityStatus } from "../shared/ipc.js";
+import type { IpcInput, IpcOutput, SecurityResult, SecurityStatus } from "../shared/ipc.js";
 
 function userDir(): string {
   return app.getPath("userData");
@@ -136,16 +161,87 @@ function startData(key: Buffer): void {
   }, 4000);
 }
 
+/** Keyring of this machine (login password, Windows Hello), once read. */
+let keyring: Keyring | null = null;
+/** Bare key left by v1.20.x, waiting for a login password. */
+let legacyKey: Buffer | null = null;
+
+/** Reads the key files at startup. Nothing opens without a login. */
+function loadKeys(): void {
+  if (hasKeyring()) {
+    try {
+      keyring = loadKeyring();
+      // Written again by an older Qompta launched meanwhile: the bare key must not stay.
+      removeLegacyKey();
+      return;
+    } catch (err) {
+      console.error("[qompta] lecture du trousseau :", err);
+      startupError =
+        "Le trousseau de connexion de ce poste est illisible. Saisissez votre clé de récupération et choisissez un nouveau mot de passe.";
+    }
+  }
+  if (hasLegacyKey()) {
+    try {
+      legacyKey = loadLegacyKey();
+      startupError = null;
+    } catch (err) {
+      console.error("[qompta] lecture de la clé :", err);
+      startupError = "La clé enregistrée sur ce poste est illisible. Saisissez votre clé de récupération.";
+    }
+  }
+}
+
 function securityStatus(): SecurityStatus {
+  const encrypted = hasEncryptedData(userDir());
   return {
-    // A key or an encrypted database exists but nothing is open: the original key is needed.
-    state: data ? "ready" : hasStoredKey() || hasEncryptedData(userDir()) ? "locked" : "setup",
-    hasEncryptedData: hasEncryptedData(userDir()),
+    state: data
+      ? "ready"
+      : keyring
+        ? "locked"
+        : legacyKey
+          ? "set-password"
+          : encrypted || hasKeyring() || hasLegacyKey()
+            ? "recover"
+            : "setup",
+    hasEncryptedData: encrypted,
     hasLegacyData: hasLegacyData(userDir()),
     keyProtected: keyIsProtected(),
+    helloEnrolled: helloEnrolled(keyring),
     defaultBackupDir: defaultBackupDir(),
     error: startupError,
   };
+}
+
+function errorMessage(err: unknown): string {
+  if (err instanceof VaultError && err.code === "wrong-key") {
+    return "Cette clé n'ouvre pas les données de ce poste. Saisissez la clé de récupération d'origine.";
+  }
+  return err instanceof Error ? err.message : String(err);
+}
+
+/** Runs a security action; a failure becomes a message for the screen. */
+async function attempt(fn: () => void | Promise<void>): Promise<SecurityResult> {
+  try {
+    await fn();
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: errorMessage(err) };
+  }
+}
+
+/** The data is open and the keyring known: settings actions. */
+function unlocked(): { key: Buffer; ring: Keyring } {
+  if (!data || !keyring) throw new Error("Les données ne sont pas ouvertes.");
+  return { key: data.key, ring: keyring };
+}
+
+/** Saves the keyring; the bare key of an older version goes. */
+function adoptKeyring(ring: Keyring): void {
+  storeKeyring(ring);
+  keyring = ring;
+  removeLegacyKey();
+  legacyKey = null;
+  startupError = null;
 }
 
 function handleSecurity<C extends `security:${string}` & keyof import("../shared/ipc.js").IpcContract>(
@@ -178,7 +274,8 @@ function registerSecurityHandlers(): void {
         recoveryKey,
         "",
         "Cette clé chiffre vos données comptables et vos sauvegardes.",
-        "Sans elle, une sauvegarde ne peut pas être restaurée sur un autre poste.",
+        "Sans elle, une sauvegarde ne peut pas être restaurée sur un autre poste,",
+        "et un mot de passe de connexion oublié ne peut pas être remplacé.",
         "Conservez ce fichier HORS de l'ordinateur (clé USB, gestionnaire de mots de passe),",
         "et ne le partagez avec personne.",
         "",
@@ -189,43 +286,114 @@ function registerSecurityHandlers(): void {
     return { saved: true, path: filePath };
   });
 
-  handleSecurity("security:activate", ({ recoveryKey }) => {
-    if (data) return { ok: true } as const;
-    const key = parseRecoveryKey(recoveryKey);
-    if (!key) return { ok: false, error: "Clé illisible : vérifiez la saisie (52 caractères après QK1-)." } as const;
-    try {
+  // New key, key of another machine, or forgotten password: the recovery key is the
+  // data key itself, so it may always choose a new login password.
+  handleSecurity("security:activate", ({ recoveryKey, password }) =>
+    attempt(async () => {
+      if (data) return;
+      const key = parseRecoveryKey(recoveryKey);
+      if (!key) throw new Error("Clé illisible : vérifiez la saisie (52 caractères après QK1-).");
+      if (keyring && !keyMatches(keyring, key)) {
+        throw new Error("Cette clé n'est pas celle de ce poste. Saisissez la clé de récupération d'origine.");
+      }
+      // Wrapped BEFORE opening: a weak password refuses everything, nothing opens without login.
+      const ring = await createKeyring(key, password, { keep: keyring });
       startData(key);
-    } catch (err) {
-      const message =
-        err instanceof VaultError && err.code === "wrong-key"
-          ? "Cette clé n'ouvre pas les données de ce poste. Saisissez la clé de récupération d'origine."
-          : err instanceof Error
-            ? err.message
-            : String(err);
-      return { ok: false, error: message } as const;
-    }
-    storeKey(key);
-    return { ok: true } as const;
-  });
+      adoptKeyring(ring);
+    }),
+  );
+
+  handleSecurity("security:setPassword", ({ password }) =>
+    attempt(async () => {
+      if (data) return;
+      if (!legacyKey) throw new Error("Aucune clé à protéger sur ce poste.");
+      const ring = await createKeyring(legacyKey, password);
+      try {
+        startData(legacyKey);
+      } catch (err) {
+        legacyKey = null;
+        startupError = "La clé enregistrée sur ce poste n'ouvre pas les données. Saisissez votre clé de récupération.";
+        throw err;
+      }
+      adoptKeyring(ring);
+    }),
+  );
+
+  handleSecurity("security:unlock", ({ password }) =>
+    attempt(async () => {
+      if (data) return;
+      if (!keyring) throw new Error("Aucun mot de passe n'est défini sur ce poste.");
+      const key = await openWithPassword(keyring, password);
+      // Windows Hello may have won while the password was being checked.
+      if (!data) startData(key);
+    }),
+  );
+
+  handleSecurity("security:unlockHello", () =>
+    attempt(async () => {
+      if (data) return;
+      const challenge = keyring ? helloChallenge(keyring) : null;
+      if (!keyring || !challenge) throw new Error("Windows Hello n'est pas activé pour Qompta.");
+      const signature = await helloSign(challenge, false);
+      const key = openWithHello(keyring, signature);
+      signature.fill(0);
+      if (!data) startData(key);
+    }),
+  );
+
+  handleSecurity("security:helloAvailable", () => isHelloSupported());
+
+  handleSecurity("security:enableHello", () =>
+    attempt(async () => {
+      const { key } = unlocked();
+      const challenge = randomBytes(32);
+      const signature = await helloSign(challenge, true);
+      // The keyring may have changed while Windows Hello was waiting for the user.
+      adoptKeyring(withHello(unlocked().ring, key, challenge, signature));
+      signature.fill(0);
+    }),
+  );
+
+  handleSecurity("security:disableHello", () =>
+    attempt(async () => {
+      adoptKeyring(withoutHello(unlocked().ring));
+      await helloDelete();
+    }),
+  );
+
+  handleSecurity("security:changePassword", ({ current, next }) =>
+    attempt(async () => {
+      const { key, ring } = unlocked();
+      (await openWithPassword(ring, current)).fill(0);
+      adoptKeyring(await createKeyring(key, next, { keep: ring }));
+    }),
+  );
 
   handleSecurity("security:resetData", () => {
     if (data) throw new Error("Les données sont ouvertes : rien à mettre de côté.");
+    const suffix = `illisible-${new Date().toISOString().slice(0, 10)}`;
     const path = join(userDir(), DATA_FILE);
     let movedTo: string | null = null;
     if (existsSync(path)) {
-      movedTo = `${path}.illisible-${new Date().toISOString().slice(0, 10)}`;
+      movedTo = `${path}.${suffix}`;
       renameSync(path, movedTo);
     }
-    // The machine key opened nothing: it is forgotten along with the set-aside database.
-    const keyFile = join(userDir(), "qompta.key");
-    if (existsSync(keyFile)) renameSync(keyFile, `${keyFile}.illisible-${new Date().toISOString().slice(0, 10)}`);
+    // The key of this machine opened nothing: it is set aside with the database.
+    setAsideKeyFiles(suffix);
+    keyring = null;
+    legacyKey = null;
     startupError = null;
     return { ok: true, movedTo } as const;
   });
 
-  handleSecurity("security:revealKey", () => {
-    if (!data) throw new Error("Les données ne sont pas ouvertes.");
-    return { recoveryKey: formatRecoveryKey(data.key) };
+  handleSecurity("security:revealKey", async ({ password }) => {
+    try {
+      const { key, ring } = unlocked();
+      (await openWithPassword(ring, password)).fill(0);
+      return { ok: true, recoveryKey: formatRecoveryKey(key) } as const;
+    } catch (err) {
+      return { ok: false, error: errorMessage(err) } as const;
+    }
   });
 }
 
@@ -277,18 +445,9 @@ app.whenReady().then(() => {
   registerWindowHandlers();
   registerSecurityHandlers();
 
-  const key = hasStoredKey() ? safeLoadKey() : null;
-  if (key) {
-    try {
-      startData(key);
-    } catch (err) {
-      startupError =
-        err instanceof VaultError && err.code === "wrong-key"
-          ? "La clé enregistrée sur ce poste n'ouvre pas les données. Saisissez votre clé de récupération."
-          : `Impossible d'ouvrir les données : ${err instanceof Error ? err.message : String(err)}`;
-      console.error("[qompta] ouverture des données :", err);
-    }
-  }
+  loadKeys();
+  // The first Windows Hello check takes a second or two: done ahead of the screens.
+  void isHelloSupported();
 
   createWindow();
 
@@ -296,16 +455,6 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
-
-function safeLoadKey(): Buffer | null {
-  try {
-    return loadKey();
-  } catch (err) {
-    startupError = "La clé enregistrée sur ce poste est illisible. Saisissez votre clé de récupération.";
-    console.error("[qompta] lecture de la clé :", err);
-    return null;
-  }
-}
 
 // Last encrypted write before quitting: nothing must stay pending.
 app.on("will-quit", () => {

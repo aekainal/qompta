@@ -7,6 +7,7 @@ serveur à joindre, rien à configurer avant de commencer.
 - [2. Windows](#2-windows)
 - [3. Linux](#3-linux)
 - [4. Premier démarrage : la clé de récupération](#4-premier-démarrage--la-clé-de-récupération)
+- [4 bis. Mot de passe de connexion et Windows Hello](#4-bis-mot-de-passe-de-connexion-et-windows-hello)
 - [5. Sur un deuxième ordinateur](#5-sur-un-deuxième-ordinateur)
 - [6. Sauvegardes](#6-sauvegardes)
 - [7. Mettre à jour](#7-mettre-à-jour)
@@ -37,7 +38,7 @@ Chaque version publie ses paquets sur la
 3. L'installeur vous demande où installer. Il **n'exige aucun droit administrateur**
    et installe pour votre compte utilisateur uniquement.
 
-Qompta démarre ensuite tout seul, et ajoute un raccourci au menu Démarrer et sur le
+Qompta démarre ensuite tout seul et ajoute un raccourci au menu Démarrer et sur le
 bureau.
 
 ### Où vivent vos données
@@ -45,7 +46,7 @@ bureau.
 | Quoi | Où |
 |---|---|
 | Base chiffrée | `%APPDATA%\Qompta\qompta.qdb` |
-| Clé de chiffrement | `%APPDATA%\Qompta\qompta.key` (protégée par Windows DPAPI) |
+| Trousseau de connexion | `%APPDATA%\Qompta\qompta.keyring` (clé protégée par votre mot de passe et par Windows DPAPI) |
 | Sauvegardes automatiques | `Documents\Qompta\Sauvegardes` |
 
 ---
@@ -66,7 +67,7 @@ chemin, terminez-la par :
 sudo apt-get install -f
 ```
 
-Lancez ensuite Qompta depuis votre menu d'applications, ou par `qompta` dans un
+Lancez ensuite Qompta depuis votre menu d'applications ou par `qompta` dans un
 terminal.
 
 ### Autres distributions
@@ -89,7 +90,7 @@ sudo apt-get install -y libnss3 libnspr4 libasound2 libgtk-3-0 libgbm1
 | Quoi | Où |
 |---|---|
 | Base chiffrée | `~/.config/Qompta/qompta.qdb` |
-| Clé de chiffrement | `~/.config/Qompta/qompta.key` |
+| Trousseau de connexion | `~/.config/Qompta/qompta.keyring` (clé protégée par votre mot de passe) |
 | Sauvegardes automatiques | `~/Documents/Qompta/Sauvegardes` |
 
 ---
@@ -118,10 +119,10 @@ Deux boutons vous aident : **« Copier »** la met dans le presse-papiers,
 
 > ### ⚠️ Notez cette clé ailleurs que sur cet ordinateur
 >
-> Un gestionnaire de mots de passe, une clé USB, ou du papier rangé en lieu sûr.
+> Un gestionnaire de mots de passe, une clé USB ou du papier rangé en lieu sûr.
 >
 > C'est le **seul** moyen de rouvrir vos données si la machine tombe en panne, si
-> Windows est réinstallé, ou si le coffre du système est réinitialisé.
+> Windows est réinstallé ou si le coffre du système est réinitialisé.
 > **Personne ne peut la régénérer** : ni vous, ni l'auteur du logiciel. La perdre,
 > c'est perdre toute votre comptabilité et toutes vos sauvegardes.
 
@@ -131,7 +132,13 @@ Deux boutons vous aident : **« Copier »** la met dans le presse-papiers,
 
 Cochez la case, puis **recopiez le dernier groupe** de la clé (`J450` dans l'exemple
 ci-dessus). Cette étape existe exprès : c'est la seule preuve que la clé a bien quitté
-l'écran. Le bouton **« Activer le chiffrement »** ne s'active pas avant.
+l'écran.
+
+### Choisir le mot de passe de connexion
+
+Troisième étape : le mot de passe demandé à chaque ouverture de Qompta (voir la section
+suivante). Le bouton **« Activer le chiffrement »** ne s'active qu'une fois la clé
+confirmée et le mot de passe valide.
 
 Qompta redémarre alors sur l'application, prête à l'emploi.
 
@@ -140,16 +147,46 @@ Qompta redémarre alors sur l'application, prête à l'emploi.
 ### Ce qui est chiffré, exactement
 
 Tout. La base ne touche jamais le disque en clair : elle est déchiffrée en mémoire au
-démarrage, et seul un fichier scellé en AES-256-GCM est réécrit. Les sauvegardes
-automatiques sont chiffrées avec la même clé. Copier le disque, ou le dossier de
+démarrage et seul un fichier scellé en AES-256-GCM est réécrit. Les sauvegardes
+automatiques sont chiffrées avec la même clé. Copier le disque ou le dossier de
 sauvegardes, ne donne rien sans la clé.
+
+---
+
+## 4 bis. Mot de passe de connexion et Windows Hello
+
+Depuis la version 1.21.0, Qompta ne s'ouvre plus sans vous : un **mot de passe de
+connexion** est demandé à chaque lancement. Chiffrer le disque ne sert à rien si
+n'importe qui peut ouvrir l'application sur votre session.
+
+Le mot de passe compte **au moins 10 caractères**, avec au moins une lettre, un chiffre
+et un caractère spécial (`!`, `@`, `#`, `-`, `.`…). La liste des règles se coche
+en direct pendant la saisie.
+
+**Windows Hello** (Windows uniquement) : si votre poste le propose (visage, empreinte,
+code PIN), Qompta offre de l'utiliser en plus du mot de passe. Il se présente alors dès
+l'ouverture ; le mot de passe reste toujours accepté. Il s'active ou se désactive dans
+**Réglages → Connexion** où l'on change aussi le mot de passe (l'actuel est demandé).
+Sous Linux et macOS, la connexion se fait par mot de passe.
+
+**Mot de passe oublié ?** Le lien de l'écran de connexion demande la **clé de
+récupération**, puis un nouveau mot de passe. C'est le seul moyen de le remplacer : ni
+l'application ni l'auteur du logiciel ne peuvent le faire autrement. Vos données, elles,
+ne changent pas.
+
+**Mise à jour depuis une version 1.20 :** au premier lancement, Qompta vous demande de
+choisir ce mot de passe, une seule fois. Votre clé de récupération reste la même et
+vos sauvegardes s'ouvrent comme avant.
+
+Afficher la clé de récupération dans **Réglages** demande aussi le mot de passe.
 
 ---
 
 ## 5. Sur un deuxième ordinateur
 
 Installez Qompta normalement, puis choisissez **« J'ai déjà une clé »** au premier
-démarrage.
+démarrage. Le mot de passe de connexion est propre à chaque poste : choisissez-le à
+cette étape.
 
 ![Saisie d'une clé existante](../images/02c-setup-cle-existante.png)
 
@@ -161,7 +198,7 @@ pas d'importance. Vos sauvegardes s'ouvrent alors comme sur le poste d'origine.
 ## 6. Sauvegardes
 
 Qompta écrit une sauvegarde chiffrée **à chaque lancement**, dans
-`Documents\Qompta\Sauvegardes`, et les conserve 7 jours. Le dossier et la durée se
+`Documents\Qompta\Sauvegardes` et les conserve 7 jours. Le dossier et la durée se
 changent dans **Réglages**.
 
 ![Réglages](../images/23-reglages.png)
@@ -185,7 +222,7 @@ Installez la nouvelle version par-dessus l'ancienne : même installeur, mêmes �
 Vos données, votre clé et vos sauvegardes ne sont pas touchées : elles vivent en dehors
 du dossier du programme.
 
-Les migrations de base s'appliquent seules au démarrage, et sont testées pour conserver
+Les migrations de base s'appliquent seules au démarrage et sont testées pour conserver
 chaque ligne existante.
 
 ---
@@ -220,5 +257,9 @@ remède.
 **J'ai perdu ma clé de récupération.**
 Il n'y a pas de solution. C'est le prix du chiffrement : si une porte de secours
 existait, elle existerait aussi pour quelqu'un d'autre. Tant que l'application s'ouvre
-encore sur ce poste, la clé est toujours dans le coffre du système : faites une
-sauvegarde immédiatement et, surtout, notez la clé.
+encore sur ce poste (avec votre mot de passe), la clé est toujours dans son trousseau :
+affichez-la dans **Réglages**, notez-la et faites une sauvegarde immédiatement.
+
+**J'ai oublié mon mot de passe.**
+**« Mot de passe oublié ? »** sur l'écran de connexion, puis la clé de récupération et un
+nouveau mot de passe. Sans la clé, il n'y a pas de solution, pour la même raison.

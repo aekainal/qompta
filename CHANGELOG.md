@@ -5,12 +5,36 @@ versions [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.21.0] · 2026-09-27
+
+### Added
+- **Login password**: Qompta no longer opens without you. A password (10 characters at
+  least, with a letter, a digit and a special character, checked live) is asked at every
+  launch. Encrypting the disk was of little use while anyone at the session could open
+  the application.
+- **Windows Hello** (Windows only, optional): face, fingerprint or PIN open Qompta,
+  offered right at launch; the password is always accepted too. Offered when the
+  password is chosen, and in **Réglages → Connexion**. Linux and macOS: password only.
+- **Réglages → Connexion**: change the password (the current one is required), enable
+  or disable Windows Hello.
+
 ### Changed
+- **Forgotten password**: « Mot de passe oublié ? » on the login screen asks for the
+  **recovery key** and a new password. There is no other way to reset it.
+- **Showing the recovery key** in Réglages now requires the login password.
+- **Update from 1.20**: on the first launch, Qompta asks to choose the password once.
+  The recovery key does not change; backups and exports open as before. The key of the
+  machine, until now protected by Windows alone (`qompta.key`), now only exists
+  wrapped by the password (`qompta.keyring`).
+- **Setup of a new machine**: choosing the password is the third step, after the
+  recovery key.
 - **No more em dashes** anywhere in the interface, the PDFs, the exports or the
   documentation. An empty value now shows as "-"; screen subtitles and list entries use
   a middle dot ("Factures · Société", "FC… · titre"); the empty signature choice reads
   "Aucun"; a signature caption reads "Nom, fonction"; the VAT and tax export titles read
   "Décompte TVA · Société" and "Dossier fiscal 2026 · Société".
+- **French punctuation**: no more comma before « et », « ou » or « où » in the interface,
+  the contract templates and the user documentation.
 
 ## [1.20.5] · 2026-09-25
 

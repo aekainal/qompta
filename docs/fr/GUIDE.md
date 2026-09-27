@@ -56,7 +56,7 @@ fiscalité appliquées ensuite.
 | Association | simple | sur le bénéfice seul, sans capital |
 
 Les autres champs (IDE, n° TVA, adresse, contact) servent aux documents commerciaux.
-Remplissez-les proprement : ils s'impriment sur vos devis et vos factures, et l'adresse
+Remplissez-les proprement : ils s'impriment sur vos devis et vos factures et l'adresse
 est indispensable à la QR-facture.
 
 Le bouton **« Créer en société de test »** crée la même chose avec un nom préfixé
@@ -67,12 +67,12 @@ société réelle qui ne peut qu'être archivée. C'est là qu'il faut faire ses
 
 Une raison individuelle qui devient une Sàrl, par exemple. Qompta bascule alors la
 comptabilité en partie double, complète le plan comptable avec les comptes de capital
-manquants, et **conserve l'historique** de ce que la société était avant.
+manquants et **conserve l'historique** de ce que la société était avant.
 
 ### Les réglages TVA
 
 Sous **TVA & impôts → Décompte TVA**, indiquez si la société est assujettie, selon
-quelle méthode (effective, ou taux de la dette fiscale nette) et sur quelle période
+quelle méthode (effective ou taux de la dette fiscale nette) et sur quelle période
 (trimestrielle, semestrielle, annuelle). Ce choix commande les filtres des factures et
 le décompte lui-même.
 
@@ -90,7 +90,7 @@ Le bouton **« Nouveau »** ouvre la fiche.
 
 ![Fiche d'un tiers](../images/27-client-formulaire.png)
 
-Un tiers peut être **client**, **fournisseur**, ou les deux. Distinguez aussi
+Un tiers peut être **client**, **fournisseur** ou les deux. Distinguez aussi
 l'**entreprise** de la **personne physique** : cela change la façon dont l'adresse
 s'imprime.
 
@@ -118,7 +118,7 @@ une facture ou un devis, seul l'archivage est possible : l'historique comptable 
 ![Plan comptable](../images/14-plan-comptable.png)
 
 Chaque société reçoit un plan comptable adapté à sa forme juridique. Il sert à
-catégoriser les factures, et alimente le dossier fiscal.
+catégoriser les factures et alimente le dossier fiscal.
 
 ![Nouveau compte](../images/37-compte-formulaire.png)
 
@@ -147,7 +147,7 @@ est numéroté `DC` suivi de la date et d'un compteur remis à zéro chaque jour
 | **Prestation comprise** | un détail imprimé avec un tiret, **sans montant** |
 
 C'est ce qui permet de détailler une offre sans gonfler le total : « Installation
-complète » facturée, et sous elle trois lignes qui disent ce que « complète » recouvre.
+complète » facturée et sous elle trois lignes qui disent ce que « complète » recouvre.
 
 ### Le cycle
 
@@ -161,7 +161,7 @@ affaires perdues du tableau de bord, au lieu de compter deux fois.
 
 ### La conversion en facture
 
-La conversion produit une facture de vente **en brouillon**, et **une facture par taux
+La conversion produit une facture de vente **en brouillon** et **une facture par taux
 de TVA** si le devis en mélange plusieurs. Ce découpage n'est pas une coquetterie : une
 facture ne peut porter qu'un seul taux, sans quoi la ventilation 303/313/343 du décompte
 serait fausse.
@@ -176,7 +176,7 @@ reconvertible.
 
 ![Liste des contrats](../images/11-contrats.png)
 
-Un contrat se compose **par sections** : dix types de blocs, et huit structures de
+Un contrat se compose **par sections** : dix types de blocs et huit structures de
 départ (contrat de prestation, abonnement, mandat, contrat d'entreprise au forfait,
 NDA…).
 
@@ -220,14 +220,14 @@ dans cette société-ci. Il n'est proposé qu'aux sociétés **assujetties**.
 ### Les filtres par période TVA
 
 Les boutons à côté de l'année suivent la périodicité de la société : `T1…T4` au
-trimestre, `S1/S2` au semestre, « Année » à l'année. Ils se **cumulent**, et
+trimestre, `S1/S2` au semestre, « Année » à l'année. Ils se **cumulent** et
 s'**ajoutent** aux filtres du dessous au lieu de les remplacer. Les flèches d'année
 filtrent cette année-là à défaut de trimestre sélectionné.
 
 ### Le détail des prestations
 
 Une facture peut porter des lignes comme un devis. Son montant et son taux découlent
-alors de ces lignes, et elle n'accepte **qu'un seul taux de TVA**, pour la même raison
+alors de ces lignes et elle n'accepte **qu'un seul taux de TVA**, pour la même raison
 qu'un devis se découpe à la conversion. Sans ligne, elle reste une écriture au montant
 global.
 
@@ -269,7 +269,7 @@ vente ni un achat.
 ![Dossier fiscal](../images/13-impots.png)
 
 L'écran **Impôts** rassemble ce qu'il faut pour la déclaration, adapté à la forme
-juridique : bénéfice imposable, et pour une Sàrl ou une SA, le capital.
+juridique : bénéfice imposable et pour une Sàrl ou une SA, le capital.
 
 Pour ces deux formes, les **fonds propres** se saisissent ici et alimentent le calcul de
 l'impôt sur le bénéfice et sur le capital.
@@ -285,7 +285,7 @@ encaissées, moins achats réellement payés, moins la TVA nette versée à l'AF
 de l'an dernier paie encore les factures de cette année. C'est pourquoi rien n'est
 remis à zéro au changement d'exercice.
 
-L'écran affiche aussi l'**ancienneté des créances** : ce qui est à échoir, et ce qui
+L'écran affiche aussi l'**ancienneté des créances** : ce qui est à échoir et ce qui
 traîne depuis 30, 60 ou plus de 60 jours.
 
 ### Recaler sur le vrai solde bancaire
@@ -315,7 +315,7 @@ sert à répartir le bénéfice dans les formes imposées sur les associés.
 ![Entrées de fonds](../images/16-entrees-fonds.png)
 
 C'est l'argent qu'un associé verse dans la société. Une **table à part, exprès** : un
-apport n'est ni un produit ni une opération TVA, et **aucun calcul de décompte ne le
+apport n'est ni un produit ni une opération TVA et **aucun calcul de décompte ne le
 lit**.
 
 ![Formulaire d'entrée de fonds](../images/30-entree-fonds-formulaire.png)
@@ -345,7 +345,7 @@ devis et les contrats.
 ![Nouvelle signature](../images/31-signature-formulaire.png)
 
 Une signature peut être marquée **par défaut** : elle est alors proposée
-automatiquement sur les nouveaux devis. Un devis peut aussi n'en porter **aucune**, et
+automatiquement sur les nouveaux devis. Un devis peut aussi n'en porter **aucune** et
 laisser une ligne vierge à signer à la main.
 
 ---
@@ -367,16 +367,16 @@ finances, commercial, rentabilité, clients & pipeline, encaissement & créances
 ![Mode Modifier](../images/34-tableau-modifier.png)
 
 Le bouton **« Modifier »** fait apparaître la grille. Chaque widget se **déplace** et se
-**redimensionne** librement, et refuse de chevaucher un autre : il ne va que sur de la
+**redimensionne** librement et refuse de chevaucher un autre : il ne va que sur de la
 place libre.
 
 Les widgets s'adaptent à la place qu'on leur donne : un indicateur réduit au minimum
-n'affiche plus que son chiffre, et la taille du texte grandit avec la case.
+n'affiche plus que son chiffre et la taille du texte grandit avec la case.
 
 ![Ajouter un widget](../images/35-tableau-widget.png)
 
 Un widget est soit un **indicateur** (22 métriques disponibles), soit un **graphique** :
-un du catalogue, ou un graphique sur mesure dont vous choisissez le type (barres, ligne,
+un du catalogue ou un graphique sur mesure dont vous choisissez le type (barres, ligne,
 camembert), la dimension (mois, catégorie, client, étape) et la valeur.
 
 ---
@@ -402,14 +402,14 @@ affichage, si bien qu'un objectif ne peut pas dériver de la comptabilité qu'il
 
 Chaque société a sa propre apparence de documents :
 
-- **Logo** : un texte, une image importée, ou aucun, avec sa hauteur ;
+- **Logo** : un texte, une image importée ou aucun, avec sa hauteur ;
 - **Couleur de marque** ;
-- **Motif du bord droit** : le caractère, de 1 à 5 colonnes, sa taille, son opacité, ou
+- **Motif du bord droit** : le caractère, de 1 à 5 colonnes, sa taille, son opacité ou
   rien du tout. Les marges, l'en-tête et la QR-facture se recalent automatiquement sur
   la largeur de la bande ;
 - **Ligne de contact** et **blocs de signature** ;
 - **Police** : Inter (fournie, par défaut), un fichier que vous importez (.ttf, .otf,
-  .woff2, stocké en base, donc emporté par les sauvegardes et imprimé même hors ligne),
+  .woff2, stocké en base, donc emporté par les sauvegardes et imprimé même hors ligne)
   ou une police installée sur le poste.
 
 Les valeurs par défaut reproduisent le gabarit d'origine à l'identique : une société qui
@@ -426,7 +426,7 @@ vous voyez avant de valider.
 
 Le sélecteur en haut de la fenêtre passe d'une société à l'autre. Tout ce que vous voyez
 ensuite appartient à la société sélectionnée : les données sont **strictement
-cloisonnées**, et ce cloisonnement est vérifié par des tests automatisés, pas seulement
+cloisonnées** et ce cloisonnement est vérifié par des tests automatisés, pas seulement
 par convention.
 
 ![Dupliquer une société](../images/36-societe-dupliquer.png)
@@ -444,8 +444,10 @@ rien ne soit perdu.
 
 ![Réglages](../images/23-reglages.png)
 
-On y trouve le dossier des sauvegardes automatiques et leur durée de conservation, la
-restauration, et l'export.
+On y trouve la **connexion** (changer le mot de passe, activer ou désactiver Windows
+Hello), le dossier des sauvegardes automatiques et leur durée de conservation, la
+restauration et l'export. Afficher la clé de récupération demande le mot de passe de
+connexion.
 
 - **Restaurer une sauvegarde** remplace les données en place. L'ancienne base est mise
   de côté, pas supprimée.
@@ -472,5 +474,5 @@ de l'écran :
   15 secondes.
 
 C'est vrai partout : supprimer un tiers, convertir un devis, changer la forme juridique
-d'une société. Vous pouvez essayer sans crainte, et pour les essais à blanc, créez une
+d'une société. Vous pouvez essayer sans crainte et pour les essais à blanc, créez une
 **société de test**, la seule qui se supprime définitivement.

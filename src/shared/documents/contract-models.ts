@@ -404,7 +404,7 @@ export const CONTRACT_MODELS: ContractModel[] = [
         "Obligations",
         "La partie qui reçoit une information confidentielle s'engage à ne l'utiliser que pour " +
           "la collaboration envisagée, à ne la divulguer qu'aux personnes qui ont besoin de la " +
-          "connaître et qui sont tenues au même secret, et à la protéger comme ses propres " +
+          "connaître et qui sont tenues au même secret et à la protéger comme ses propres " +
           "informations.",
       ),
       {
@@ -412,7 +412,7 @@ export const CONTRACT_MODELS: ContractModel[] = [
         title: "Exceptions",
         intro: "L'obligation de confidentialité ne s'applique pas aux informations :",
         items: [
-          "déjà publiques, ou qui le deviennent sans faute de la partie qui les reçoit ;",
+          "déjà publiques ou qui le deviennent sans faute de la partie qui les reçoit ;",
           "déjà connues de celle-ci avant leur communication ;",
           "reçues légitimement d'un tiers non tenu au secret ;",
           "dont la divulgation est exigée par la loi ou une autorité.",
@@ -428,7 +428,7 @@ export const CONTRACT_MODELS: ContractModel[] = [
       article(
         "Restitution",
         "Sur demande, chaque partie restitue ou détruit les informations confidentielles reçues " +
-          "et leurs copies, et le confirme par écrit.",
+          "et leurs copies et le confirme par écrit.",
       ),
       {
         type: "callout",

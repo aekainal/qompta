@@ -1,5 +1,6 @@
 /**
- * Settings: VAT parameters per company, encrypted backups, recovery key.
+ * Settings: VAT parameters per company, login (password, Windows Hello),
+ * encrypted backups, recovery key.
  */
 
 import { useCallback, useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import { useCompany } from "../../app/CompanyContext.js";
 import { Button, Card, Field, Select } from "../../components/ui/primitives.js";
 import { BankAccountSettings, CompanyDocumentSettings } from "./DocumentSettings.js";
 import { BackupSettings } from "./BackupSettings.js";
+import { SecuritySettings } from "./SecuritySettings.js";
 
 export function SettingsPage() {
   const { active, reload } = useCompany();
@@ -82,6 +84,9 @@ export function SettingsPage() {
           </>
         )}
       </Card>
+
+      {/* Login password, Windows Hello */}
+      <SecuritySettings />
 
       {/* Backups, restore, encryption key */}
       <BackupSettings />

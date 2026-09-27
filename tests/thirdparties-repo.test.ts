@@ -39,7 +39,7 @@ describe("tiers : suppression définitive", () => {
     expect(thirdParties.list(company.id, true).find((t) => t.id === tp.id)).toBeUndefined();
   });
 
-  it("refuse la suppression d'un tiers lié à une facture, et le laisse intact", () => {
+  it("refuse la suppression d'un tiers lié à une facture et le laisse intact", () => {
     const { thirdParties, invoices, company } = setup();
     const tp = thirdParties.create(company.id, { kind: "client", name: "Facturé" });
     invoices.create(company.id, {

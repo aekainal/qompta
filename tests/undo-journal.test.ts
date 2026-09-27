@@ -91,7 +91,7 @@ describe("journal d'annulation", () => {
     expect(tp.list(c.id)[0].name).toBe("A1");
   });
 
-  it("une annulation n'est pas elle-même annulable, et ne se rejoue pas deux fois", () => {
+  it("une annulation n'est pas elle-même annulable et ne se rejoue pas deux fois", () => {
     const companies = createCompaniesRepo(db);
     const tp = createThirdPartiesRepo(db);
     const c = companies.create({ name: "Qwasar", legalForm: "sarl" });

@@ -4,7 +4,8 @@
  * - Automatic backups: folder (editable), retention (7 days by default),
  *   list of the backups present with direct restore.
  * - Manual backups and exports: everything is encrypted (.qbak, .qexp).
- * - Recovery key: view it again, store it again outside the machine.
+ * - Recovery key: view it again (login password required), store it again
+ *   outside the machine.
  *
  * A file coming from another machine (another key) prompts for ITS recovery
  * key, then the operation resumes.
@@ -30,6 +31,7 @@ import type { NeedsKey } from "@shared/ipc.js";
 import { useActionBar } from "../../app/ActionBarContext.js";
 import { useCompany } from "../../app/CompanyContext.js";
 import { Button, Card, Field, Input, Modal } from "../../components/ui/primitives.js";
+import { PasswordInput } from "../security/PasswordFields.js";
 
 function size(bytes: number): string {
   return bytes >= 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} Mo` : `${Math.max(1, Math.round(bytes / 1024))} Ko`;
@@ -54,6 +56,9 @@ export function BackupSettings() {
   const [pending, setPending] = useState<Pending | null>(null);
   const [recoveryKey, setRecoveryKey] = useState("");
   const [revealed, setRevealed] = useState<string | null>(null);
+  const [askPassword, setAskPassword] = useState(false);
+  const [keyPassword, setKeyPassword] = useState("");
+  const [keyError, setKeyError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const [c, l] = await Promise.all([
@@ -78,6 +83,19 @@ export function BackupSettings() {
     } catch (e) {
       setError(e instanceof Error ? e.message : "Erreur");
     }
+  }
+
+  async function reveal() {
+    if (!keyPassword) return;
+    setKeyError(null);
+    const r = await window.api.invoke("security:revealKey", { password: keyPassword });
+    if (!r.ok) {
+      setKeyError(r.error);
+      return;
+    }
+    setRevealed(r.recoveryKey);
+    setAskPassword(false);
+    setKeyPassword("");
   }
 
   /** Changes a setting while offering to go back to the previous one. */
@@ -298,8 +316,9 @@ export function BackupSettings() {
       <section className="space-y-3 border-t pt-5">
         <h3 className="flex items-center gap-2 text-sm font-semibold"><KeyRound size={16} /> Clé de récupération</h3>
         <p className="text-sm text-muted-foreground">
-          Elle est demandée pour restaurer une sauvegarde sur un autre poste ou après une
-          réinstallation de Windows. Gardez-en une copie hors de cet ordinateur.
+          Elle est demandée pour restaurer une sauvegarde sur un autre poste, après une
+          réinstallation de Windows ou pour remplacer un mot de passe oublié. Gardez-en une copie
+          hors de cet ordinateur. L'afficher demande le mot de passe de connexion.
         </p>
         {revealed ? (
           <div className="space-y-2">
@@ -322,16 +341,27 @@ export function BackupSettings() {
               <Button variant="ghost" onClick={() => setRevealed(null)}>Masquer</Button>
             </div>
           </div>
+        ) : askPassword ? (
+          // The key reopens everything, even without the password: it is shown to the password only.
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="w-64">
+              <PasswordInput
+                value={keyPassword}
+                onChange={setKeyPassword}
+                onEnter={() => void reveal()}
+                placeholder="Mot de passe de connexion"
+                autoComplete="current-password"
+                autoFocus
+              />
+            </div>
+            <Button onClick={() => void reveal()} disabled={!keyPassword}>
+              <Eye size={16} /> Afficher
+            </Button>
+            <Button variant="ghost" onClick={() => { setAskPassword(false); setKeyPassword(""); setKeyError(null); }}>Annuler</Button>
+            {keyError && <p className="w-full text-sm text-destructive">{keyError}</p>}
+          </div>
         ) : (
-          <Button
-            variant="outline"
-            onClick={() =>
-              void run(async () => {
-                const r = await window.api.invoke("security:revealKey", undefined as never);
-                setRevealed(r.recoveryKey);
-              })
-            }
-          >
+          <Button variant="outline" onClick={() => setAskPassword(true)}>
             <Eye size={16} /> Afficher ma clé
           </Button>
         )}

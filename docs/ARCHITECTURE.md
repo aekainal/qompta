@@ -38,7 +38,9 @@ src/
 │  ├─ ipc/registerHandlers.ts  # ALL business handlers, grouped by domain
 │  ├─ ipc/windowHandlers.ts    # window controls (before the data is opened)
 │  ├─ security/vault.ts        # encrypted .qdb/.qbak/.qexp format, recovery key (§11)
-│  ├─ security/keystore.ts     # machine key protected by safeStorage (DPAPI)
+│  ├─ security/keyring.ts      # login keyring: password (Argon2id) + Windows Hello wraps (§11)
+│  ├─ security/hello.ts        # Windows Hello through PowerShell 5.1 / WinRT
+│  ├─ security/keystore.ts     # qompta.keyring on disk (+ safeStorage), v1.20 key migration
 │  ├─ storage.ts               # in-memory database ⇄ encrypted qompta.qdb file
 │  ├─ backups.ts               # encrypted automatic and manual backups
 │  ├─ undo.ts                  # undo log (temporary triggers, §12)
@@ -228,7 +230,7 @@ bank details, with an explicit message rather than a failure.
   reloads the screens that depend on `companyId`.
 - Light/dark mode through Tailwind `class` + persistence.
 
-## 11. Data encryption and backups (v1.20.0)
+## 11. Data encryption, login and backups (v1.20.0, login v1.21.0)
 
 - **The database lives in memory.** `storage.ts` decrypts `userData/qompta.qdb` and replays its
   logical copy (schema + rows, `db/dump.ts`) into a `:memory:` database, then rewrites the
@@ -241,10 +243,35 @@ bank details, with an explicit message rather than a failure.
   format for `.qdb` (database), `.qbak` (full backup) and `.qexp` (JSON export).
 - **Key**: 256 random bits, shown once to the user as a **recovery
   key** `QK1-` + 13 groups of 4 (Crockford base32), which they keep off the
-  machine. On the machine it is protected by `safeStorage` (DPAPI) in `qompta.key`.
-- **Startup**: without a key, the setup screen (`features/security/SetupScreen`)
-  is displayed instead of the app; business handlers are registered only once
-  the database is open. An old plaintext database (`qompta.sqlite`, ≤ 1.19) is encrypted,
+  machine. It never changes (backups and exports stay readable).
+- **Login (v1.21.0, same design as QSSH)**: on the machine the key only lives in
+  `userData/qompta.keyring` (`security/keyring.ts`, pure and tested), wrapped by:
+  - the **login password**: AES-256-GCM under `Argon2id(password, salt)` (hash-wasm,
+    WebAssembly, no native module; 64 MiB, 3 passes, ~0.35 s in Electron). Rules in
+    `shared/password.ts` (10 characters, letter, digit, special), checked again by
+    the main process;
+  - optionally **Windows Hello** (`security/hello.ts`): a Hello key credential named
+    `Qompta` signs a random challenge stored in the keyring; RSA PKCS#1 v1.5 is
+    deterministic, so `HKDF(signature)` always gives the same wrapping key. WinRT is
+    reached through Windows PowerShell 5.1 (only the challenge goes in). A reset
+    credential (new PIN) no longer opens the wrap: password, then enable again.
+  There is **no recovery wrap**: the recovery key IS the data key, recognized by the
+  keyring's public fingerprint (or by opening the database). It is the only way to
+  choose a new password after forgetting it (`security:activate` with key + new
+  password; the Hello wrap is kept). The keyring file is additionally sealed by
+  `safeStorage` (DPAPI) when available, so a copy taken off the machine cannot even be
+  brute-forced. Changing the password and revealing the recovery key both require the
+  current password. Linux / macOS: password only.
+- **Migration from 1.20**: `qompta.key` held the bare key under DPAPI. It is read
+  once (state `set-password`), the user picks a password, then it is deleted. An
+  older Qompta launched afterwards writes it again: deleted at every start while a
+  keyring exists (dev and installed app share `%APPDATA%\Qompta`).
+- **Startup**: nothing opens without a login. States (`SecurityStatus.state`): `setup`
+  (create or enter a key, then a password), `locked` (login screen, Hello offered
+  straight away), `set-password` (migration), `recover` (encrypted data without a
+  usable keyring: recovery key + password, or set everything aside). The screens live
+  in `features/security/SetupScreen`; business handlers are registered only once the
+  database is open. An old plaintext database (`qompta.sqlite`, ≤ 1.19) is encrypted,
   **verified** (read back identically), then deleted.
 - **Backups** (`backups.ts`): automatic on every launch into
   `Documents\Qompta\Sauvegardes` (configurable), 7-day retention (the most recent one

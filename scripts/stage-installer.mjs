@@ -88,5 +88,5 @@ for (const { name } of packages) {
 console.log(
   `✓ ${packages.length} paquets indexés via Git LFS (pointeurs, pas les binaires) :\n` +
     packages.map((p) => `    ${p.name}`).join("\n") +
-    "\n  Ils partiront avec ton prochain commit + push, et la pipeline les publiera.",
+    "\n  Ils partiront avec ton prochain commit + push et la pipeline les publiera.",
 );

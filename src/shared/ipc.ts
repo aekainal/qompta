@@ -56,16 +56,26 @@ import type { TaxDossier } from "./tax/dossier.js";
 import type { Signature, SignatureInput } from "./signatures.js";
 import type { BackupConfig, BackupEntry } from "./backups.js";
 
-/** Encryption state at startup (setup screen). */
+/** Answer of the security channels that may fail on a user input (wrong password, etc.). */
+export type SecurityResult = { ok: true } | { ok: false; error: string };
+
+/** Encryption state at startup (setup and login screens). */
 export interface SecurityStatus {
-  /** ready: data unlocked; setup: no key yet; locked: key required to unlock. */
-  state: "ready" | "setup" | "locked";
+  /**
+   * ready: data open; setup: nothing yet (create or enter a key, then a password);
+   * locked: login required (password or Windows Hello); set-password: key of an
+   * older version found, a login password must be chosen; recover: encrypted data
+   * without a usable keyring, the recovery key is required.
+   */
+  state: "ready" | "setup" | "locked" | "set-password" | "recover";
   /** An encrypted database already exists on this machine. */
   hasEncryptedData: boolean;
   /** An old plaintext database (<= 1.19) is waiting to be encrypted. */
   hasLegacyData: boolean;
-  /** The key is protected by the system vault (DPAPI / keychain). */
+  /** The keyring file is also protected by the system vault (DPAPI / keychain). */
   keyProtected: boolean;
+  /** Windows Hello unlocks the keyring (the prompt is offered right away). */
+  helloEnrolled: boolean;
   defaultBackupDir: string;
   error: string | null;
 }
@@ -281,12 +291,27 @@ export interface IpcContract {
   "security:newKey": { input: void; output: { recoveryKey: string } };
   /** Writes the recovery key to a chosen text file (USB stick, etc.). */
   "security:saveKeyFile": { input: { recoveryKey: string }; output: { saved: boolean; path?: string } };
-  /** Adopts the key (new or entered) and unlocks the data. */
-  "security:activate": { input: { recoveryKey: string }; output: { ok: true } | { ok: false; error: string } };
+  /**
+   * Adopts the key (new or entered, or the recovery key after a forgotten password),
+   * protects it with the login password and opens the data.
+   */
+  "security:activate": { input: { recoveryKey: string; password: string }; output: SecurityResult };
+  /** Migration from <= 1.20: protects the key already on the machine with a password. */
+  "security:setPassword": { input: { password: string }; output: SecurityResult };
+  /** Login with the password. */
+  "security:unlock": { input: { password: string }; output: SecurityResult };
+  /** Login with Windows Hello. */
+  "security:unlockHello": { input: void; output: SecurityResult };
+  /** Windows Hello can be used on this machine (Windows only; first answer takes a second or two). */
+  "security:helloAvailable": { input: void; output: boolean };
+  "security:enableHello": { input: void; output: SecurityResult };
+  "security:disableHello": { input: void; output: SecurityResult };
+  /** Replaces the login password; the current one is required. */
+  "security:changePassword": { input: { current: string; next: string }; output: SecurityResult };
   /** Sets aside an unreadable database (lost key) to start over from scratch. */
   "security:resetData": { input: void; output: { ok: true; movedTo: string | null } };
-  /** Recovery key of this machine, to write it down again. */
-  "security:revealKey": { input: void; output: { recoveryKey: string } };
+  /** Recovery key of this machine, to write it down again; the password is required. */
+  "security:revealKey": { input: { password: string }; output: { ok: true; recoveryKey: string } | { ok: false; error: string } };
 
   // Backup / restore / export (everything is encrypted)
   "backup:config": { input: void; output: BackupConfig };
@@ -449,6 +474,13 @@ export const IPC_CHANNELS: IpcChannel[] = [
   "security:newKey",
   "security:saveKeyFile",
   "security:activate",
+  "security:setPassword",
+  "security:unlock",
+  "security:unlockHello",
+  "security:helloAvailable",
+  "security:enableHello",
+  "security:disableHello",
+  "security:changePassword",
   "security:resetData",
   "security:revealKey",
   "backup:config",

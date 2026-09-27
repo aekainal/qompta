@@ -13,7 +13,7 @@ import {
 const at = (iso: string) => new Date(iso);
 
 describe("sauvegardes : nommage", () => {
-  it("nomme par date et heure locales, et relit la date depuis le nom", () => {
+  it("nomme par date et heure locales et relit la date depuis le nom", () => {
     const d = new Date(2026, 8, 21, 7, 5, 9);
     const name = backupFileName(d);
     expect(name).toBe("Qompta_2026-09-21_07-05-09.qbak");
@@ -41,7 +41,7 @@ describe("sauvegardes : rétention", () => {
     "Qompta_export_toutes_2026-08-01.qexp",
   ];
 
-  it("supprime les sauvegardes Qompta plus vieilles que la rétention, et elles seules", () => {
+  it("supprime les sauvegardes Qompta plus vieilles que la rétention et elles seules", () => {
     expect(backupsToPrune(files, now, 7).sort()).toEqual(
       [backupFileName(at("2026-09-14T11:00:00")), backupFileName(at("2026-08-01T08:00:00"))].sort(),
     );

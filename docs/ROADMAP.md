@@ -448,6 +448,20 @@ explicit and shared between screen and PDF.
   (`db/dump.ts`), verified inside Electron on a copy of the real database. Lesson: any
   native code that manipulates buffers must be tested INSIDE Electron (293 tests).
 
+## M25: Login password and Windows Hello  ✅ (v1.21.0)
+> Encrypted data is of little use if the application itself opens for anyone at the
+> session. Same design as QSSH (Thomas's SSH key manager).
+- [x] **Keyring** `qompta.keyring` (`security/keyring.ts`, pure, tested): the data key
+  wrapped by `Argon2id(password)` and optionally by Windows Hello (signature of a
+  random challenge by a TPM-held credential, `security/hello.ts` through PowerShell 5.1).
+  The file is also sealed by DPAPI when available.
+- [x] **Forgotten password**: recovery key only (it is the data key itself), then a new
+  password. Changing the password and showing the recovery key require the current one.
+- [x] **Migration from 1.20**: the bare DPAPI key (`qompta.key`) asks for a password
+  once, then is deleted (and deleted again if an older Qompta writes it back).
+- [ ] Next: lock on session lock / idle (relaunch into the login screen), a second
+  factor other than Windows Hello.
+
 ## Cross-cutting quality tracking
 - Strict TypeScript over the whole codebase.
 - Mandatory unit tests on: VAT computation, shareholder allocation, Sàrl profit/capital,

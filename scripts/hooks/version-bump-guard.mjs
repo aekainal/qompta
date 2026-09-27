@@ -21,6 +21,11 @@ if (!/\bgit\s+commit\b/.test(cmd)) process.exit(0);
 // repository's version: the check below would read the wrong package.json.
 if (/qompta-public/.test(cmd)) process.exit(0);
 
+// Same for any other repository reached by `cd` before the commit (the website
+// qompta.qwasar.ch, for instance): only a commit in THIS repository is checked.
+const cdTarget = /(?:^|[;&|]\s*)cd\s+("[^"]+"|'[^']+'|\S+)/.exec(cmd)?.[1]?.replace(/^["']|["']$/g, "");
+if (cdTarget && !/\/projets\/qompta\/?$/.test(cdTarget)) process.exit(0);
+
 let cur = null;
 let prev = null;
 try {

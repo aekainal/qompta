@@ -257,7 +257,7 @@ function TpForm({ companyId, initial, scope, onSaved, onCancel }: {
         <Field label="Pays"><Input value={country} onChange={(e) => setCountry(e.target.value)} className="w-16" placeholder="CH" /></Field>
       </div>
       <p className="text-xs text-muted-foreground">
-        Rue, numéro, NPA et localité sont repris sur les devis et les factures, et exigés par la QR-facture.
+        Rue, numéro, NPA et localité sont repris sur les devis et les factures et exigés par la QR-facture.
       </p>
 
       <div className="grid grid-cols-2 gap-3">

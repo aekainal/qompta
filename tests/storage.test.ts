@@ -48,7 +48,7 @@ describe("stockage chiffré", () => {
     expect(store.sqlite.prepare("SELECT v FROM secrets").get()).toEqual({ v: "Client Confidentiel SA" });
   });
 
-  it("relit après fermeture ce qui a été écrit, et refuse une autre clé", () => {
+  it("relit après fermeture ce qui a été écrit et refuse une autre clé", () => {
     const dir = tempDir();
     const key = generateKey();
     const store = openDataStore(dir, key);
